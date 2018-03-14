@@ -15,7 +15,7 @@ pipelines:
         script:
           - bash ./gradlew sonarqube -Dsonar.organization=$SONAR_ORG -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$BITBUCKET_BRANCH
   branches:
-    master:
+    test:
       - step:
           name: Build and test    
           caches:
@@ -25,16 +25,28 @@ pipelines:
             - bash ./gradlew build
             - bash ./gradlew sonarqube -Dsonar.organization=$SONAR_ORG -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$BITBUCKET_BRANCH
           artifacts:
-            - build/libs/rest-0.0.1-SNAPSHOT.war
+            - build/libs/xmi-0.0.1-SNAPSHOT.war
       - step:
           name: Deploy to test    
           deployment: test
           script:
             - curl -T build/libs/xmi-0.0.1-SNAPSHOT.war ftps://$DEPLOY_URL/$DEPLOY_TARGET --user $DEPLOY_USERNAME:$DEPLOY_PWD
-    staging:
+    production:
       - step:
-          script: 
-          - git push https://$DEPLOY_USERNAME:$DEPLOY_PWD@assetengine.scm.azurewebsites.net/assetEngine.git master
+          name: Build and test    
+          caches:
+            - gradle
+            - sonar          
+          script:
+            - bash ./gradlew build
+            - bash ./gradlew sonarqube -Dsonar.organization=$SONAR_ORG -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$BITBUCKET_BRANCH
+          artifacts:
+            - build/libs/xmi-0.0.1-SNAPSHOT.war
+      - step:
+          name: Deploy to PROD    
+          deployment: production
+          script:
+            - curl -T build/libs/xmi-0.0.1-SNAPSHOT.war ftps://$DEPLOY_URL/$DEPLOY_TARGET --user $DEPLOY_USERNAME:$DEPLOY_PWD
 
 definitions:
   caches:
