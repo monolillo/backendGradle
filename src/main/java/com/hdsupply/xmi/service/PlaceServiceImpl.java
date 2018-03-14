@@ -11,7 +11,6 @@ import com.hdsupply.xmi.repository.PlaceDao;
 @Service
 public class PlaceServiceImpl implements PlaceService {
 	
-	
 	@Autowired
 	private PlaceDao placeDao;
 	
