@@ -1,0 +1,42 @@
+# This is a sample build configuration for Java (Maven).
+# Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: maven:3.3.9
+
+pipelines:
+  default:
+    - step:
+        name: Build and test    
+        caches:
+          - gradle
+          - sonar
+        script:
+          - bash ./gradlew sonarqube -Dsonar.organization=$SONAR_ORG -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$BITBUCKET_BRANCH
+  branches:
+    master:
+      - step:
+          name: Build and test    
+          caches:
+            - gradle
+            - sonar          
+          script:
+            - bash ./gradlew build
+            - bash ./gradlew sonarqube -Dsonar.organization=$SONAR_ORG -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$BITBUCKET_BRANCH
+          artifacts:
+            - build/libs/rest-0.0.1-SNAPSHOT.war
+      - step:
+          name: Deploy to test    
+          deployment: test
+          script:
+            - curl -T build/libs/xmi-0.0.1-SNAPSHOT.war ftps://$DEPLOY_URL/$DEPLOY_TARGET --user $DEPLOY_USERNAME:$DEPLOY_PWD
+    staging:
+      - step:
+          script: 
+          - git push https://$DEPLOY_USERNAME:$DEPLOY_PWD@assetengine.scm.azurewebsites.net/assetEngine.git master
+
+definitions:
+  caches:
+    sonar: ~/.sonar/cache
+    gradlew: ~/.gradle/wrapper

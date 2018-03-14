@@ -1,0 +1,7 @@
+{
+	"eventName": "testEvent",
+	"data":{
+		"x": "13.5",
+		"y": 20.0
+	}
+}
