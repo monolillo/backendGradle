@@ -1,6 +1,5 @@
 package com.hdsupply.xmi.config;
 
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class DatasourceConfig {
     private Environment environment;
     
     @Bean
-    public DataSource dataSource() throws NamingException {
+    public DataSource dataSource() {
     	
     	DataSource dataSource = DataSourceBuilder.create()
     			.url(environment.getProperty("JDBC_URL"))
