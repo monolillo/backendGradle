@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 /**
@@ -16,20 +17,19 @@ import org.springframework.core.env.Environment;
  * @created Apr 17, 2015
  */
 @Configuration
+@PropertySource({"classpath:datasource.properties"})
 public class DatasourceConfig {
 	
     @Autowired
     private Environment environment;
-	
+    
     @Bean
     public DataSource dataSource() throws NamingException {
     	
-    	String conn = "jdbc:sqlserver://miidb.database.windows.net:1433;database=xmi;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-    	
     	DataSource dataSource = DataSourceBuilder.create()
-    			.url(conn)
-    			.username("mii_admin")
-    			.password("Neoris.16")
+    			.url(environment.getProperty("JDBC_URL"))
+    			.username(environment.getProperty("DB_USERNAME"))
+    			.password(environment.getProperty("DB_PASSWORD"))    			
     			.build();
     	
         return dataSource;

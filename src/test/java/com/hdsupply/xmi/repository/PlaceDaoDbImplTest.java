@@ -10,14 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hdsupply.xmi.config.DatasourceConfig;
 import com.hdsupply.xmi.config.PropertiesConfig;
 import com.hdsupply.xmi.domain.Place;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {InMemoryDataConfig.class, PropertiesConfig.class, PlaceDaoDbImplTest.class})
+@ContextConfiguration(classes = {DatasourceConfig.class, PropertiesConfig.class, PlaceDaoDbImplTest.class})
 @Configuration
+@TestPropertySource({"classpath:testDatasource.properties"})
 public class PlaceDaoDbImplTest {
 	
 	@Autowired
