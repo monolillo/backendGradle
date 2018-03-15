@@ -1,14 +1,10 @@
 [
     {
         "id": 123,
-        "name": "Test Name",
-        "longitude": 0,
-        "latitude": 0
+        "name": "Test Name"
     },
     {
         "id": 321,
-        "name": "Test Name 2",
-        "longitude": 0,
-        "latitude": 0
+        "name": "Test Name 2"
     }
 ]

@@ -10,10 +10,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 /**
- * Example configuration for a bean read from a JNDI lookup
+ * Database configuration using DataSourceBuilder
  *
- * @author Julian F. Nunez <vc.julian.nune@lowes.com>
- * @created Apr 17, 2015
+ * @author Julian F. Nunez <julian.nunez@neoris.com>
+ * @created Mar 15, 2018
  */
 @Configuration
 @PropertySource({"classpath:datasource.properties"})
