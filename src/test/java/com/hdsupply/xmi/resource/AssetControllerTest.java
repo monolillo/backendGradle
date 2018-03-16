@@ -1,12 +1,10 @@
 package com.hdsupply.xmi.resource;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
@@ -38,9 +36,6 @@ import com.hdsupply.xmi.service.PlaceService;
 public class AssetControllerTest {
 	
 	@Autowired
-	private AssetController fixture;
-	
-	@Autowired
 	private PlaceService mockPlaceService;	
 	
     @Autowired
@@ -67,7 +62,6 @@ public class AssetControllerTest {
 		Place place2 = new Place();
 		place2.setId(321);
 		place2.setName("Test Name 2");
-		
 		
 		List<Place> returnedPlaces = Arrays.asList(new Place[] {place1, place2});
 		

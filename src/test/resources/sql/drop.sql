@@ -1,0 +1,11 @@
+DROP TABLE inventory;
+DROP TABLE location;
+DROP TABLE catalog;
+DROP TABLE shop;
+DROP TABLE site_users;
+DROP TABLE notification;
+DROP TABLE site;
+DROP TABLE users;
+DROP TABLE notification_type;
+DROP TABLE company;
+DROP TABLE product;
