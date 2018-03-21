@@ -24,9 +24,7 @@ public class ProductDaoImpl implements ProductDao{
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		Product product = jdbcTemplate.queryForObject(getProductByIdSql, new Object[] { idProduct }, new BeanPropertyRowMapper<Product>(Product.class));
-		
-		return product;
+		return jdbcTemplate.queryForObject(getProductByIdSql, new Object[] { idProduct }, new BeanPropertyRowMapper<Product>(Product.class));
 	}
 
 }

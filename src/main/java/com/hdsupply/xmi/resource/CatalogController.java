@@ -22,9 +22,7 @@ public class CatalogController {
 	@RequestMapping(value="/site/{siteId}/product")
 	public List<ProductCatalog> getActiveCatalog(@PathVariable("siteId") Integer siteId) {
 		
-		List<ProductCatalog> listProductCatalog = catalogService.getActiveCatalog(siteId);
-		
-		return listProductCatalog;
+		return catalogService.getActiveCatalog(siteId);
 	}
 	
 }
