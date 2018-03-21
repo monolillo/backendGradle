@@ -47,11 +47,14 @@ CREATE TABLE notification
   id INT NOT NULL,
   timestamp DATETIME NOT NULL,
   notificationQty INT NOT NULL,
+  active BIT NOT NULL,
   siteId INT NOT NULL,
   typeId INT NOT NULL,
+  productId INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (siteId) REFERENCES site(id),
-  FOREIGN KEY (typeId) REFERENCES notification_type(id)
+  FOREIGN KEY (typeId) REFERENCES notification_type(id),
+  FOREIGN KEY (productId) REFERENCES product(id)
 );
 
 CREATE TABLE site_users
@@ -59,7 +62,7 @@ CREATE TABLE site_users
   userId INT NOT NULL,
   siteId INT NOT NULL,
   PRIMARY KEY (userId, siteId),
-  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (userId) REFERENCES users(id),
   FOREIGN KEY (siteId) REFERENCES site(id)
 );
 
@@ -77,11 +80,11 @@ CREATE TABLE catalog
   critical BIT NOT NULL,
   min INT NOT NULL,
   max INT NOT NULL,
-  siteId INT NOT NULL,
   productId INT NOT NULL,
-  PRIMARY KEY (siteId, productId),
-  FOREIGN KEY (siteId) REFERENCES site(id),
-  FOREIGN KEY (productId) REFERENCES product(id)
+  siteId INT NOT NULL,
+  PRIMARY KEY (productId, siteId),
+  FOREIGN KEY (productId) REFERENCES product(id),
+  FOREIGN KEY (siteId) REFERENCES site(id)
 );
 
 CREATE TABLE location
@@ -96,11 +99,12 @@ CREATE TABLE location
 CREATE TABLE inventory
 (
   qty INT NOT NULL,
-  checkedOut INT NOT NULL,
+  checkedOutQty INT NOT NULL,
   shopId INT NOT NULL,
   productId INT NOT NULL,
+  locationId INT NOT NULL,
   PRIMARY KEY (shopId, productId),
   FOREIGN KEY (shopId) REFERENCES shop(id),
-  FOREIGN KEY (productId) REFERENCES product(id)
+  FOREIGN KEY (productId) REFERENCES product(id),
+  FOREIGN KEY (locationId) REFERENCES location(id)
 );
-
