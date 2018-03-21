@@ -77,10 +77,10 @@ CREATE TABLE catalog
   critical BIT NOT NULL,
   min INT NOT NULL,
   max INT NOT NULL,
-  shopId INT NOT NULL,
+  siteId INT NOT NULL,
   productId INT NOT NULL,
-  PRIMARY KEY (shopId, productId),
-  FOREIGN KEY (shopId) REFERENCES shop(id),
+  PRIMARY KEY (siteId, productId),
+  FOREIGN KEY (siteId) REFERENCES site(id),
   FOREIGN KEY (productId) REFERENCES product(id)
 );
 
