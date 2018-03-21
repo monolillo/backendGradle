@@ -1,5 +1,6 @@
 package com.hdsupply.xmi.resource;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,9 @@ public class AssetController {
 	
 	@RequestMapping(value="/place")
 	@PreAuthorize("hasAuthority('GET_PLACES')")
-	public List<Place> getAllPlaces() {
+	public List<Place> getAllPlaces(Principal principal) {
+		
+		System.out.println(principal.getName());
 		
 		List<Place> places = placeService.getActivePlaces();
 		
