@@ -28,7 +28,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.hdsupply.xmi.domain.Place;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.service.CatalogService;
-import com.hdsupply.xmi.service.PlaceService;
+import com.hdsupply.xmi.service.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {CatalogControllerTest.class})
@@ -39,6 +39,9 @@ public class CatalogControllerTest {
 
 	@Autowired
 	private CatalogService mockCatalogService;
+	
+	@Autowired
+	private ProductService mockProductService;
 	
 	@Autowired
     private WebApplicationContext ctx;
@@ -52,6 +55,7 @@ public class CatalogControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();		
         
         EasyMock.reset(mockCatalogService);
+        EasyMock.reset(mockProductService);
 	}	
 	
 	@Test
@@ -88,11 +92,43 @@ public class CatalogControllerTest {
 		EasyMock.verify(mockCatalogService);
 	}
 	
+	@Test
+	public void testGetProductById() throws Exception {
+		
+		ProductCatalog productCatalog = new ProductCatalog();
+		productCatalog.setIdProduct(123);
+		productCatalog.setName("A Bulb 40W A15 Frost");
+		productCatalog.setItemNumber(2);
+		productCatalog.setMax(10);
+		productCatalog.setMin(2);
+
+		EasyMock.expect(mockProductService.getProductById(2,1)).andReturn(productCatalog);
+		
+		EasyMock.replay(mockProductService);
+		
+		File file = ResourceUtils.getFile("classpath:json/getProductById.json");
+		String expectedJson1 = new String(Files.readAllBytes(file.toPath()));
+		
+		mockMvc.perform(get("/site/2/product/1")
+				.header("Accept", "application/json"))
+				.andExpect(status().isOk())
+				.andExpect(content().json(expectedJson1));
+			
+			EasyMock.verify(mockProductService);
+	}
+	
+	
+	
 	@Bean
 	public CatalogService catalogService() {
 		return EasyMock.createStrictMock(CatalogService.class);
 	}
   
+	@Bean
+	public ProductService productService() {
+		return EasyMock.createStrictMock(ProductService.class);
+	}
+	
 	@Bean
 	public CatalogController fixture() {
 		return new CatalogController();
