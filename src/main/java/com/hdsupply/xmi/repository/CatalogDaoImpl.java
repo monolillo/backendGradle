@@ -26,10 +26,8 @@ public class CatalogDaoImpl implements CatalogDao{
 	public List<Catalog> getActiveCatalog(Integer siteId) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		List<Catalog> result =
-				jdbcTemplate.query(getActiveCatalogSql, new Object[] { siteId }, new BeanPropertyRowMapper<Catalog>(Catalog.class));
 		
-		return result;
+		return jdbcTemplate.query(getActiveCatalogSql, new Object[] { siteId }, new BeanPropertyRowMapper<Catalog>(Catalog.class));
 	}
 	
 }
