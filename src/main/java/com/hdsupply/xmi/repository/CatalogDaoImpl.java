@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hdsupply.xmi.domain.Catalog;
-import com.hdsupply.xmi.domain.Product;
 
 
 @Repository
