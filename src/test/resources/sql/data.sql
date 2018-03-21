@@ -33,3 +33,13 @@ INSERT INTO CATALOG (critical,min,max,productId,siteId) VALUES (0,3,10,6,2);
 INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (10,0,2,1,2);
 INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (4,0,2,2,3);
 INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (2,0,3,5,6);
+
+INSERT INTO USERS (username,password,enabled) VALUES ('admin','admin_pwd',true);
+
+INSERT INTO GROUPS (group_name) VALUES ('SITE_ADMIN');
+
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'GET_PLACES');
+
+INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('ADMIN',0);
+
+
