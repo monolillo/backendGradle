@@ -21,6 +21,8 @@ import org.springframework.util.ResourceUtils;
 import com.hdsupply.xmi.domain.Place;
 import com.hdsupply.xmi.service.PlaceService;
 
+import junit.framework.AssertionFailedError;
+
 @ContextConfiguration(classes = AssetControllerTest.class)
 public class AssetControllerTest extends AbstractControllerTest {
 	
@@ -36,7 +38,7 @@ public class AssetControllerTest extends AbstractControllerTest {
 	}	
 
 	@Test
-	@WithMockUser(username = "admin", authorities = { "GET_PLACES", "USER" })
+	@WithMockUser(username = "admin", authorities = { "GET_PLACES" })
 	public void testGetAllPlaces() throws Exception {
 		
 		Place place1 = new Place();
@@ -60,6 +62,23 @@ public class AssetControllerTest extends AbstractControllerTest {
 			.header("Accept", "application/json"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(expectedJson));
+		
+		EasyMock.verify(mockPlaceService);		
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+	public void testGetAllPlacesUnauthorized() throws Exception {
+		
+		EasyMock.expect(mockPlaceService.getActivePlaces()).andThrow(new AssertionFailedError())
+			.anyTimes();
+	
+		EasyMock.replay(mockPlaceService);
+		
+		mockMvc.perform(get("/rest/place")
+			.header("Accept", "application/json"))
+			.andExpect(status().isForbidden());
 		
 		EasyMock.verify(mockPlaceService);		
 		

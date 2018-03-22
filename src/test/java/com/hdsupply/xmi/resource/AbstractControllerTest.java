@@ -17,6 +17,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.hdsupply.xmi.config.PropertiesConfig;
 import com.hdsupply.xmi.config.SecurityConfig;
 
+/**
+ * Base test class for controllers.
+ * Wires up a spring MVC context with security ready to go.
+ * 
+ * @author Julian F. Nunez <julian.nunez@neoris.com>
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PropertiesConfig.class, SecurityConfig.class})
 @WebAppConfiguration
