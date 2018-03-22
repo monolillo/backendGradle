@@ -43,12 +43,7 @@ public class CatalogDaoImplTest extends DaoDbTestBase{
 		assertEquals(5, catalog.getMin());
 		assertEquals(1, catalog.getProductId());
 		assertEquals(2, catalog.getSiteId());
-		
-//		assertEquals(30, catalog.getMax());
-//		assertEquals(5, catalog.getMin());
-//		assertEquals(2, catalog.getProductId());
-//		assertEquals(2, catalog.getProductId());
-		
+
 	}
 	
 	@Bean
