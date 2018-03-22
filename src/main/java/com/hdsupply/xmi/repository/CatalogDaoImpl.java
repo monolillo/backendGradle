@@ -22,12 +22,23 @@ public class CatalogDaoImpl implements CatalogDao{
 	@Value("${catalogDao.getActiveCatalogSql}")
 	private String getActiveCatalogSql;
 	
+	@Value("${catalogDao.getCatalogSql}")
+	private String getCatalogSql;
+	
 	@Override
 	public List<Catalog> getActiveCatalog(Integer siteId) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		return jdbcTemplate.query(getActiveCatalogSql, new Object[] { siteId }, new BeanPropertyRowMapper<Catalog>(Catalog.class));
+	}
+
+	@Override
+	public Catalog getCatalog(Integer siteId, Integer productId) {
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		return jdbcTemplate.queryForObject(getCatalogSql, new Object[] { siteId, productId }, new BeanPropertyRowMapper<Catalog>(Catalog.class));
 	}
 	
 }

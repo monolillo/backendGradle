@@ -9,4 +9,6 @@ public interface CatalogDao {
 
 	List<Catalog> getActiveCatalog(Integer siteId);
 	
+	Catalog getCatalog(Integer siteId, Integer productId);
+	
 }
