@@ -33,3 +33,33 @@ INSERT INTO CATALOG (critical,min,max,productId,siteId) VALUES (0,3,10,6,2);
 INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (10,0,2,1,2);
 INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (4,0,2,2,3);
 INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (2,0,3,5,6);
+
+INSERT INTO USERS (username,password,enabled) VALUES ('admin','{noop}admin_pwd',1);
+INSERT INTO USERS (username,password,enabled) VALUES ('mgr_usr','{noop}pass',1);
+INSERT INTO USERS (username,password,enabled) VALUES ('tech_usr','{noop}pass',1);
+INSERT INTO USERS (username,password,enabled) VALUES ('superv_usr','{noop}pass',1);
+
+INSERT INTO SITE_USERS (username,siteId) VALUES ('admin',2);
+INSERT INTO SITE_USERS (username,siteId) VALUES ('mgr_usr',2);
+INSERT INTO SITE_USERS (username,siteId) VALUES ('superv_usr',2);
+INSERT INTO SITE_USERS (username,siteId) VALUES ('tech_usr',2);
+
+INSERT INTO GROUPS (group_name) VALUES ('SITE_ADMIN');
+INSERT INTO GROUPS (group_name) VALUES ('ADMIN');
+INSERT INTO GROUPS (group_name) VALUES ('PROPERTY_MGR');
+INSERT INTO GROUPS (group_name) VALUES ('MNT_SUPERVISOR');
+INSERT INTO GROUPS (group_name) VALUES ('MNT_TECH');
+
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'GET_PLACES');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'READ_SITE_CATALOG');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (1,'READ_SITE_CATALOG');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (2,'READ_SITE_CATALOG');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (3,'READ_SITE_CATALOG');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (4,'READ_SITE_CATALOG');
+
+INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',0);
+INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',1);
+INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('mgr_usr',2);
+INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('superv_usr',3);
+INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('tech_usr',4);
+
