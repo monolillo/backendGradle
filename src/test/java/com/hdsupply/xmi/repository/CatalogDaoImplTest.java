@@ -34,6 +34,23 @@ public class CatalogDaoImplTest extends DaoDbTestBase{
 		
 	}
 	
+	@Test
+	public void GetCatalog() {
+		
+		Catalog catalog = fixture.getCatalog(2,1);
+		
+		assertEquals(30, catalog.getMax());
+		assertEquals(5, catalog.getMin());
+		assertEquals(1, catalog.getProductId());
+		assertEquals(2, catalog.getSiteId());
+		
+//		assertEquals(30, catalog.getMax());
+//		assertEquals(5, catalog.getMin());
+//		assertEquals(2, catalog.getProductId());
+//		assertEquals(2, catalog.getProductId());
+		
+	}
+	
 	@Bean
 	public CatalogDao fixture() {
 		return new CatalogDaoImpl();
