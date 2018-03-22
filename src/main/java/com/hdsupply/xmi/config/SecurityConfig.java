@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,7 +20,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
-@EnableWebSecurity(debug=true)
+@EnableWebSecurity(debug=false)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -32,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    @Value("${security.security-realm}")
    private String securityRealm;
 
-   @Autowired
+   @Autowired(required=false)
    private UserDetailsService userDetailsService;
 
    @Bean
@@ -43,8 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
    @Override
    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-      auth.userDetailsService(userDetailsService);
+	   
+	  if(null != userDetailsService) {
+		  auth.userDetailsService(userDetailsService);
               //.passwordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
+	  }
    }
 
    @Override
@@ -59,6 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .csrf()
               .disable();
 
+   }
+   
+   @Override
+   public void configure(WebSecurity web) throws Exception {
+       //web.ignoring().antMatchers("/**");
    }
 
    @Bean
