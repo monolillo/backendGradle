@@ -1,7 +1,5 @@
 package com.hdsupply.xmi.domain;
 
-import javax.validation.constraints.NotNull;
-
 public class Inventory {
 	
 	Integer quantity;
