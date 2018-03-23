@@ -1,11 +1,10 @@
 package com.hdsupply.xmi.resource;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +28,9 @@ public class AssetController {
 	
 	@RequestMapping(value="/place")
 	@PreAuthorize("hasAuthority('GET_PLACES')")
-	public List<Place> getAllPlaces(@AuthenticationPrincipal User principal) {
+	public List<Place> getAllPlaces(Principal userDetails) {
 		
-		System.out.println(principal.getUsername());
+		System.out.println(userDetails.getName());
 		
 		List<Place> places = placeService.getActivePlaces();
 		

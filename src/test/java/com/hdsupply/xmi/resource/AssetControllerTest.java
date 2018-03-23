@@ -24,7 +24,7 @@ import com.hdsupply.xmi.service.PlaceService;
 import junit.framework.AssertionFailedError;
 
 @ContextConfiguration(classes = AssetControllerTest.class)
-public class AssetControllerTest extends AbstractControllerTest {
+public class AssetControllerTest extends ControllerTestBase {
 	
 	@Autowired
 	private PlaceService mockPlaceService;	

@@ -29,7 +29,7 @@ import com.hdsupply.xmi.config.SecurityConfig;
 @WebAppConfiguration
 @Configuration
 @EnableWebMvc
-public class AbstractControllerTest {
+public abstract class ControllerTestBase {
 	
     @Autowired
     protected WebApplicationContext ctx;
