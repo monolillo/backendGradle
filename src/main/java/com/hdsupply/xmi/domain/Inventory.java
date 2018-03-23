@@ -1,24 +1,26 @@
 package com.hdsupply.xmi.domain;
 
+import javax.validation.constraints.NotNull;
+
 public class Inventory {
 	
-	Integer qty;
-	Integer checkedOutQty;
+	Integer quantity;
+	Integer checkedOutQuantity;
 	Integer shopId;
 	Integer productId;
 	Integer locationId;
 	
-	public Integer getQty() {
-		return qty;
+	public Integer getQuantity() {
+		return quantity;
 	}
-	public void setQty(Integer qty) {
-		this.qty = qty;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
-	public Integer getCheckedOutQty() {
-		return checkedOutQty;
+	public Integer getCheckedOutQuantity() {
+		return checkedOutQuantity;
 	}
-	public void setCheckedOutQty(Integer checkedOutQty) {
-		this.checkedOutQty = checkedOutQty;
+	public void setCheckedOutQuantity(Integer checkedOutQuantity) {
+		this.checkedOutQuantity = checkedOutQuantity;
 	}
 	public Integer getShopId() {
 		return shopId;
