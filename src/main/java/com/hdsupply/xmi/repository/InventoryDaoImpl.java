@@ -4,8 +4,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -31,16 +29,16 @@ public class InventoryDaoImpl implements InventoryDao{
 	private String updateProductSql;
 	
 	@Override
-	public Inventory getInventoryById(Integer productId) {
+	public Inventory getInventoryById(Integer productId, Integer shopId) {
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		return jdbcTemplate.queryForObject(getInventoryByIdSql, new Object[] { productId }, new BeanPropertyRowMapper<Inventory>(Inventory.class));
+		return jdbcTemplate.queryForObject(getInventoryByIdSql, new Object[] { productId, shopId }, new BeanPropertyRowMapper<Inventory>(Inventory.class));
 
 	} 
 	
 	@Override
-	public void newProduct(Inventory inventory) {
+	public void newInventoryProduct(Inventory inventory) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
@@ -50,7 +48,7 @@ public class InventoryDaoImpl implements InventoryDao{
 	}
 
 	@Override
-	public void updateProduct(Inventory inventory) {
+	public void updateInventoryProduct(Inventory inventory) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		

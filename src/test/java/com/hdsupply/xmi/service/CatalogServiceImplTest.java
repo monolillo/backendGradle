@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.hdsupply.xmi.domain.Catalog;
-import com.hdsupply.xmi.domain.Place;
 import com.hdsupply.xmi.domain.Product;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.repository.CatalogDao;
@@ -51,8 +50,6 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 	
 	@Test
 	public void testGetActiveCatalog() {
-		
-		List<ProductCatalog> listProdCatalog = new ArrayList<>();
 		
 		Catalog catalog1 = new Catalog();
 		catalog1.setSiteId(2);
@@ -98,8 +95,6 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 321, listProductcatalog.get(1).getItemNumber());
 		assertEquals((Integer) 10, listProductcatalog.get(1).getMax());
 		assertEquals((Integer) 5, listProductcatalog.get(1).getMin());
-		
-		
 		
 	}
 
