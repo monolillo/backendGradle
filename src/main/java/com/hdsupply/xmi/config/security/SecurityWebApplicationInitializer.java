@@ -1,4 +1,4 @@
-package com.hdsupply.xmi.config;
+package com.hdsupply.xmi.config.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

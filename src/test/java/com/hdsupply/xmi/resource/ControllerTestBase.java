@@ -15,7 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.hdsupply.xmi.config.PropertiesConfig;
-import com.hdsupply.xmi.config.SecurityConfig;
+import com.hdsupply.xmi.config.security.SecurityConfig;
 
 /**
  * Base test class for controllers.
