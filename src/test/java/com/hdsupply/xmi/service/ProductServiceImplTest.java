@@ -34,18 +34,15 @@ public class ProductServiceImplTest extends EasyMockSupport {
 	@Test
 	public void testGetProductById() {
 		
-		Product product = new Product();
-		product.setId(123);
+		ProductCatalog product = new ProductCatalog();
+		product.setIdProduct(123);
 		product.setName("A Bulb 40W A15 Frost");
 		product.setItemNumber(2);
+		product.setMax(10);
+		product.setMin(5);
+		product.setQuantity(20);
 		
-		EasyMock.expect(productDao.getProductById(1)).andReturn(product);
-		
-		Catalog catalog = new Catalog();
-		catalog.setMax(10);
-		catalog.setMin(5);
-		
-		EasyMock.expect(catalogDao.getCatalog(2,1)).andReturn(catalog);
+		EasyMock.expect(productDao.getProductById(2,1)).andReturn(product);
 		
 		replayAll();
 		
@@ -57,7 +54,9 @@ public class ProductServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 2, productcatalog.getItemNumber());
 		assertEquals((Integer) 10, productcatalog.getMax());
 		assertEquals((Integer) 5, productcatalog.getMin());
+		assertEquals((Integer)20, productcatalog.getQuantity());
 
 	}
 	
 }
+

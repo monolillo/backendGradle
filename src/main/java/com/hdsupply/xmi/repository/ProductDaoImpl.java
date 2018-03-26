@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hdsupply.xmi.domain.Product;
+import com.hdsupply.xmi.domain.ProductCatalog;
 
 @Repository
 public class ProductDaoImpl implements ProductDao{
@@ -20,11 +21,11 @@ public class ProductDaoImpl implements ProductDao{
 	private String getProductByIdSql;
 	
 	@Override
-	public Product getProductById(Integer idProduct) {
+	public ProductCatalog getProductById(Integer siteId, Integer productId) {
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		return jdbcTemplate.queryForObject(getProductByIdSql, new Object[] { idProduct }, new BeanPropertyRowMapper<Product>(Product.class));
+		return jdbcTemplate.queryForObject(getProductByIdSql, new Object[] { siteId, productId }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
 	}
 
 }
