@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.hdsupply.xmi.domain.Catalog;
+import com.hdsupply.xmi.domain.ProductCatalog;
 
 @ContextConfiguration(classes=CatalogDaoImplTest.class)
 @Configuration
@@ -22,15 +23,15 @@ public class CatalogDaoImplTest extends DaoDbTestBase{
 	@Test
 	public void testGetActiveCatalog() {
 		
-		List<Catalog> catalogList = fixture.getActiveCatalog(2);
+		List<ProductCatalog> catalogList = fixture.getActiveCatalog(2);
 		
-		assertEquals(5, catalogList.get(0).getMin());
-		assertEquals(30, catalogList.get(0).getMax());
-		assertEquals(1, catalogList.get(0).getProductId());
+		assertEquals((Integer)5, catalogList.get(0).getMin());
+		assertEquals((Integer)30, catalogList.get(0).getMax());
+		assertEquals((Integer)1, catalogList.get(0).getIdProduct());
 
-		assertEquals(5, catalogList.get(1).getMin());
-		assertEquals(30, catalogList.get(1).getMax());
-		assertEquals(2, catalogList.get(1).getProductId());
+		assertEquals((Integer)5, catalogList.get(1).getMin());
+		assertEquals((Integer)30, catalogList.get(1).getMax());
+		assertEquals((Integer)2, catalogList.get(1).getIdProduct());
 		
 	}
 	

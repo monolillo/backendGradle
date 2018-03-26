@@ -38,8 +38,7 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		
 		List<ProductCatalog> listProdCatalog = new ArrayList<>();
 		
-		List<Catalog> returnedList = new ArrayList<Catalog>();
-		EasyMock.expect(catalogDao.getActiveCatalog(2)).andReturn(returnedList);
+		EasyMock.expect(catalogDao.getActiveCatalog(2)).andReturn(listProdCatalog);
 		
 		replayAll();
 		
@@ -52,36 +51,28 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 	@Test
 	public void testGetActiveCatalog() {
 		
-		List<ProductCatalog> listProdCatalog = new ArrayList<>();
-		
-		Catalog catalog1 = new Catalog();
-		catalog1.setSiteId(2);
-		catalog1.setProductId(1);
+		ProductCatalog catalog1 = new ProductCatalog();
+
+		catalog1.setIdProduct(1);
+		catalog1.setItemNumber(123);
+		catalog1.setName("AAAAAA");
 		catalog1.setMax(9);
 		catalog1.setMin(2);
+		catalog1.setQuantity(20);
 		
-		Catalog catalog2 = new Catalog();
-		catalog2.setSiteId(2);
-		catalog2.setProductId(2);
+		ProductCatalog catalog2 = new ProductCatalog();
+		
+		catalog2.setIdProduct(2);
+		catalog2.setItemNumber(321);
+		catalog2.setName("BBBBB");
 		catalog2.setMax(10);
 		catalog2.setMin(5);
+		catalog2.setQuantity(30);
 		
-		List<Catalog> returnedCatalog = Arrays.asList(new Catalog[] {catalog1, catalog2});
+		List<ProductCatalog> listProdCatalog = Arrays.asList(new ProductCatalog[] {catalog1, catalog2});
 		
-		EasyMock.expect(catalogDao.getActiveCatalog(2)).andReturn(returnedCatalog);
+		EasyMock.expect(catalogDao.getActiveCatalog(2)).andReturn(listProdCatalog);
 		
-		Product product1 = new Product();
-		product1.setId(1);
-		product1.setItemNumber(123);
-		product1.setName("AAAAAA");
-		
-		Product product2 = new Product();
-		product2.setId(2);
-		product2.setItemNumber(321);
-		product2.setName("BBBBB");
-		
-		EasyMock.expect(productDao.getProductById(1)).andReturn(product1);
-		EasyMock.expect(productDao.getProductById(2)).andReturn(product2);
 		
 		replayAll();
 		
@@ -92,13 +83,14 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 123, listProductcatalog.get(0).getItemNumber());
 		assertEquals((Integer) 9, listProductcatalog.get(0).getMax());
 		assertEquals((Integer) 2, listProductcatalog.get(0).getMin());
+		assertEquals((Integer)20, listProductcatalog.get(0).getQuantity());
 		
 		assertEquals("BBBBB", listProductcatalog.get(1).getName());
 		assertEquals((Integer) 2, listProductcatalog.get(1).getIdProduct());
 		assertEquals((Integer) 321, listProductcatalog.get(1).getItemNumber());
 		assertEquals((Integer) 10, listProductcatalog.get(1).getMax());
 		assertEquals((Integer) 5, listProductcatalog.get(1).getMin());
-		
+		assertEquals((Integer) 30, listProductcatalog.get(1).getQuantity());
 		
 		
 	}
