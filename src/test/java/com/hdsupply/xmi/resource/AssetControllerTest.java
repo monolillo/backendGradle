@@ -12,47 +12,33 @@ import java.util.List;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.hdsupply.xmi.domain.Place;
 import com.hdsupply.xmi.service.PlaceService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AssetControllerTest.class})
-@WebAppConfiguration
-@Configuration
-@EnableWebMvc
-public class AssetControllerTest {
+import junit.framework.AssertionFailedError;
+
+@ContextConfiguration(classes = AssetControllerTest.class)
+public class AssetControllerTest extends ControllerTestBase {
 	
 	@Autowired
 	private PlaceService mockPlaceService;	
 	
-    @Autowired
-    private WebApplicationContext ctx;
-	
-	private MockMvc mockMvc;
-
 	@Before
 	public void setUp() throws Exception {
 		
-		// Setup Spring test in standalone mode
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();		
-        
+		super.setUp();
+		
         EasyMock.reset(mockPlaceService);
 	}	
 
 	@Test
+	@WithMockUser(username = "admin", authorities = { "GET_PLACES" })
 	public void testGetAllPlaces() throws Exception {
 		
 		Place place1 = new Place();
@@ -72,10 +58,27 @@ public class AssetControllerTest {
 		File file = ResourceUtils.getFile("classpath:json/getAllPlaces.json");
 		String expectedJson = new String(Files.readAllBytes(file.toPath()));			
 		
-		mockMvc.perform(get("/place")
+		mockMvc.perform(get("/rest/place")
 			.header("Accept", "application/json"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(expectedJson));
+		
+		EasyMock.verify(mockPlaceService);		
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+	public void testGetAllPlacesUnauthorized() throws Exception {
+		
+		EasyMock.expect(mockPlaceService.getActivePlaces()).andThrow(new AssertionFailedError())
+			.anyTimes();
+	
+		EasyMock.replay(mockPlaceService);
+		
+		mockMvc.perform(get("/rest/place")
+			.header("Accept", "application/json"))
+			.andExpect(status().isForbidden());
 		
 		EasyMock.verify(mockPlaceService);		
 		
