@@ -1,9 +1,9 @@
 package com.hdsupply.xmi.repository;
 
-import com.hdsupply.xmi.domain.Product;
+import com.hdsupply.xmi.domain.ProductCatalog;
 
 public interface ProductDao {
 	
-	Product getProductById(Integer idProduct);
+	ProductCatalog getProductById(Integer siteId, Integer productId);
 
 }

@@ -7,6 +7,8 @@ public class ProductCatalog {
 	private Integer idProduct;
 	private Integer min;
 	private Integer max;
+	private Integer quantity;
+	
 	
 	public String getName() {
 		return name;
@@ -37,6 +39,12 @@ public class ProductCatalog {
 	}
 	public void setMax(Integer max) {
 		this.max = max;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 }

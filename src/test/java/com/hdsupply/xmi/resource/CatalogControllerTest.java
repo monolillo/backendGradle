@@ -22,6 +22,8 @@ import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.service.CatalogService;
 import com.hdsupply.xmi.service.ProductService;
 
+import junit.framework.AssertionFailedError;
+
 @ContextConfiguration(classes = {CatalogControllerTest.class})
 public class CatalogControllerTest extends ControllerTestBase {
 
@@ -101,7 +103,39 @@ public class CatalogControllerTest extends ControllerTestBase {
 			EasyMock.verify(mockProductService);
 	}
 	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+	public void testGetActiveCatalogUnauthorized() throws Exception {
+		
+		EasyMock.expect(mockCatalogService.getActiveCatalog(2)).andThrow(new AssertionFailedError())
+			.anyTimes();
 	
+		EasyMock.replay(mockCatalogService);
+		
+		mockMvc.perform(get("/rest/site/2/product")
+			.header("Accept", "application/json"))
+			.andExpect(status().isForbidden());
+		
+		EasyMock.verify(mockCatalogService);		
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+	public void testGetProductByIdUnauthorized() throws Exception {
+		
+		EasyMock.expect(mockProductService.getProductById(2, 1)).andThrow(new AssertionFailedError())
+			.anyTimes();
+	
+		EasyMock.replay(mockProductService);
+		
+		mockMvc.perform(get("/rest/site/2/product")
+			.header("Accept", "application/json"))
+			.andExpect(status().isForbidden());
+		
+		EasyMock.verify(mockProductService);		
+		
+	}
 	
 	@Bean
 	public CatalogService catalogService() {
