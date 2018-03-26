@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.hdsupply.xmi.domain.Catalog;
@@ -33,18 +34,6 @@ public class CatalogDaoImplTest extends DaoDbTestBase{
 		assertEquals((Integer)30, catalogList.get(1).getMax());
 		assertEquals((Integer)2, catalogList.get(1).getIdProduct());
 		
-	}
-	
-	@Test
-	public void GetCatalog() {
-		
-		Catalog catalog = fixture.getCatalog(2,1);
-		
-		assertEquals(30, catalog.getMax());
-		assertEquals(5, catalog.getMin());
-		assertEquals(1, catalog.getProductId());
-		assertEquals(2, catalog.getSiteId());
-
 	}
 	
 	@Bean
