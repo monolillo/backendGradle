@@ -3,12 +3,11 @@ package com.hdsupply.xmi.repository;
 import java.util.List;
 
 import com.hdsupply.xmi.domain.Catalog;
+import com.hdsupply.xmi.domain.ProductCatalog;
 
 
 public interface CatalogDao {
 
-	List<Catalog> getActiveCatalog(Integer siteId);
-	
-	Catalog getCatalog(Integer siteId, Integer productId);
+	List<ProductCatalog> getActiveCatalog(Integer siteId);
 	
 }

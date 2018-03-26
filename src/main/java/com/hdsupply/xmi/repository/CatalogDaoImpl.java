@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hdsupply.xmi.domain.Catalog;
-
+import com.hdsupply.xmi.domain.ProductCatalog;
 
 @Repository
 public class CatalogDaoImpl implements CatalogDao{
@@ -22,23 +22,12 @@ public class CatalogDaoImpl implements CatalogDao{
 	@Value("${catalogDao.getActiveCatalogSql}")
 	private String getActiveCatalogSql;
 	
-	@Value("${catalogDao.getCatalogSql}")
-	private String getCatalogSql;
-	
 	@Override
-	public List<Catalog> getActiveCatalog(Integer siteId) {
+	public List<ProductCatalog> getActiveCatalog(Integer siteId) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		return jdbcTemplate.query(getActiveCatalogSql, new Object[] { siteId }, new BeanPropertyRowMapper<Catalog>(Catalog.class));
+		return jdbcTemplate.query(getActiveCatalogSql, new Object[] { siteId }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
 	}
 
-	@Override
-	public Catalog getCatalog(Integer siteId, Integer productId) {
-
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		return jdbcTemplate.queryForObject(getCatalogSql, new Object[] { siteId, productId }, new BeanPropertyRowMapper<Catalog>(Catalog.class));
-	}
-	
 }

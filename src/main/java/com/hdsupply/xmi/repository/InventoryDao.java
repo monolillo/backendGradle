@@ -8,7 +8,7 @@ public interface InventoryDao {
 	
 	public void updateInventoryProduct(Inventory inventory);
 	
-	public Integer existProductInInventory(Integer shopId, Integer productId);
+	public Boolean existProductInInventory(Integer shopId, Integer productId);
 	
 	public Inventory getInventoryById(Integer productId, Integer shopId);
 

@@ -58,11 +58,11 @@ public class InventoryDaoImpl implements InventoryDao{
 	}
 	
 	@Override
-	public Integer existProductInInventory(Integer shopId, Integer productId) {
+	public Boolean existProductInInventory(Integer shopId, Integer productId) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		return jdbcTemplate.queryForObject(existProductInInventorySql, new Object[] { shopId, productId }, Integer.class);
+		return jdbcTemplate.queryForObject(existProductInInventorySql, new Object[] { shopId, productId }, Boolean.class);
 	}
 
 }

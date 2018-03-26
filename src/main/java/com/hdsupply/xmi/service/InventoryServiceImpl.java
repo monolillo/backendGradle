@@ -15,8 +15,8 @@ public class InventoryServiceImpl implements InventoryService{
 	@Override
 	public void checkInProduct(Inventory inventory) {
 		
-		Integer exist = inventoryDao.existProductInInventory(inventory.getShopId(), inventory.getProductId());
-		if (exist > 0) {
+		Boolean exist = inventoryDao.existProductInInventory(inventory.getShopId(), inventory.getProductId());
+		if (exist) {
 			inventoryDao.updateInventoryProduct(inventory);
 		} else {
 			inventoryDao.newInventoryProduct(inventory);
