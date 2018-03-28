@@ -101,6 +101,15 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		
 	}
 	
+	@Test
+	public void testGetQuantity() {
+		
+		Integer qty = testIntendoryDao.getQuantity(1, 2);
+		
+		assertEquals((Integer) 10, qty);
+		
+	}
+	
 	@Bean
 	public InventoryDao testIntendoryDao() {
 		return new InventoryDaoImpl();

@@ -11,5 +11,7 @@ public interface InventoryDao {
 	public Boolean existProductInInventory(Integer shopId, Integer productId);
 	
 	public Inventory getInventoryById(Integer productId, Integer shopId);
+	
+	public Integer getQuantity(Integer productId, Integer siteId);
 
 }

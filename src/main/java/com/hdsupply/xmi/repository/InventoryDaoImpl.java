@@ -28,6 +28,9 @@ public class InventoryDaoImpl implements InventoryDao{
 	@Value("${inventoryDao.updateProductSql}")
 	private String updateProductSql;
 	
+	@Value("${inventoryDao.getQuantitySql}")
+	private String getQuantitySql;
+	
 	@Override
 	public Inventory getInventoryById(Integer productId, Integer shopId) {
 
@@ -63,6 +66,14 @@ public class InventoryDaoImpl implements InventoryDao{
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		return jdbcTemplate.queryForObject(existProductInInventorySql, new Object[] { shopId, productId }, Boolean.class);
+	}
+
+	@Override
+	public Integer getQuantity(Integer productId, Integer siteId) {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		return jdbcTemplate.queryForObject(getQuantitySql, new Object[] { productId, siteId }, Integer.class);
 	}
 
 }

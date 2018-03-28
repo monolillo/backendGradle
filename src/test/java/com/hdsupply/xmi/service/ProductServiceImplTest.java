@@ -2,9 +2,6 @@ package com.hdsupply.xmi.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
@@ -13,10 +10,8 @@ import org.easymock.TestSubject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.hdsupply.xmi.domain.Catalog;
-import com.hdsupply.xmi.domain.Product;
 import com.hdsupply.xmi.domain.ProductCatalog;
-import com.hdsupply.xmi.repository.CatalogDao;
+import com.hdsupply.xmi.repository.InventoryDao;
 import com.hdsupply.xmi.repository.ProductDao;
 
 @RunWith(EasyMockRunner.class)
@@ -26,10 +21,10 @@ public class ProductServiceImplTest extends EasyMockSupport {
 	private ProductServiceImpl productServiceImplTest = new ProductServiceImpl();
 	
 	@Mock
-	private CatalogDao catalogDao;
+	private ProductDao productDao;
 	
 	@Mock
-	private ProductDao productDao;
+	private InventoryDao inventoryDao;
 	
 	@Test
 	public void testGetProductById() {
@@ -40,9 +35,10 @@ public class ProductServiceImplTest extends EasyMockSupport {
 		product.setItemNumber(2);
 		product.setMax(10);
 		product.setMin(5);
-		product.setQuantity(20);
 		
 		EasyMock.expect(productDao.getProductById(2,1)).andReturn(product);
+		
+		EasyMock.expect(inventoryDao.getQuantity(1, 2)).andReturn(20);
 		
 		replayAll();
 		
