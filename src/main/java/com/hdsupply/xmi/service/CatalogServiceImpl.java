@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.hdsupply.xmi.domain.Catalog;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.repository.CatalogDao;
+import com.hdsupply.xmi.repository.InventoryDao;
 
 @Service
 public class CatalogServiceImpl implements CatalogService{
@@ -15,9 +16,20 @@ public class CatalogServiceImpl implements CatalogService{
 	@Autowired
 	private CatalogDao catalogDao;
 	
+	@Autowired
+	private InventoryDao inventoryDao;
+	
 	public List<ProductCatalog> getActiveCatalog(Integer siteId){
 		
 		List<ProductCatalog> listProductCatalog = catalogDao.getActiveCatalog(siteId);
+		
+		for (ProductCatalog productCatalog : listProductCatalog) {
+			
+			Integer qty = inventoryDao.getQuantity(productCatalog.getIdProduct(), siteId);
+			
+			productCatalog.setQuantity(qty);
+			
+		}
 		
 		return listProductCatalog;
 	}

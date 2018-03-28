@@ -16,10 +16,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.hdsupply.xmi.domain.Catalog;
-import com.hdsupply.xmi.domain.Place;
-import com.hdsupply.xmi.domain.Product;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.repository.CatalogDao;
+import com.hdsupply.xmi.repository.InventoryDao;
 import com.hdsupply.xmi.repository.ProductDao;
 
 @RunWith(EasyMockRunner.class)
@@ -33,6 +32,9 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 	
 	@Mock
 	private ProductDao productDao;
+	
+	@Mock
+	private InventoryDao inventoryDao;
 	
 	@Test
 	public void testGetActiveCatalogEmptyCatalog() {
@@ -59,7 +61,6 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		catalog1.setName("AAAAAA");
 		catalog1.setMax(9);
 		catalog1.setMin(2);
-		catalog1.setQuantity(20);
 		
 		ProductCatalog catalog2 = new ProductCatalog();
 		
@@ -68,12 +69,13 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		catalog2.setName("BBBBB");
 		catalog2.setMax(10);
 		catalog2.setMin(5);
-		catalog2.setQuantity(30);
 		
 		List<ProductCatalog> listProdCatalog = Arrays.asList(new ProductCatalog[] {catalog1, catalog2});
 		
 		EasyMock.expect(catalogDao.getActiveCatalog(2)).andReturn(listProdCatalog);
 		
+		EasyMock.expect(inventoryDao.getQuantity(1, 2)).andReturn(20);
+		EasyMock.expect(inventoryDao.getQuantity(2, 2)).andReturn(30);
 		
 		replayAll();
 		
