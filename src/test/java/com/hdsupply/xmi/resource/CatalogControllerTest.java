@@ -115,7 +115,7 @@ public class CatalogControllerTest extends ControllerTestBase {
 		Catalog catalog = new Catalog();
 		
 		catalog.setMin(1);
-		catalog.setMax(5);
+		catalog.setMax(1);
 		catalog.setCritical(true);
 		
 		Capture<Catalog> captured = EasyMock.newCapture();
@@ -123,14 +123,14 @@ public class CatalogControllerTest extends ControllerTestBase {
 		mockCatalogService.updateActiveCatalog(EasyMock.capture(captured));
 		EasyMock.replay(mockCatalogService);
 		
-		File file = ResourceUtils.getFile("classpath:json/getActiveCatalog.json");
+		File file = ResourceUtils.getFile("classpath:request/requestUpdateActiveCatalog.json");
 		String requestBody = new String(Files.readAllBytes(file.toPath()));
 		
 		mockMvc.perform(put("/rest/site/2/product/1").
 				contentType(MediaType.APPLICATION_JSON_UTF8).
 				content(requestBody)
-				).andExpect(status().isCreated());
-		
+				).andExpect(status().isNoContent());
+
 		EasyMock.verify(mockCatalogService);
 		
 		assertEquals(catalog.getMin(), captured.getValue().getMin());
@@ -155,32 +155,32 @@ public class CatalogControllerTest extends ControllerTestBase {
 		
 	}
 	
-//	@Test
-//	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
-//	public void testGetProductByIdUnauthorized() throws Exception {
-//		
-//		EasyMock.expect(mockProductService.getProductById(2, 1)).andThrow(new AssertionFailedError())
-//			.anyTimes();
-//	
-//		EasyMock.replay(mockProductService);
-//		
-//		mockMvc.perform(get("/rest/site/2/product")
-//			.header("Accept", "application/json"))
-//			.andExpect(status().isForbidden());
-//		
-//		EasyMock.verify(mockProductService);		
-//		
-//	}
+	@Test
+	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+	public void testGetProductByIdUnauthorized() throws Exception {
+		
+		EasyMock.expect(mockProductService.getProductById(2, 1)).andThrow(new AssertionFailedError())
+			.anyTimes();
+	
+		EasyMock.replay(mockProductService);
+		
+		mockMvc.perform(get("/rest/site/2/product")
+			.header("Accept", "application/json"))
+			.andExpect(status().isForbidden());
+		
+		EasyMock.verify(mockProductService);		
+		
+	}
 	
 	
 	@Test
 	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION"})
 	public void testUpdateActiveCatalogUnauthorized() throws Exception {
 		
-		File file = ResourceUtils.getFile("classpath:json/getActiveCatalog.json");
+		File file = ResourceUtils.getFile("classpath:request/requestUpdateActiveCatalog.json");
 		String requestBody = new String(Files.readAllBytes(file.toPath()));
 		
-		mockMvc.perform(put("\"/rest/site/2/product/1\"").
+		mockMvc.perform(put("/rest/site/2/product/1").
 				contentType(MediaType.APPLICATION_JSON_UTF8).
 				content(requestBody)
 				).andExpect(status().isForbidden());
