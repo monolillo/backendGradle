@@ -24,8 +24,8 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		Boolean existe = testIntendoryDao.existProductInInventory(2, 1);
 		Boolean noExiste = testIntendoryDao.existProductInInventory(10, 11);
 		
-		assertEquals((Integer) 1, existe);
-		assertEquals((Integer) 0, noExiste);
+		assertEquals(true, existe);
+		assertEquals(false, noExiste);
 		
 	}
 	
