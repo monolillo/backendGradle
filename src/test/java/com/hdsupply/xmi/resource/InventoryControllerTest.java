@@ -14,6 +14,7 @@ import org.springframework.util.ResourceUtils;
 import com.hdsupply.xmi.domain.Inventory;
 import com.hdsupply.xmi.service.InventoryService;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,7 +42,7 @@ public class InventoryControllerTest extends ControllerTestBase{
 		Inventory inventory = new Inventory();
 		inventory.setLocationId(2);
 		inventory.setProductId(3);
-		inventory.setQuantity(7);
+		inventory.setQuantity(5);
 		inventory.setShopId(2);
 		
 		Capture<Inventory> captured = EasyMock.newCapture();
@@ -59,7 +60,24 @@ public class InventoryControllerTest extends ControllerTestBase{
 		
 		EasyMock.verify(mockInventoryService);
 		
-		//assert
+		assertEquals(inventory.getLocationId(), captured.getValue().getLocationId());
+		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
+		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());
+		assertEquals(inventory.getShopId(), captured.getValue().getShopId());
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+	public void testCheckInProductUnauthorized() throws Exception {
+		
+		File file = ResourceUtils.getFile("classpath:request/requestCheckInProduct.json");
+		String requestBody = new String(Files.readAllBytes(file.toPath()));
+		
+		mockMvc.perform(post("/rest/shop/2/product/3/checkin").
+				contentType(MediaType.APPLICATION_JSON_UTF8).
+				content(requestBody)
+				).andExpect(status().isForbidden());
 		
 	}
 	
