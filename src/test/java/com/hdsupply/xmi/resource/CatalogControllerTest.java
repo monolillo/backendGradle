@@ -1,6 +1,8 @@
 package com.hdsupply.xmi.resource;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -9,15 +11,18 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
+import org.easymock.Capture;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.util.ResourceUtils;
 
+import com.hdsupply.xmi.domain.Catalog;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.service.CatalogService;
 import com.hdsupply.xmi.service.ProductService;
@@ -104,6 +109,36 @@ public class CatalogControllerTest extends ControllerTestBase {
 	}
 	
 	@Test
+	@WithMockUser(username = "admin", authorities = { "READ_SITE_CATALOG" })
+	public void testUpdateActiveCatalog() throws Exception{
+		
+		Catalog catalog = new Catalog();
+		
+		catalog.setMin(1);
+		catalog.setMax(5);
+		catalog.setCritical(true);
+		
+		Capture<Catalog> captured = EasyMock.newCapture();
+		
+		mockCatalogService.updateActiveCatalog(EasyMock.capture(captured));
+		EasyMock.replay(mockCatalogService);
+		
+		File file = ResourceUtils.getFile("classpath:json/getActiveCatalog.json");
+		String requestBody = new String(Files.readAllBytes(file.toPath()));
+		
+		mockMvc.perform(put("/rest/site/2/product/1").
+				contentType(MediaType.APPLICATION_JSON_UTF8).
+				content(requestBody)
+				).andExpect(status().isCreated());
+		
+		EasyMock.verify(mockCatalogService);
+		
+		assertEquals(catalog.getMin(), captured.getValue().getMin());
+		assertEquals(catalog.getMax(), captured.getValue().getMax());
+		assertEquals(catalog.getCritical(), captured.getValue().getCritical());
+	}
+	
+	@Test
 	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
 	public void testGetActiveCatalogUnauthorized() throws Exception {
 		
@@ -120,21 +155,36 @@ public class CatalogControllerTest extends ControllerTestBase {
 		
 	}
 	
-	@Test
-	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
-	public void testGetProductByIdUnauthorized() throws Exception {
-		
-		EasyMock.expect(mockProductService.getProductById(2, 1)).andThrow(new AssertionFailedError())
-			.anyTimes();
+//	@Test
+//	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+//	public void testGetProductByIdUnauthorized() throws Exception {
+//		
+//		EasyMock.expect(mockProductService.getProductById(2, 1)).andThrow(new AssertionFailedError())
+//			.anyTimes();
+//	
+//		EasyMock.replay(mockProductService);
+//		
+//		mockMvc.perform(get("/rest/site/2/product")
+//			.header("Accept", "application/json"))
+//			.andExpect(status().isForbidden());
+//		
+//		EasyMock.verify(mockProductService);		
+//		
+//	}
 	
-		EasyMock.replay(mockProductService);
+	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION"})
+	public void testUpdateActiveCatalogUnauthorized() throws Exception {
 		
-		mockMvc.perform(get("/rest/site/2/product")
-			.header("Accept", "application/json"))
-			.andExpect(status().isForbidden());
+		File file = ResourceUtils.getFile("classpath:json/getActiveCatalog.json");
+		String requestBody = new String(Files.readAllBytes(file.toPath()));
 		
-		EasyMock.verify(mockProductService);		
-		
+		mockMvc.perform(put("\"/rest/site/2/product/1\"").
+				contentType(MediaType.APPLICATION_JSON_UTF8).
+				content(requestBody)
+				).andExpect(status().isForbidden());
+
 	}
 	
 	@Bean

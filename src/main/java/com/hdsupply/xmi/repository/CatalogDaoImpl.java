@@ -22,6 +22,12 @@ public class CatalogDaoImpl implements CatalogDao{
 	@Value("${catalogDao.getActiveCatalogSql}")
 	private String getActiveCatalogSql;
 	
+	@Value("${catalogDao.updateActiveCatalogSql}")
+	private String updateActiveCatalogSql;
+	
+	@Value("${catalogDao.getCatalogByIdSql}")
+	private String getCatalogByIdSql;
+	
 	@Override
 	public List<ProductCatalog> getActiveCatalog(Integer siteId) {
 		
@@ -30,4 +36,21 @@ public class CatalogDaoImpl implements CatalogDao{
 		return jdbcTemplate.query(getActiveCatalogSql, new Object[] { siteId }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
 	}
 
+	public void updateActiveCatalog(Catalog catalog){
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update(updateActiveCatalogSql, catalog.getMin(), catalog.getMax(), catalog.getCritical(), catalog.getSiteId(), catalog.getProductId());
+		
+		
+	}
+
+	@Override
+	public Catalog getCatalogById(Integer siteId, Integer productId) {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		return jdbcTemplate.queryForObject(getCatalogByIdSql, new Object[] { siteId, productId }, new BeanPropertyRowMapper<Catalog>(Catalog.class));
+	}
+	
 }

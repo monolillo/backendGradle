@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.easymock.Capture;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
@@ -92,6 +93,35 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 5, listProductcatalog.get(1).getMin());
 		assertEquals((Integer) 30, listProductcatalog.get(1).getQuantity());
 		
+		
+	}
+	
+	@Test
+	public void testUpdateActiveCatalog() {
+		
+		Catalog catalog = new Catalog();
+		
+		catalog.setMin(4);
+		catalog.setMax(10);
+		catalog.setCritical(true);
+		catalog.setSiteId(2);
+		catalog.setProductId(1);
+		
+		Capture<Catalog> capture = EasyMock.newCapture();
+		
+		catalogDao.updateActiveCatalog(EasyMock.capture(capture));
+		
+		replayAll();
+		
+		fixture.updateActiveCatalog(catalog);
+		
+		verifyAll();
+		
+		assertEquals(catalog.getMin(), capture.getValue().getMin());
+		assertEquals(catalog.getMax(), capture.getValue().getMax());
+		assertEquals(catalog.getCritical(), capture.getValue().getCritical());
+		assertEquals(catalog.getSiteId(), capture.getValue().getSiteId());
+		assertEquals(catalog.getProductId(), capture.getValue().getProductId());
 		
 	}
 
