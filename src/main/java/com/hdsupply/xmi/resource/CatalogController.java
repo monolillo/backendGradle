@@ -3,11 +3,16 @@ package com.hdsupply.xmi.resource;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hdsupply.xmi.domain.Catalog;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.service.CatalogService;
 import com.hdsupply.xmi.service.ProductService;
@@ -33,6 +38,17 @@ public class CatalogController extends BaseRestController {
 	public ProductCatalog getProductById(@PathVariable("siteId") Integer siteId, @PathVariable("productId") Integer productId) {
 		
 		return productService.getProductById(siteId,productId);
+		
+	}
+	
+	@RequestMapping(value="/site/{siteId}/product/{productId}", method=RequestMethod.PUT)
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAuthority('READ_SITE_CATALOG')")
+	public void updateActiveCatalog(@RequestBody Catalog catalog, @PathVariable("siteId") Integer siteId, @PathVariable("productId") Integer productId) {
+		
+		catalog.setSiteId(siteId);
+		catalog.setProductId(productId);
+		catalogService.updateActiveCatalog(catalog);
 		
 	}
 }

@@ -5,5 +5,4 @@ import com.hdsupply.xmi.domain.ProductCatalog;
 public interface ProductService {
 
 	ProductCatalog getProductById(Integer siteId, Integer pruductId);
-	
 }
