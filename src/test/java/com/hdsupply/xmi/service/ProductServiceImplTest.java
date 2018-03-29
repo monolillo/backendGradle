@@ -54,5 +54,19 @@ public class ProductServiceImplTest extends EasyMockSupport {
 
 	}
 	
+	@Test
+	public void testGetProductByNotFound() {
+		
+		EasyMock.expect(productDao.getProductById(2,1)).andReturn(null);
+		
+		replayAll();
+		
+		ProductCatalog productcatalog = productServiceImplTest.getProductById(2,1);
+		verifyAll();
+		
+		assertEquals(null, productcatalog);
+
+	}	
+	
 }
 
