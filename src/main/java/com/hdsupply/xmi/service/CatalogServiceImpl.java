@@ -31,6 +31,8 @@ public class CatalogServiceImpl implements CatalogService{
 			
 		}
 		
+		listProductCatalog.sort((p1, p2) -> p1.getQuantity().compareTo(p2.getQuantity()));
+		
 		return listProductCatalog;
 	}
 	
