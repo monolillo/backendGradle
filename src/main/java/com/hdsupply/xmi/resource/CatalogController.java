@@ -47,6 +47,20 @@ public class CatalogController extends BaseRestController {
 		}
 		
 	}
+
+	@RequestMapping(value="/site/{siteId}/product/itemNumber/{itemNumber}")
+	@PreAuthorize("hasAuthority('READ_SITE_CATALOG')")
+	public ResponseEntity<ProductCatalog> getProductByItemNumber(@PathVariable("siteId") Integer siteId, @PathVariable("itemNumber") Integer itemNumber) {
+		
+		ProductCatalog productCatalog = productService.getProductByItemNumber(siteId,itemNumber);
+		
+		if(null == productCatalog) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		} else {
+			return ResponseEntity.ok().body(productCatalog);
+		}
+		
+	}
 	
 	@RequestMapping(value="/site/{siteId}/product/{productId}", method=RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)

@@ -122,6 +122,47 @@ public class CatalogControllerTest extends ControllerTestBase {
 			
 			EasyMock.verify(mockProductService);
 	}	
+
+	@Test
+	@WithMockUser(username = "admin", authorities = { "READ_SITE_CATALOG" })
+	public void testGetProductByItemNumber() throws Exception {
+		
+		ProductCatalog productCatalog = new ProductCatalog();
+		productCatalog.setIdProduct(123);
+		productCatalog.setName("A Bulb 40W A15 Frost");
+		productCatalog.setItemNumber(2);
+		productCatalog.setMax(10);
+		productCatalog.setMin(2);
+
+		EasyMock.expect(mockProductService.getProductByItemNumber(2,1)).andReturn(productCatalog);
+		
+		EasyMock.replay(mockProductService);
+		
+		File file = ResourceUtils.getFile("classpath:json/getProductById.json");
+		String expectedJson1 = new String(Files.readAllBytes(file.toPath()));
+		
+		mockMvc.perform(get("/rest/site/2/product/itemNumber/1")
+				.header("Accept", "application/json"))
+				.andExpect(status().isOk())
+				.andExpect(content().json(expectedJson1));
+			
+			EasyMock.verify(mockProductService);
+	}
+
+	@Test
+	@WithMockUser(username = "admin", authorities = { "READ_SITE_CATALOG" })
+	public void testGetProductByItemNumberNotFound() throws Exception {
+		
+		EasyMock.expect(mockProductService.getProductByItemNumber(2,100)).andReturn(null);
+		
+		EasyMock.replay(mockProductService);
+		
+		mockMvc.perform(get("/rest/site/2/product/itemNumber/100")
+				.header("Accept", "application/json"))
+				.andExpect(status().isNotFound());
+			
+			EasyMock.verify(mockProductService);
+	}	
 	
 	@Test
 	@WithMockUser(username = "admin", authorities = { "READ_SITE_CATALOG" })
