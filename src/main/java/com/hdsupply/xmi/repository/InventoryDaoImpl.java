@@ -56,7 +56,7 @@ public class InventoryDaoImpl implements InventoryDao{
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		//Verify if shopId is modified
-		jdbcTemplate.update(updateProductSql, inventory.getQuantity(), inventory.getCheckedOutQuantity(), inventory.getShopId(),
+		jdbcTemplate.update(updateProductSql, inventory.getQuantity(), inventory.getCheckedOutQuantity(),
 				inventory.getLocationId(), inventory.getShopId(), inventory.getProductId());	
 	}
 	
