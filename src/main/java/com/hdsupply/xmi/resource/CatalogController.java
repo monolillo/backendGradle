@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,9 +36,15 @@ public class CatalogController extends BaseRestController {
 	
 	@RequestMapping(value="/site/{siteId}/product/{productId}")
 	@PreAuthorize("hasAuthority('READ_SITE_CATALOG')")
-	public ProductCatalog getProductById(@PathVariable("siteId") Integer siteId, @PathVariable("productId") Integer productId) {
+	public ResponseEntity<ProductCatalog> getProductById(@PathVariable("siteId") Integer siteId, @PathVariable("productId") Integer productId) {
 		
-		return productService.getProductById(siteId,productId);
+		ProductCatalog productCatalog = productService.getProductById(siteId,productId);
+		
+		if(null == productCatalog) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		} else {
+			return ResponseEntity.ok().body(productCatalog);
+		}
 		
 	}
 	

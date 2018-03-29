@@ -107,6 +107,21 @@ public class CatalogControllerTest extends ControllerTestBase {
 			
 			EasyMock.verify(mockProductService);
 	}
+
+	@Test
+	@WithMockUser(username = "admin", authorities = { "READ_SITE_CATALOG" })
+	public void testGetProductByIdNotFound() throws Exception {
+		
+		EasyMock.expect(mockProductService.getProductById(2,100)).andReturn(null);
+		
+		EasyMock.replay(mockProductService);
+		
+		mockMvc.perform(get("/rest/site/2/product/100")
+				.header("Accept", "application/json"))
+				.andExpect(status().isNotFound());
+			
+			EasyMock.verify(mockProductService);
+	}	
 	
 	@Test
 	@WithMockUser(username = "admin", authorities = { "READ_SITE_CATALOG" })
