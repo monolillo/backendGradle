@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.hdsupply.xmi.domain.Inventory;
-import com.hdsupply.xmi.repository.CatalogDao;
 import com.hdsupply.xmi.repository.InventoryDao;
 
 

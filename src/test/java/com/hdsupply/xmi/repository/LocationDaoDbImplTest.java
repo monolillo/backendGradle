@@ -20,7 +20,7 @@ public class LocationDaoDbImplTest extends DaoDbTestBase {
 	private LocationDao fixture;	
 
 	@Test
-	public void testGetActivePlaces() {
+	public void testGetLocationsByShop() {
 		
 		List<Location> locations = fixture.getLocationsByShop(2);
 		
