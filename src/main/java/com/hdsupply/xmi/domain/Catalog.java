@@ -2,42 +2,44 @@ package com.hdsupply.xmi.domain;
 
 public class Catalog {
 
-	private int productId;
-	private int min;
-	private int max;
-	private int siteId;
+	private Integer productId;
+	private Integer min;
+	private Integer max;
+	private Integer siteId;
+	private Boolean critical;
 	
-	public int getProductId() {
+	public Integer getProductId() {
 		return productId;
 	}
-	
-	public void setProductId(int productId) {
+	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
-	
-	public int getMin() {
+	public Integer getMin() {
 		return min;
 	}
-	
-	public void setMin(int min) {
+	public void setMin(Integer min) {
 		this.min = min;
 	}
-	
-	public int getMax() {
+	public Integer getMax() {
 		return max;
 	}
-	
-	public void setMax(int max) {
+	public void setMax(Integer max) {
 		this.max = max;
 	}
-	
-	public int getSiteId() {
+	public Integer getSiteId() {
 		return siteId;
 	}
-	
-	public void setSiteId(int siteId) {
+	public void setSiteId(Integer siteId) {
 		this.siteId = siteId;
 	}
+	public Boolean getCritical() {
+		return critical;
+	}
+	public void setCritical(Boolean critical) {
+		this.critical = critical;
+	}
+	
+	
 	
 	
 }

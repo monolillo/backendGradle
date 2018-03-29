@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.hdsupply.xmi.domain.Product;
+import com.hdsupply.xmi.domain.ProductCatalog;
 
 @ContextConfiguration(classes=ProductDaoImplTest.class)
 @Configuration
@@ -20,12 +20,20 @@ public class ProductDaoImplTest extends DaoDbTestBase{
 	@Test
 	public void getProductById() {
 		
-		Product product = fixture.getProductById(1);
-		assertEquals((Integer)1, product.getId());
+		ProductCatalog product = fixture.getProductById(2,1);
+		assertEquals((Integer)1, product.getIdProduct());
 		assertEquals("A Bulb 40W A15 Frost", product.getName());
 		assertEquals((Integer)307692, product.getItemNumber());
 		
 	}
+	
+	@Test
+	public void getProductByIdNotFound() {
+		
+		ProductCatalog product = fixture.getProductById(2,100);
+		assertEquals(null, product);
+		
+	}	
 	
 	@Bean
 	public ProductDao fixture() {

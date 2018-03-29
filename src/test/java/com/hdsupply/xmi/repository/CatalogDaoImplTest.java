@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.hdsupply.xmi.domain.Catalog;
+import com.hdsupply.xmi.domain.ProductCatalog;
 
 @ContextConfiguration(classes=CatalogDaoImplTest.class)
 @Configuration
@@ -22,15 +23,47 @@ public class CatalogDaoImplTest extends DaoDbTestBase{
 	@Test
 	public void testGetActiveCatalog() {
 		
-		List<Catalog> catalogList = fixture.getActiveCatalog(2);
+		List<ProductCatalog> catalogList = fixture.getActiveCatalog(2);
 		
-		assertEquals(5, catalogList.get(0).getMin());
-		assertEquals(30, catalogList.get(0).getMax());
-		assertEquals(1, catalogList.get(0).getProductId());
+		assertEquals((Integer)5, catalogList.get(0).getMin());
+		assertEquals((Integer)30, catalogList.get(0).getMax());
+		assertEquals((Integer)1, catalogList.get(0).getIdProduct());
 
-		assertEquals(5, catalogList.get(1).getMin());
-		assertEquals(30, catalogList.get(1).getMax());
-		assertEquals(2, catalogList.get(1).getProductId());
+		assertEquals((Integer)5, catalogList.get(1).getMin());
+		assertEquals((Integer)30, catalogList.get(1).getMax());
+		assertEquals((Integer)2, catalogList.get(1).getIdProduct());
+		
+	}
+	
+	@Test
+	public void testUpdateActiveCatalog() {
+		
+		Catalog catalog = fixture.getCatalogById(2,1);
+		
+		catalog.setCritical(true);
+		catalog.setMin(3);
+		catalog.setMax(20);
+		
+		fixture.updateActiveCatalog(catalog);
+		
+		Catalog modifiedCatalog = fixture.getCatalogById(2,1);
+		
+		assertEquals((Integer)3, modifiedCatalog.getMin());
+		assertEquals((Integer)20, modifiedCatalog.getMax());
+		assertEquals(true, modifiedCatalog.getCritical());
+	
+	}
+	
+	@Test
+	public void testGetCatalogById() {
+		
+		Catalog catalog = fixture.getCatalogById(2,1);
+		
+		assertEquals((Integer)5, catalog.getMin());
+		assertEquals((Integer)30, catalog.getMax());
+		assertEquals(false, catalog.getCritical());
+		assertEquals((Integer)2, catalog.getSiteId());
+		assertEquals((Integer)1, catalog.getProductId());
 		
 	}
 	

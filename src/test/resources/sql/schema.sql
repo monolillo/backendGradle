@@ -25,14 +25,6 @@ CREATE TABLE notification_type
   PRIMARY KEY (id)
 );
 
-CREATE TABLE users
-(
-  id INT NOT NULL,
-  firstName VARCHAR(256) NOT NULL,
-  lastName VARCHAR(256) NOT NULL,
-  PRIMARY KEY (id)
-);
-
 CREATE TABLE site
 (
   id INT NOT NULL,
@@ -55,15 +47,6 @@ CREATE TABLE notification
   FOREIGN KEY (siteId) REFERENCES site(id),
   FOREIGN KEY (typeId) REFERENCES notification_type(id),
   FOREIGN KEY (productId) REFERENCES product(id)
-);
-
-CREATE TABLE site_users
-(
-  userId INT NOT NULL,
-  siteId INT NOT NULL,
-  PRIMARY KEY (userId, siteId),
-  FOREIGN KEY (userId) REFERENCES users(id),
-  FOREIGN KEY (siteId) REFERENCES site(id)
 );
 
 CREATE TABLE shop
@@ -107,4 +90,37 @@ CREATE TABLE inventory
   FOREIGN KEY (shopId) REFERENCES shop(id),
   FOREIGN KEY (productId) REFERENCES product(id),
   FOREIGN KEY (locationId) REFERENCES location(id)
+);
+
+create table users(
+	username varchar(50) not null primary key,
+	password varchar(50) not null,
+	enabled bit not null
+);
+
+CREATE TABLE site_users
+(
+  username VARCHAR(50) NOT NULL,
+  siteId INT NOT NULL,
+  PRIMARY KEY (username, siteId),
+  FOREIGN KEY (username) REFERENCES users(username),
+  FOREIGN KEY (siteId) REFERENCES site(id)
+);
+
+create table groups (
+	id bigint not null identity(0,1) primary key,
+	group_name varchar(50) not null
+);
+
+create table group_authorities (
+	group_id bigint not null,
+	authority varchar(50) not null,
+	constraint fk_group_authorities_group foreign key(group_id) references groups(id)
+);
+
+create table group_members (
+	id bigint not null identity(0,1) primary key,
+	username varchar(50) not null,
+	group_id bigint not null,
+	constraint fk_group_members_group foreign key(group_id) references groups(id)
 );

@@ -1,16 +1,14 @@
 package com.hdsupply.xmi.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hdsupply.xmi.domain.Catalog;
-import com.hdsupply.xmi.domain.Product;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.repository.CatalogDao;
-import com.hdsupply.xmi.repository.ProductDao;
+import com.hdsupply.xmi.repository.InventoryDao;
 
 @Service
 public class CatalogServiceImpl implements CatalogService{
@@ -19,33 +17,29 @@ public class CatalogServiceImpl implements CatalogService{
 	private CatalogDao catalogDao;
 	
 	@Autowired
-	private ProductDao productDao;
+	private InventoryDao inventoryDao;
 	
 	public List<ProductCatalog> getActiveCatalog(Integer siteId){
 		
-		List<ProductCatalog> listProductCatalog = new ArrayList<>();
-		ProductCatalog productCatalog = null;
+		List<ProductCatalog> listProductCatalog = catalogDao.getActiveCatalog(siteId);
 		
-		List<Catalog> listCatalog = catalogDao.getActiveCatalog(siteId);
-		
-		for (Catalog catalog : listCatalog) {
+		for (ProductCatalog productCatalog : listProductCatalog) {
 			
-			productCatalog = new ProductCatalog();
+			Integer qty = inventoryDao.getQuantity(productCatalog.getIdProduct(), siteId);
 			
-			productCatalog.setMax(catalog.getMax());
-			productCatalog.setMin(catalog.getMin());
-			
-			Product product = productDao.getProductById(catalog.getProductId());
-			
-			productCatalog.setItemNumber(product.getItemNumber());
-			productCatalog.setName(product.getName());
-			productCatalog.setIdProduct(product.getId());
-			
-			listProductCatalog.add(productCatalog);
+			productCatalog.setQuantity(qty);
 			
 		}
 		
+		listProductCatalog.sort((p1, p2) -> p1.getQuantity().compareTo(p2.getQuantity()));
+		
 		return listProductCatalog;
+	}
+	
+	public void updateActiveCatalog (Catalog catalog){
+		
+		 catalogDao.updateActiveCatalog(catalog);
+	
 	}
 
 }
