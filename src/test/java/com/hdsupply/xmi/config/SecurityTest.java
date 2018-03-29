@@ -49,6 +49,9 @@ public class SecurityTest {
 	
     @Autowired
     protected WebApplicationContext ctx;
+    
+    @Autowired
+    private SimpleCORSFilter filter;
 	
 	protected MockMvc mockMvc;
 
@@ -59,6 +62,7 @@ public class SecurityTest {
         this.mockMvc = MockMvcBuilders
         		.webAppContextSetup(ctx)
         		.apply(springSecurity())
+        		.addFilter(filter, "/*")
         		.build();		
         
 	}		
