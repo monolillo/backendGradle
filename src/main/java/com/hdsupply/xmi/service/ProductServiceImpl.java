@@ -19,10 +19,10 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public ProductCatalog getProductById(Integer siteId, Integer pruductId) {
 		
-		ProductCatalog productCatalog = productDao.getProductById(siteId, pruductId);
+		ProductCatalog productCatalog = productDao.getProductByItemNumber(siteId, pruductId);
 		
 		if(null != productCatalog) {
-			Integer qty = inventoryDao.getQuantity(pruductId, siteId);
+			Integer qty = inventoryDao.getQuantity(productCatalog.getIdProduct(), siteId);
 		
 			productCatalog.setQuantity(qty);
 		}

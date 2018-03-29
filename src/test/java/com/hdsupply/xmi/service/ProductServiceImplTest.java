@@ -36,9 +36,9 @@ public class ProductServiceImplTest extends EasyMockSupport {
 		product.setMax(10);
 		product.setMin(5);
 		
-		EasyMock.expect(productDao.getProductById(2,1)).andReturn(product);
+		EasyMock.expect(productDao.getProductByItemNumber(2,1)).andReturn(product);
 		
-		EasyMock.expect(inventoryDao.getQuantity(1, 2)).andReturn(20);
+		EasyMock.expect(inventoryDao.getQuantity(123, 2)).andReturn(20);
 		
 		replayAll();
 		
@@ -57,7 +57,7 @@ public class ProductServiceImplTest extends EasyMockSupport {
 	@Test
 	public void testGetProductByNotFound() {
 		
-		EasyMock.expect(productDao.getProductById(2,1)).andReturn(null);
+		EasyMock.expect(productDao.getProductByItemNumber(2,1)).andReturn(null);
 		
 		replayAll();
 		

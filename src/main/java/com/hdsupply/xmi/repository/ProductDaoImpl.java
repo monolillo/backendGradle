@@ -20,6 +20,9 @@ public class ProductDaoImpl implements ProductDao{
 	@Value("${productDao.getProductByIdSql}")
 	private String getProductByIdSql;
 	
+	@Value("${productDao.getProductByItemNumberSql}")
+	private String getProductByItemNumberSql;	
+	
 	@Override
 	public ProductCatalog getProductById(Integer siteId, Integer productId) {
 
@@ -31,5 +34,18 @@ public class ProductDaoImpl implements ProductDao{
 			return null;
 		}
 	}
+	
+	@Override
+	public ProductCatalog getProductByItemNumber(Integer siteId, Integer itemNumber) {
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		try { 
+			return jdbcTemplate.queryForObject(getProductByItemNumberSql, 
+					new Object[] { siteId, itemNumber }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}	
 
 }

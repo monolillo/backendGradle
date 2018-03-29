@@ -34,6 +34,24 @@ public class ProductDaoImplTest extends DaoDbTestBase{
 		assertEquals(null, product);
 		
 	}	
+
+	@Test
+	public void getProductByItemNumber() {
+		
+		ProductCatalog product = fixture.getProductByItemNumber(2,307692);
+		assertEquals((Integer)1, product.getIdProduct());
+		assertEquals("A Bulb 40W A15 Frost", product.getName());
+		assertEquals((Integer)307692, product.getItemNumber());
+		
+	}
+	
+	@Test
+	public void getProductByItemNumberNotFound() {
+		
+		ProductCatalog product = fixture.getProductByItemNumber(2,100);
+		assertEquals(null, product);
+		
+	}		
 	
 	@Bean
 	public ProductDao fixture() {
