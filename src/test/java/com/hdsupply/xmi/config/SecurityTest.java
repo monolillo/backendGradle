@@ -29,6 +29,7 @@ import com.hdsupply.xmi.config.security.AuthorizationServerConfig;
 import com.hdsupply.xmi.config.security.ResourceServerConfig;
 import com.hdsupply.xmi.config.security.SecurityConfig;
 import com.hdsupply.xmi.config.security.SecurityWebApplicationInitializer;
+import com.hdsupply.xmi.config.security.SimpleCORSFilter;
 import com.hdsupply.xmi.config.security.UserDetailsServiceConfig;
 
 /**
@@ -39,7 +40,7 @@ import com.hdsupply.xmi.config.security.UserDetailsServiceConfig;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatasourceConfig.class, PropertiesConfig.class, UserDetailsServiceConfig.class, SecurityConfig.class, SecurityWebApplicationInitializer.class, AuthorizationServerConfig.class, ResourceServerConfig.class, SecurityTest.class})
+@ContextConfiguration(classes = {DatasourceConfig.class, PropertiesConfig.class, UserDetailsServiceConfig.class, SecurityConfig.class, SecurityWebApplicationInitializer.class, AuthorizationServerConfig.class, ResourceServerConfig.class, SecurityTest.class, SimpleCORSFilter.class})
 @WebAppConfiguration
 @Configuration
 @EnableWebMvc
@@ -48,6 +49,9 @@ public class SecurityTest {
 	
     @Autowired
     protected WebApplicationContext ctx;
+    
+    @Autowired
+    private SimpleCORSFilter filter;
 	
 	protected MockMvc mockMvc;
 
@@ -58,6 +62,7 @@ public class SecurityTest {
         this.mockMvc = MockMvcBuilders
         		.webAppContextSetup(ctx)
         		.apply(springSecurity())
+        		.addFilter(filter, "/*")
         		.build();		
         
 	}		
