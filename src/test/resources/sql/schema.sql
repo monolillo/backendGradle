@@ -124,3 +124,21 @@ create table group_members (
 	group_id bigint not null,
 	constraint fk_group_members_group foreign key(group_id) references groups(id)
 );
+
+CREATE SEQUENCE checkin_seq AS INT
+  START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE checkin
+(
+  id INT NOT NULL,
+  qty INT NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  timestamp DATETIME NOT NULL,
+  shopId INT NOT NULL,
+  locationId INT NOT NULL,
+  productId INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (shopId) REFERENCES shop(id),
+  FOREIGN KEY (locationId) REFERENCES location(id),
+  FOREIGN KEY (productId) REFERENCES product(id)
+);
