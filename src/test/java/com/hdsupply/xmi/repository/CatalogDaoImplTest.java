@@ -2,6 +2,7 @@ package com.hdsupply.xmi.repository;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Test;
@@ -28,10 +29,14 @@ public class CatalogDaoImplTest extends DaoDbTestBase{
 		assertEquals((Integer)5, catalogList.get(0).getMin());
 		assertEquals((Integer)30, catalogList.get(0).getMax());
 		assertEquals((Integer)1, catalogList.get(0).getIdProduct());
+		assertEquals(new BigDecimal("12.35"), catalogList.get(0).getPrice());
+		assertEquals("/img/item-image-lightbulb.png", catalogList.get(0).getImageUrl());
 
 		assertEquals((Integer)5, catalogList.get(1).getMin());
 		assertEquals((Integer)30, catalogList.get(1).getMax());
 		assertEquals((Integer)2, catalogList.get(1).getIdProduct());
+		assertEquals(new BigDecimal("11.35"), catalogList.get(1).getPrice());
+		assertEquals("/img/item-image-lightbulb.png", catalogList.get(1).getImageUrl());
 		
 	}
 	
