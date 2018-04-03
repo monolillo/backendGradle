@@ -15,5 +15,9 @@ public interface InventoryDao {
 	public Inventory getInventoryById(Integer productId, Integer shopId);
 	
 	public Integer getQuantity(Integer productId, Integer siteId);
+	
+	public void newCheckIn(Inventory inventory, String user, Integer checkInId);
+	
+	public Integer getNextCheckinId();
 
 }

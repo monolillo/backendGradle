@@ -1,11 +1,20 @@
 package com.hdsupply.xmi.repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.hdsupply.xmi.domain.Inventory;
@@ -31,6 +40,12 @@ public class InventoryDaoImpl implements InventoryDao{
 	@Value("${inventoryDao.getQuantitySql}")
 	private String getQuantitySql;
 	
+	@Value("${inventoryDao.newCheckInSql}")
+	private String newCheckInSql;
+	
+	@Value("${inventoryDao.getNextCheckinIdSql}")
+	private String getNextCheckinIdSql;
+	
 	@Value("${inventoryDao.updateCheckOutProductSql}")
 	private String updateCheckOutProductSql;
 	
@@ -48,7 +63,7 @@ public class InventoryDaoImpl implements InventoryDao{
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		jdbcTemplate.update(newProductSql, inventory.getQuantity(), inventory.getCheckedOutQuantity(), inventory.getShopId(),
+		jdbcTemplate.update(newProductSql, inventory.getQuantity(), inventory.getShopId(),
 				inventory.getProductId(), inventory.getLocationId());
 		
 	}
@@ -59,8 +74,8 @@ public class InventoryDaoImpl implements InventoryDao{
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		//Verify if shopId is modified
-		jdbcTemplate.update(updateProductSql, inventory.getQuantity(), inventory.getCheckedOutQuantity(),
-				inventory.getLocationId(), inventory.getShopId(), inventory.getProductId());	
+		jdbcTemplate.update(updateProductSql, inventory.getQuantity(), inventory.getLocationId(), 
+				inventory.getShopId(), inventory.getProductId());	
 	}
 	
 	@Override
@@ -77,6 +92,25 @@ public class InventoryDaoImpl implements InventoryDao{
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		return jdbcTemplate.queryForObject(getQuantitySql, new Object[] { productId, siteId }, Integer.class);
+	}
+	
+	@Override
+	public void newCheckIn(Inventory inventory, String user, Integer checkInId) {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update(newCheckInSql, checkInId, inventory.getQuantity(), user, new Date(), inventory.getShopId(),
+				inventory.getLocationId(), inventory.getProductId());
+		
+	}
+	
+	@Override
+	public Integer getNextCheckinId() {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		return jdbcTemplate.queryForObject(getNextCheckinIdSql, Integer.class);
+		
 	}
 
 	@Override

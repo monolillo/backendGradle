@@ -1,5 +1,7 @@
 package com.hdsupply.xmi.resource;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,12 +26,12 @@ public class InventoryController extends BaseRestController{
 	@RequestMapping(value="/shop/{shopId}/product/{productId}/checkin", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CHECK_IN_PRODUCT')")
-	public void checkInProduct(@RequestBody Inventory inventory, @PathVariable("shopId") Integer shopId, @PathVariable("productId") Integer productId) {
+	public Integer checkInProduct(@RequestBody Inventory inventory, @PathVariable("shopId") Integer shopId, @PathVariable("productId") Integer productId, Principal userDetail) {
 		
 		inventory.setProductId(productId);
 		inventory.setShopId(shopId);
 		
-		inventoryService.checkInProduct(inventory);
+		return inventoryService.checkInProduct(inventory, userDetail.getName());
 		
 	}
 	
