@@ -45,9 +45,12 @@ public class InventoryControllerTest extends ControllerTestBase{
 		inventory.setQuantity(5);
 		inventory.setShopId(2);
 		
+		Integer returned = 1;
+		
 		Capture<Inventory> captured = EasyMock.newCapture();
 		
-		mockInventoryService.checkInProduct(EasyMock.capture(captured));
+		EasyMock.expect(mockInventoryService.checkInProduct(EasyMock.capture(captured), EasyMock.eq("admin") )).andReturn(returned); 
+		
 		EasyMock.replay(mockInventoryService);
 		
 		File file = ResourceUtils.getFile("classpath:request/requestCheckInProduct.json");
@@ -64,7 +67,6 @@ public class InventoryControllerTest extends ControllerTestBase{
 		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
 		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());
 		assertEquals(inventory.getShopId(), captured.getValue().getShopId());
-		
 	}
 	
 	@Test

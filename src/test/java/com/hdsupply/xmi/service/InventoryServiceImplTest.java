@@ -43,7 +43,7 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		
 		replayAll();
 		
-		inventoryServiceImplTest.checkInProduct(inventory);
+		inventoryServiceImplTest.checkInProduct(inventory, "admin");
 		
 		verifyAll();
 		
@@ -73,7 +73,7 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		
 		replayAll();
 		
-		inventoryServiceImplTest.checkInProduct(inventory);
+		inventoryServiceImplTest.checkInProduct(inventory, "admin");
 		
 		verifyAll();
 		
