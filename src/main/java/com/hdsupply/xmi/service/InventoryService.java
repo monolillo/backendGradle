@@ -6,6 +6,4 @@ public interface InventoryService {
 	
 	public Integer checkInProduct(Inventory inventory, String user);
 	
-	public void checkOutProduct(Inventory inventory, String user);
-
 }

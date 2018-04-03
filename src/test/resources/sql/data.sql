@@ -57,7 +57,10 @@ INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (2,'READ_SITE_CATALOG'
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (3,'READ_SITE_CATALOG');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (4,'READ_SITE_CATALOG');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_IN_PRODUCT');
+<<<<<<< Upstream, based on branch 'dev_flor' of https://flordelgado@bitbucket.org/neorishds/xmi.git
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0, 'CHECK_OUT_PRODUCT');
+=======
+>>>>>>> 58e7de1 Modify service checkIn
 
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',0);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',1);
