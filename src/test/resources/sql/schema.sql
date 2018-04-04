@@ -144,3 +144,21 @@ CREATE TABLE checkin
   FOREIGN KEY (locationId) REFERENCES location(id),
   FOREIGN KEY (productId) REFERENCES product(id)
 );
+
+CREATE SEQUENCE checkout_seq
+  START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE checkout
+(
+  id INT NOT NULL,
+  qty INT NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  timestamp DATETIME NOT NULL,
+  shopId INT NOT NULL,
+  locationId INT NOT NULL,
+  productId INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (shopId) REFERENCES shop(id),
+  FOREIGN KEY (locationId) REFERENCES location(id),
+  FOREIGN KEY (productId) REFERENCES product(id)
+);
