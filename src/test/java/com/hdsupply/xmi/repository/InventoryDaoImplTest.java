@@ -96,6 +96,15 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 	}
 	
 	@Test
+	public void testGetInventoryByIdNotFound() {
+		
+		Inventory inventory = testIntendoryDao.getInventoryById(100, 200);
+		
+		assertEquals(null, inventory);
+		
+	}
+	
+	@Test
 	public void testGetQuantity() {
 		
 		Integer qty = testIntendoryDao.getQuantity(1, 2);
@@ -150,6 +159,15 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		assertEquals((Integer) 2, checkIn.getShopId());
 		assertEquals((Integer) 2, checkIn.getLocationId());
 		assertEquals((Integer) 1, checkIn.getProductId());
+		
+	}
+	
+	@Test
+	public void testGetCheckInByIdNotFound() {
+		
+		CheckIn checkIn = testIntendoryDao.getCheckInById(100);
+		
+		assertEquals(null, checkIn);
 		
 	}
 	
