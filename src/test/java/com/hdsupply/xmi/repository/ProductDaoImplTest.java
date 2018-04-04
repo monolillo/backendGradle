@@ -2,6 +2,8 @@ package com.hdsupply.xmi.repository;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +27,8 @@ public class ProductDaoImplTest extends DaoDbTestBase{
 		assertEquals("A Bulb 40W A15 Frost", product.getName());
 		assertEquals((Integer)307692, product.getItemNumber());
 		assertEquals(false, product.getCritical());
+		assertEquals(new BigDecimal("12.35"), product.getPrice());
+		assertEquals("/img/item-image-lightbulb.png", product.getImageUrl());
 		
 	}
 	
@@ -44,6 +48,8 @@ public class ProductDaoImplTest extends DaoDbTestBase{
 		assertEquals("A Bulb 40W A15 Frost", product.getName());
 		assertEquals((Integer)307692, product.getItemNumber());
 		assertEquals(false, product.getCritical());
+		assertEquals(new BigDecimal("12.35"), product.getPrice());
+		assertEquals("/img/item-image-lightbulb.png", product.getImageUrl());
 		
 	}
 	

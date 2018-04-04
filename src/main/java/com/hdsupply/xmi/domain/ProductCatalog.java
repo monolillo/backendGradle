@@ -1,10 +1,14 @@
 package com.hdsupply.xmi.domain;
 
+import java.math.BigDecimal;
+
 public class ProductCatalog {
 	
 	private String name;
 	private Integer itemNumber;
 	private Integer idProduct;
+	private BigDecimal price;
+	private String imageUrl;
 	private Integer min;
 	private Integer max;
 	private Integer quantity;
@@ -51,6 +55,18 @@ public class ProductCatalog {
 	}
 	public void setCritical(Boolean critical) {
 		this.critical = critical;
+	}
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }
