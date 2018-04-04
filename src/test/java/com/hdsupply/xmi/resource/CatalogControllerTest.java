@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +55,8 @@ public class CatalogControllerTest extends ControllerTestBase {
 		ProductCatalog productCatalog1 = new ProductCatalog();
 		productCatalog1.setIdProduct(123);
 		productCatalog1.setItemNumber(1);
+		productCatalog1.setPrice(new BigDecimal("10.10"));
+		productCatalog1.setImageUrl("image1.jpg");
 		productCatalog1.setMax(10);
 		productCatalog1.setMin(2);
 		productCatalog1.setName("A Bulb 40W A15 Frost");
@@ -61,6 +64,8 @@ public class CatalogControllerTest extends ControllerTestBase {
 		ProductCatalog productCatalog2 = new ProductCatalog();
 		productCatalog2.setIdProduct(321);
 		productCatalog2.setItemNumber(2);
+		productCatalog2.setPrice(new BigDecimal("20.20"));
+		productCatalog2.setImageUrl("image2.jpg");
 		productCatalog2.setMax(9);
 		productCatalog2.setMin(2);
 		productCatalog2.setName("T8 Bulb 40W Intermediate");
@@ -90,6 +95,8 @@ public class CatalogControllerTest extends ControllerTestBase {
 		productCatalog.setIdProduct(123);
 		productCatalog.setName("A Bulb 40W A15 Frost");
 		productCatalog.setItemNumber(2);
+		productCatalog.setPrice(new BigDecimal("20.20"));
+		productCatalog.setImageUrl("image2.jpg");
 		productCatalog.setMax(10);
 		productCatalog.setMin(2);
 
@@ -131,6 +138,8 @@ public class CatalogControllerTest extends ControllerTestBase {
 		productCatalog.setIdProduct(123);
 		productCatalog.setName("A Bulb 40W A15 Frost");
 		productCatalog.setItemNumber(2);
+		productCatalog.setPrice(new BigDecimal("20.20"));
+		productCatalog.setImageUrl("image2.jpg");
 		productCatalog.setMax(10);
 		productCatalog.setMin(2);
 
