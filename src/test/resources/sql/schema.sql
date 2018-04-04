@@ -84,7 +84,6 @@ CREATE TABLE location
 CREATE TABLE inventory
 (
   qty INT NOT NULL,
-  checkedOutQty INT NOT NULL,
   shopId INT NOT NULL,
   productId INT NOT NULL,
   locationId INT NOT NULL,

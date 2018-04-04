@@ -13,7 +13,7 @@ public class InventoryServiceImpl implements InventoryService{
 	private InventoryDao inventoryDao;
 
 	@Override
-	public void checkInProduct(Inventory inventory) {
+	public Integer checkInProduct(Inventory inventory, String user) {
 		
 		Boolean exist = inventoryDao.existProductInInventory(inventory.getShopId(), inventory.getProductId());
 		if (exist) {
@@ -21,6 +21,12 @@ public class InventoryServiceImpl implements InventoryService{
 		} else {
 			inventoryDao.newInventoryProduct(inventory);
 		}
+		
+		Integer checkInId = inventoryDao.getNextCheckinId();
+		
+		inventoryDao.newCheckIn(inventory, user, checkInId);
+		
+		return checkInId;
 	}
 
 }
