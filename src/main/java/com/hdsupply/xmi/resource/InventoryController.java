@@ -32,5 +32,17 @@ public class InventoryController extends BaseRestController{
 		inventoryService.checkInProduct(inventory);
 		
 	}
+	
+	@RequestMapping(value="/shop/{shopId}/product/{productId}/checkout", method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('CHECK_OUT_PRODUCT')")
+	public void checkOutProduct(@RequestBody Inventory inventory, @PathVariable("shopId") Integer shopId, @PathVariable("productId") Integer productId) {
+		
+		inventory.setProductId(productId);
+		inventory.setShopId(shopId);
+		
+		inventoryService.checkOutProduct(inventory);
+		
+	}
 
 }

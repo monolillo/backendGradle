@@ -61,6 +61,7 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		catalog1.setName("AAAAAA");
 		catalog1.setMax(9);
 		catalog1.setMin(2);
+		catalog1.setCritical(false);
 		
 		ProductCatalog catalog2 = new ProductCatalog();
 		
@@ -69,6 +70,7 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		catalog2.setName("BBBBB");
 		catalog2.setMax(10);
 		catalog2.setMin(5);
+		catalog2.setCritical(true);
 		
 		List<ProductCatalog> listProdCatalog = Arrays.asList(new ProductCatalog[] {catalog1, catalog2});
 		
@@ -87,6 +89,7 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 9, listProductcatalog.get(0).getMax());
 		assertEquals((Integer) 2, listProductcatalog.get(0).getMin());
 		assertEquals((Integer)20, listProductcatalog.get(0).getQuantity());
+		assertEquals(false, listProdCatalog.get(0).getCritical());
 		
 		assertEquals("BBBBB", listProductcatalog.get(1).getName());
 		assertEquals((Integer) 2, listProductcatalog.get(1).getIdProduct());
@@ -94,6 +97,7 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 10, listProductcatalog.get(1).getMax());
 		assertEquals((Integer) 5, listProductcatalog.get(1).getMin());
 		assertEquals((Integer) 30, listProductcatalog.get(1).getQuantity());
+		assertEquals(true, listProdCatalog.get(1).getCritical());
 		
 		
 	}
@@ -108,6 +112,7 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		catalog.setCritical(true);
 		catalog.setSiteId(2);
 		catalog.setProductId(1);
+		catalog.setCritical(false);
 		
 		Capture<Catalog> capture = EasyMock.newCapture();
 		
@@ -124,6 +129,7 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		assertEquals(catalog.getCritical(), capture.getValue().getCritical());
 		assertEquals(catalog.getSiteId(), capture.getValue().getSiteId());
 		assertEquals(catalog.getProductId(), capture.getValue().getProductId());
+		assertEquals(catalog.getCritical(), capture.getValue().getCritical());
 		
 	}
 

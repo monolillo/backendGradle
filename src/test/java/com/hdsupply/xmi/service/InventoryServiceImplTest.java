@@ -85,5 +85,28 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		
 	}
 	
+	@Test
+	public void testCheckoutUpdateProduct() {
+		
+		Inventory inventory = new Inventory();
+		inventory.setProductId(1);
+		inventory.setQuantity(10);
+		inventory.setShopId(2);
+		
+		Capture<Inventory> captured = EasyMock.newCapture();
+		
+		inventoryDao.updateCheckOutInventoryProduct(EasyMock.capture(captured));
+		
+		replayAll();
+		
+		inventoryServiceImplTest.checkOutProduct(inventory);
+		
+		verifyAll();
+		
+		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
+		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());
+		assertEquals(inventory.getShopId(), captured.getValue().getShopId());
+	}
+	
 }
 	

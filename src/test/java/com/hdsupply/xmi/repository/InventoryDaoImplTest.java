@@ -84,7 +84,7 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		
 		assertNotEquals(inventoryInserted.getCheckedOutQuantity(), inventoryUpdated.getCheckedOutQuantity());
 		assertNotEquals(inventoryInserted.getLocationId(), inventoryUpdated.getLocationId());
-		assertNotEquals(inventoryInserted, inventoryUpdated.getQuantity());
+		assertNotEquals(inventoryInserted.getQuantity(), inventoryUpdated.getQuantity());
 		
 	}
 	
@@ -98,6 +98,27 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		assertEquals((Integer) 5, inventory.getProductId());
 		assertEquals((Integer) 2, inventory.getQuantity());
 		assertEquals((Integer) 3, inventory.getShopId());
+		
+	}
+	
+	@Test
+	public void testUpdateCheckOutInventoryProduct() {
+		
+		Inventory inventoryCheckout = new Inventory();
+		
+		inventoryCheckout.setProductId(3);
+		inventoryCheckout.setQuantity(10);
+		inventoryCheckout.setShopId(2);
+		
+		testIntendoryDao.updateInventoryProduct(inventoryCheckout);
+		
+		Inventory inventoryUpdated = testIntendoryDao.getInventoryById(inventoryCheckout.getProductId(), inventoryCheckout.getShopId());
+
+		assertEquals((Integer) 3, inventoryUpdated.getProductId());
+		assertEquals((Integer) 15, inventoryUpdated.getQuantity());
+		assertEquals((Integer) 2, inventoryUpdated.getShopId());
+		
+		assertNotEquals(inventoryCheckout.getQuantity(), inventoryUpdated.getQuantity());
 		
 	}
 	

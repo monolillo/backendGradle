@@ -22,5 +22,12 @@ public class InventoryServiceImpl implements InventoryService{
 			inventoryDao.newInventoryProduct(inventory);
 		}
 	}
+	
+	@Override
+	public void checkOutProduct(Inventory inventory) {
+		
+		inventoryDao.updateCheckOutInventoryProduct(inventory);
+		
+	}
 
 }
