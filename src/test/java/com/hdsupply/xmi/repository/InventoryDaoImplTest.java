@@ -96,27 +96,6 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 	}
 	
 	@Test
-	public void testUpdateCheckOutInventoryProduct() {
-		
-		Inventory inventoryCheckout = new Inventory();
-		
-		inventoryCheckout.setProductId(3);
-		inventoryCheckout.setQuantity(10);
-		inventoryCheckout.setShopId(2);
-		
-		testIntendoryDao.updateInventoryProduct(inventoryCheckout);
-		
-		Inventory inventoryUpdated = testIntendoryDao.getInventoryById(inventoryCheckout.getProductId(), inventoryCheckout.getShopId());
-
-		assertEquals((Integer) 3, inventoryUpdated.getProductId());
-		assertEquals((Integer) 15, inventoryUpdated.getQuantity());
-		assertEquals((Integer) 2, inventoryUpdated.getShopId());
-		
-		assertNotEquals(inventoryCheckout.getQuantity(), inventoryUpdated.getQuantity());
-		
-	}
-	
-	@Test
 	public void testGetInventoryByIdNotFound() {
 		
 		Inventory inventory = testIntendoryDao.getInventoryById(100, 200);

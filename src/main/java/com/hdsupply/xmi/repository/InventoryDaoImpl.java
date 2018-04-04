@@ -9,13 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.hdsupply.xmi.domain.CheckIn;
-import com.hdsupply.xmi.domain.CheckOut;
 import com.hdsupply.xmi.domain.Inventory;
 
 @Repository
@@ -44,6 +40,9 @@ public class InventoryDaoImpl implements InventoryDao{
 	
 	@Value("${inventoryDao.getNextCheckinIdSql}")
 	private String getNextCheckinIdSql;
+	
+	@Value("${inventoryDao.getCheckInByIdSql}")
+	private String getCheckInByIdSql;
 	
 	@Override
 	public Inventory getInventoryById(Integer productId, Integer shopId) {
@@ -92,7 +91,7 @@ public class InventoryDaoImpl implements InventoryDao{
 		
 		return jdbcTemplate.queryForObject(getQuantitySql, new Object[] { productId, siteId }, Integer.class);
 	}
-		
+
 	@Override
 	public void newCheckIn(Inventory inventory, String user, Integer checkInId) {
 		
@@ -109,6 +108,18 @@ public class InventoryDaoImpl implements InventoryDao{
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		return jdbcTemplate.queryForObject(getNextCheckinIdSql, Integer.class);
+		
+	}
+
+	@Override
+	public CheckIn getCheckInById(Integer checkInId) {
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		try {
+			return jdbcTemplate.queryForObject(getCheckInByIdSql, new Object[] { checkInId }, new BeanPropertyRowMapper<CheckIn>(CheckIn.class));
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 		
 	}
 
