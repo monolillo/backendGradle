@@ -1,5 +1,6 @@
 package com.hdsupply.xmi.repository;
 
+import com.hdsupply.xmi.domain.CheckIn;
 import com.hdsupply.xmi.domain.Inventory;
 
 public interface InventoryDao {
@@ -17,5 +18,7 @@ public interface InventoryDao {
 	public void newCheckIn(Inventory inventory, String user, Integer checkInId);
 	
 	public Integer getNextCheckinId();
+	
+	public CheckIn getCheckInById(Integer checkInId);
 
 }

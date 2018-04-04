@@ -29,7 +29,6 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 	public void testCheckInUpdateProduct() {
 		
 		Inventory inventory = new Inventory();
-		inventory.setCheckedOutQuantity(0);
 		inventory.setLocationId(1);
 		inventory.setProductId(1);
 		inventory.setQuantity(10);
@@ -41,13 +40,16 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		
 		inventoryDao.updateInventoryProduct(EasyMock.capture(captured));
 		
+		EasyMock.expect(inventoryDao.getNextCheckinId()).andReturn(1);
+		
+		inventoryDao.newCheckIn(EasyMock.capture(captured), EasyMock.eq("admin"), EasyMock.eq(1));
+		
 		replayAll();
 		
 		inventoryServiceImplTest.checkInProduct(inventory, "admin");
 		
 		verifyAll();
 		
-		assertEquals(inventory.getCheckedOutQuantity(), captured.getValue().getCheckedOutQuantity());
 		assertEquals(inventory.getLocationId(), captured.getValue().getLocationId());
 		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
 		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());
@@ -59,7 +61,6 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 	public void testCheckInNewProduct() {
 		
 		Inventory inventory = new Inventory();
-		inventory.setCheckedOutQuantity(0);
 		inventory.setLocationId(1);
 		inventory.setProductId(1);
 		inventory.setQuantity(10);
@@ -71,13 +72,16 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		
 		inventoryDao.newInventoryProduct(EasyMock.capture(captured));
 		
+		EasyMock.expect(inventoryDao.getNextCheckinId()).andReturn(1);
+		
+		inventoryDao.newCheckIn(EasyMock.capture(captured), EasyMock.eq("admin"), EasyMock.eq(1));
+		
 		replayAll();
 		
 		inventoryServiceImplTest.checkInProduct(inventory, "admin");
 		
 		verifyAll();
 		
-		assertEquals(inventory.getCheckedOutQuantity(), captured.getValue().getCheckedOutQuantity());
 		assertEquals(inventory.getLocationId(), captured.getValue().getLocationId());
 		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
 		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());

@@ -1,10 +1,14 @@
 package com.hdsupply.xmi.domain;
 
+import java.math.BigDecimal;
+
 public class Product {
 	
 	private Integer id;
 	private String name;
 	private Integer itemNumber;
+	private BigDecimal price;
+	private String imageUrl;
 	
 	public Integer getId() {
 		return id;
@@ -25,4 +29,18 @@ public class Product {
 		this.itemNumber = itemNumber;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	
+	
 }
