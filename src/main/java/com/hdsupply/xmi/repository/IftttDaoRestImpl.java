@@ -42,7 +42,7 @@ public class IftttDaoRestImpl implements IftttDao {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<Map<String, String>> entity = new HttpEntity<Map<String, String>>(body, headers);
+		HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
 		
 		restTemplate.postForObject(ENDPOINT, entity, String.class, eventName, API_KEY);
 
