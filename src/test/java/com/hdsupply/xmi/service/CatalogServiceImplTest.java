@@ -99,7 +99,6 @@ public class CatalogServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 30, listProductcatalog.get(1).getQuantity());
 		assertEquals(true, listProdCatalog.get(1).getCritical());
 		
-		
 	}
 	
 	@Test

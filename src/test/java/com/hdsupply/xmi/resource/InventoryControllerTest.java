@@ -94,7 +94,7 @@ public class InventoryControllerTest extends ControllerTestBase{
 		
 		Capture<Inventory> captured = EasyMock.newCapture();
 		
-		mockInventoryService.checkOutProduct(EasyMock.capture(captured));
+		mockInventoryService.checkOutProduct(EasyMock.capture(captured), EasyMock.eq("admin"));
 		EasyMock.replay(mockInventoryService);
 		
 		File file = ResourceUtils.getFile("classpath:request/requestCheckOutProduct.json");

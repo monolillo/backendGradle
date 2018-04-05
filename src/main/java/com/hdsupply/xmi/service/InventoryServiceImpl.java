@@ -30,9 +30,17 @@ public class InventoryServiceImpl implements InventoryService{
 	}
 	
 	@Override
-	public void checkOutProduct(Inventory inventory) {
+	public void checkOutProduct(Inventory inventory, String user) {
 		
 		inventoryDao.updateCheckOutInventoryProduct(inventory);
+		
+		Inventory invent = inventoryDao.getInventoryById(inventory.getProductId(), inventory.getShopId());
+		
+		inventory.setLocationId(invent.getLocationId());
+		
+		Integer checkOutId = inventoryDao.getNextCheckOutId();
+		
+		inventoryDao.newCheckOut(inventory, user, checkOutId);
 		
 	}
 

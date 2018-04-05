@@ -14,6 +14,7 @@ public class ProductCatalog {
 	private Integer quantity;
 	private Boolean critical;
 	
+	
 	public String getName() {
 		return name;
 	}
