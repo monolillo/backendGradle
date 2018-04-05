@@ -13,8 +13,8 @@ import com.hdsupply.xmi.domain.XmiUser;
 
 public class XmiUserService extends JdbcDaoImpl {
 	
-	public static final String XMI_USERS_BY_USERNAME_QUERY = "select username,password,enabled,email,phone "
-			+ "from users " + "where username = ?";	
+	public static final String XMI_USERS_BY_USERNAME_QUERY = 
+			"select username,password,enabled,email,phone from users where username = ?";	
 
 	public XmiUserService() {
 		super();
@@ -33,8 +33,8 @@ public class XmiUserService extends JdbcDaoImpl {
 						String username = rs.getString(1);
 						String password = rs.getString(2);
 						boolean enabled = rs.getBoolean(3);
-						String email = rs.getString(4);
-						String phone = rs.getString(5);
+						String email 	= rs.getString(4);
+						String phone 	= rs.getString(5);
 						
 						return new XmiUser(username, password, email, phone, enabled, true, true, true,
 								AuthorityUtils.NO_AUTHORITIES);

@@ -16,14 +16,14 @@ public class UserDetailsServiceConfig {
     private DataSource datasource;
     
     @Bean
-    public UserDetailsService jdbcDaoImpl() {
+    public UserDetailsService userDetailsService() {
     	
-    	XmiUserService jdbcDaoImpl = new XmiUserService();
-    	jdbcDaoImpl.setEnableGroups(true);
-    	jdbcDaoImpl.setEnableAuthorities(false);
-    	jdbcDaoImpl.setDataSource(datasource);
+    	XmiUserService xmiUserService = new XmiUserService();
+    	xmiUserService.setEnableGroups(true);
+    	xmiUserService.setEnableAuthorities(false);
+    	xmiUserService.setDataSource(datasource);
     	
-    	return jdbcDaoImpl;
+    	return xmiUserService;
     }
 
 }
