@@ -14,12 +14,12 @@ public class IftttDaoRestImpl implements IftttDao {
 	@Autowired
 	private RestOperations restTemplate;
 	
-	private final static String key = "d8MYovssL5-X7KHvmiIzmN";
-	private final static String endpoint = "https://maker.ifttt.com/trigger/{eventName}/with/key/{key}";
+	private static final String API_KEY = "d8MYovssL5-X7KHvmiIzmN";
+	private static final String ENDPOINT = "https://maker.ifttt.com/trigger/{eventName}/with/key/{key}";
 	
-	private final static String VALUE1_KEY = "value1";
-	private final static String VALUE2_KEY = "value2";
-	private final static String VALUE3_KEY = "value3";
+	private static final String VALUE1_KEY = "value1";
+	private static final String VALUE2_KEY = "value2";
+	private static final String VALUE3_KEY = "value3";
 
 	/**
 	 * Sends a request to the IFTTT endpoint with the following JSON body
@@ -44,7 +44,7 @@ public class IftttDaoRestImpl implements IftttDao {
 
 		HttpEntity<Map<String, String>> entity = new HttpEntity<Map<String, String>>(body, headers);
 		
-		restTemplate.postForObject(endpoint, entity, String.class, eventName, key);
+		restTemplate.postForObject(ENDPOINT, entity, String.class, eventName, API_KEY);
 
 	}
 
