@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+
+import com.hdsupply.xmi.service.security.XmiUserService;
 
 @Configuration
 public class UserDetailsServiceConfig {
@@ -17,7 +18,7 @@ public class UserDetailsServiceConfig {
     @Bean
     public UserDetailsService jdbcDaoImpl() {
     	
-    	JdbcDaoImpl jdbcDaoImpl = new JdbcDaoImpl();
+    	XmiUserService jdbcDaoImpl = new XmiUserService();
     	jdbcDaoImpl.setEnableGroups(true);
     	jdbcDaoImpl.setEnableAuthorities(false);
     	jdbcDaoImpl.setDataSource(datasource);

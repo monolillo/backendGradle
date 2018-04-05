@@ -96,7 +96,9 @@ CREATE TABLE inventory
 create table users(
 	username varchar(50) not null primary key,
 	password varchar(50) not null,
-	enabled bit not null
+	enabled bit not null,
+	email varchar(50),
+	phone varchar(20)
 );
 
 CREATE TABLE site_users
