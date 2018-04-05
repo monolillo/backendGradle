@@ -15,6 +15,7 @@ public class IftttDaoRestImpl implements IftttDao {
 	private RestOperations restTemplate;
 	
 <<<<<<< Upstream, based on branch 'dev_flor' of https://flordelgado@bitbucket.org/neorishds/xmi.git
+<<<<<<< Upstream, based on branch 'dev_flor' of https://flordelgado@bitbucket.org/neorishds/xmi.git
 	private static final String API_KEY = "d8MYovssL5-X7KHvmiIzmN";
 	private static final String ENDPOINT = "https://maker.ifttt.com/trigger/{eventName}/with/key/{key}";
 	
@@ -49,10 +50,14 @@ public class IftttDaoRestImpl implements IftttDao {
 =======
 	private final static String key = "d8MYovssL5-X7KHvmiIzmN";
 	private final static String endpoint = "https://maker.ifttt.com/trigger/{eventName}/with/key/{key}";
+=======
+	private static final String API_KEY = "d8MYovssL5-X7KHvmiIzmN";
+	private static final String ENDPOINT = "https://maker.ifttt.com/trigger/{eventName}/with/key/{key}";
+>>>>>>> c7ed96d Fixing a couple of code smells.
 	
-	private final static String VALUE1_KEY = "value1";
-	private final static String VALUE2_KEY = "value2";
-	private final static String VALUE3_KEY = "value3";
+	private static final String VALUE1_KEY = "value1";
+	private static final String VALUE2_KEY = "value2";
+	private static final String VALUE3_KEY = "value3";
 
 	/**
 	 * Sends a request to the IFTTT endpoint with the following JSON body
@@ -77,8 +82,12 @@ public class IftttDaoRestImpl implements IftttDao {
 
 		HttpEntity<Map<String, String>> entity = new HttpEntity<Map<String, String>>(body, headers);
 		
+<<<<<<< Upstream, based on branch 'dev_flor' of https://flordelgado@bitbucket.org/neorishds/xmi.git
 		restTemplate.postForObject(endpoint, entity, String.class, eventName, key);
 >>>>>>> 5debf7a Adding IFTTT rest interface to execute webhooks.
+=======
+		restTemplate.postForObject(ENDPOINT, entity, String.class, eventName, API_KEY);
+>>>>>>> c7ed96d Fixing a couple of code smells.
 
 	}
 
