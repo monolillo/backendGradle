@@ -75,7 +75,7 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		
 		assertEquals((Integer) 3, inventoryUpdated.getLocationId());
 		assertEquals((Integer) 3, inventoryUpdated.getProductId());
-		assertEquals((Integer) 15, inventoryUpdated.getQuantity());
+		assertEquals((Integer) 25, inventoryUpdated.getQuantity());
 		assertEquals((Integer) 2, inventoryUpdated.getShopId());
 		
 		assertNotEquals(inventoryInserted.getLocationId(), inventoryUpdated.getLocationId());
@@ -163,11 +163,42 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 	}
 	
 	@Test
+	public void testUndoCheckIn() {
+		
+		Inventory inventory = testIntendoryDao.getInventoryById(5, 3);
+		CheckIn checkIn = testIntendoryDao.getCheckInById(7);
+		
+		assertEquals((Integer)2, inventory.getQuantity());
+		
+		testIntendoryDao.undoCheckIn(checkIn);
+		
+		Inventory inventoryUndo = testIntendoryDao.getInventoryById(5, 3);
+		
+		assertEquals((Integer)1, inventoryUndo.getQuantity());
+		
+	}
+	
+	@Test
 	public void testGetCheckInByIdNotFound() {
 		
 		CheckIn checkIn = testIntendoryDao.getCheckInById(100);
 		
 		assertEquals(null, checkIn);
+		
+	}
+	
+	@Test
+	public void testDeleteCheckIn() {
+		
+		CheckIn checkIn = testIntendoryDao.getCheckInById(6);
+		
+		assertEquals((Integer) 6, checkIn.getId());
+		
+		testIntendoryDao.deleteCheckIn(6);
+		
+		CheckIn checkInDelete = testIntendoryDao.getCheckInById(6);
+		
+		assertEquals(null, checkInDelete);
 		
 	}
 	
