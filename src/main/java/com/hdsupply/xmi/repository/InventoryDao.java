@@ -20,5 +20,9 @@ public interface InventoryDao {
 	public Integer getNextCheckinId();
 	
 	public CheckIn getCheckInById(Integer checkInId);
+	
+	public void deleteCheckIn(Integer checkInId);
+	
+	public void undoCheckIn(CheckIn checkIn);
 
 }

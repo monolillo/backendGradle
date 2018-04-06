@@ -3,6 +3,7 @@ package com.hdsupply.xmi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hdsupply.xmi.domain.CheckIn;
 import com.hdsupply.xmi.domain.Inventory;
 import com.hdsupply.xmi.repository.InventoryDao;
 
@@ -27,6 +28,17 @@ public class InventoryServiceImpl implements InventoryService{
 		inventoryDao.newCheckIn(inventory, user, checkInId);
 		
 		return checkInId;
+	}
+
+	@Override
+	public void undoCheckIn(Integer checkInId) {
+		
+		CheckIn checkIn = inventoryDao.getCheckInById(checkInId);
+		
+		inventoryDao.deleteCheckIn(checkInId);
+		
+		inventoryDao.undoCheckIn(checkIn);
+		
 	}
 
 }
