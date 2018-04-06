@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +21,7 @@ public class RestControllerExceptionHandler {
 	
 	private static final String FIELD_ERRORS 	= "fieldErrors";
 	private static final String JSON_ERROR 		= "jsonError";
+	private static final String GENERIC_ERROR 	= "error";
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -31,6 +33,28 @@ public class RestControllerExceptionHandler {
 
 		return errorMap;
 	} 	
+	
+	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	protected Map<String, String> handleBadMedia(HttpMediaTypeNotSupportedException ex) {
+		
+		Map<String, String> errorMap = new HashMap<>();
+		errorMap.put(GENERIC_ERROR, ex.getMessage().split("\\n")[0]);
+
+		return errorMap;
+	} 		
+	
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseBody
+	protected Map<String, String> handleGenericError(Exception ex) {
+		
+		Map<String, String> errorMap = new HashMap<>();
+		errorMap.put(GENERIC_ERROR, ex.getMessage().split("\\n")[0]);
+
+		return errorMap;
+	} 		
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
