@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,17 +12,15 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 
 import com.hdsupply.xmi.domain.XmiUser;
 
+/**
+ * An implementation of UserDetailsService based on JdbcDaoImpl but
+ * that reads extended user information into XmiUser
+ * 
+ * @author julian.nunez
+ *
+ */
 public class XmiUserService extends JdbcDaoImpl {
 	
-	public static final String XMI_USERS_BY_USERNAME_QUERY = 
-			"select username,password,enabled,email,phone from users where username = ?";	
-
-	public XmiUserService() {
-		super();
-		
-		this.setUsersByUsernameQuery(XMI_USERS_BY_USERNAME_QUERY);
-	}
-
 	@Override
 	protected List<UserDetails> loadUsersByUsername(String username) {
 		
@@ -43,6 +42,9 @@ public class XmiUserService extends JdbcDaoImpl {
 				});		
 	}
 	
-	
+	@Value("${userDetailsService.usersByUsername}")
+	public void setUsersByUsernameQuery(String usersByUsernameQueryString) {
+		super.setUsersByUsernameQuery(usersByUsernameQueryString);
+	}
 
 }
