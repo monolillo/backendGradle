@@ -102,8 +102,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    @Bean
    public UserAuthenticationConverter userAuthenticationConverter() {
        DefaultUserAuthenticationConverter defaultUserAuthenticationConverter = new DefaultUserAuthenticationConverter();
-       //uncomment to make the UserDetailService execute with every request and retrieve full user info
-       //defaultUserAuthenticationConverter.setUserDetailsService(userDetailsService);
+       //replace null with userDetailsService below to force the Authentication to contain the full user details from the DB 
+       defaultUserAuthenticationConverter.setUserDetailsService(null);
        return defaultUserAuthenticationConverter;
    }   
 }

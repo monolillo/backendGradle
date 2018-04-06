@@ -42,6 +42,7 @@ public class XmiUserService extends JdbcDaoImpl {
 				});		
 	}
 	
+	@Override
 	@Value("${userDetailsService.usersByUsername}")
 	public void setUsersByUsernameQuery(String usersByUsernameQueryString) {
 		super.setUsersByUsernameQuery(usersByUsernameQueryString);
