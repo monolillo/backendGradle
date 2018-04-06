@@ -2,6 +2,8 @@ package com.hdsupply.xmi.resource;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +67,7 @@ public class CatalogController extends BaseRestController {
 	@RequestMapping(value="/site/{siteId}/product/{productId}", method=RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('READ_SITE_CATALOG')")
-	public void updateActiveCatalog(@RequestBody Catalog catalog, @PathVariable("siteId") Integer siteId, @PathVariable("productId") Integer productId) {
+	public void updateActiveCatalog(@Valid @RequestBody Catalog catalog, @PathVariable("siteId") Integer siteId, @PathVariable("productId") Integer productId) {
 		
 		catalog.setSiteId(siteId);
 		catalog.setProductId(productId);
