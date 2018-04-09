@@ -26,7 +26,6 @@ public class ProductDaoImplTest extends DaoDbTestBase{
 		assertEquals((Integer)1, product.getIdProduct());
 		assertEquals("A Bulb 40W A15 Frost", product.getName());
 		assertEquals((Integer)307692, product.getItemNumber());
-		assertEquals(false, product.getCritical());
 		assertEquals(new BigDecimal("12.35"), product.getPrice());
 		assertEquals("/img/item-image-lightbulb.png", product.getImageUrl());
 		
@@ -47,7 +46,6 @@ public class ProductDaoImplTest extends DaoDbTestBase{
 		assertEquals((Integer)1, product.getIdProduct());
 		assertEquals("A Bulb 40W A15 Frost", product.getName());
 		assertEquals((Integer)307692, product.getItemNumber());
-		assertEquals(false, product.getCritical());
 		assertEquals(new BigDecimal("12.35"), product.getPrice());
 		assertEquals("/img/item-image-lightbulb.png", product.getImageUrl());
 		

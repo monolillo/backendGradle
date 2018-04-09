@@ -83,49 +83,6 @@ public class InventoryControllerTest extends ControllerTestBase{
 		
 	}
 	
-	@Test
-	@WithMockUser(username = "admin", authorities = { "CHECK_OUT_PRODUCT" })
-	public void testCheckOutProduct() throws Exception {
-		
-		Inventory inventory = new Inventory();
-		inventory.setProductId(3);
-		inventory.setQuantity(5);
-		inventory.setShopId(2);
-		
-		Capture<Inventory> captured = EasyMock.newCapture();
-		
-		mockInventoryService.checkOutProduct(EasyMock.capture(captured), EasyMock.eq("admin"));
-		EasyMock.replay(mockInventoryService);
-		
-		File file = ResourceUtils.getFile("classpath:request/requestCheckOutProduct.json");
-		String requestBody = new String(Files.readAllBytes(file.toPath()));
-		
-		mockMvc.perform(post("/rest/shop/2/product/3/checkout").
-				contentType(MediaType.APPLICATION_JSON_UTF8).
-				content(requestBody)
-				).andExpect(status().isCreated());
-		
-		EasyMock.verify(mockInventoryService);
-		
-		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
-		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());
-		assertEquals(inventory.getShopId(), captured.getValue().getShopId());
-	}
-	
-	@Test
-	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
-	public void testCheckOutProductUnauthorized() throws Exception{
-		
-		File file = ResourceUtils.getFile("classpath:request/requestCheckOutProduct.json");
-		String requestBody = new String(Files.readAllBytes(file.toPath()));
-		
-		mockMvc.perform(post("/rest/shop/2/product/3/checkin").
-				contentType(MediaType.APPLICATION_JSON_UTF8).
-				content(requestBody)
-				).andExpect(status().isForbidden());
-		
-	}
-	
 	@Bean
 	public InventoryService inventoryService() {
 		return EasyMock.createStrictMock(InventoryService.class);

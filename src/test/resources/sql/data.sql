@@ -30,9 +30,9 @@ INSERT INTO CATALOG (critical,min,max,productId,siteId) VALUES (0,2,15,3,2);
 INSERT INTO CATALOG (critical,min,max,productId,siteId) VALUES (1,10,20,5,2);
 INSERT INTO CATALOG (critical,min,max,productId,siteId) VALUES (0,3,10,6,2);
 
-INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (10,0,2,1,2);
-INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (4,0,2,2,3);
-INSERT INTO INVENTORY (qty,checkedOutQty,shopId,productId,locationId) VALUES (2,0,3,5,6);
+INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (10,2,1,2);
+INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (4,2,2,3);
+INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (2,3,5,6);
 
 INSERT INTO USERS (username,password,enabled) VALUES ('admin','{noop}admin_pwd',1);
 INSERT INTO USERS (username,password,enabled) VALUES ('mgr_usr','{noop}pass',1);
@@ -57,10 +57,6 @@ INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (2,'READ_SITE_CATALOG'
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (3,'READ_SITE_CATALOG');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (4,'READ_SITE_CATALOG');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_IN_PRODUCT');
-<<<<<<< Upstream, based on branch 'dev_flor' of https://flordelgado@bitbucket.org/neorishds/xmi.git
-INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0, 'CHECK_OUT_PRODUCT');
-=======
->>>>>>> 58e7de1 Modify service checkIn
 
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',0);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',1);
@@ -68,3 +64,4 @@ INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('mgr_usr',2);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('superv_usr',3);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('tech_usr',4);
 
+INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId) VALUES (5,5,'admin','2018-04-03 17:45:55.38',2,2,1);

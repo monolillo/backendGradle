@@ -79,7 +79,7 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		assertEquals((Integer) 2, inventoryUpdated.getShopId());
 		
 		assertNotEquals(inventoryInserted.getLocationId(), inventoryUpdated.getLocationId());
-		assertNotEquals(inventoryInserted.getQuantity(), inventoryUpdated.getQuantity());
+		assertNotEquals(inventoryInserted, inventoryUpdated.getQuantity());
 		
 	}
 	

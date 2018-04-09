@@ -3,7 +3,6 @@ package com.hdsupply.xmi.domain;
 public class Inventory {
 	
 	Integer quantity;
-	Integer checkedOutQuantity;
 	Integer shopId;
 	Integer productId;
 	Integer locationId;
@@ -13,12 +12,6 @@ public class Inventory {
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
-	}
-	public Integer getCheckedOutQuantity() {
-		return checkedOutQuantity;
-	}
-	public void setCheckedOutQuantity(Integer checkedOutQuantity) {
-		this.checkedOutQuantity = checkedOutQuantity;
 	}
 	public Integer getShopId() {
 		return shopId;

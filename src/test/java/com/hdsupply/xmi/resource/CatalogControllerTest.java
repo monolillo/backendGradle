@@ -60,7 +60,6 @@ public class CatalogControllerTest extends ControllerTestBase {
 		productCatalog1.setMax(10);
 		productCatalog1.setMin(2);
 		productCatalog1.setName("A Bulb 40W A15 Frost");
-		productCatalog1.setCritical(false);
 		
 		ProductCatalog productCatalog2 = new ProductCatalog();
 		productCatalog2.setIdProduct(321);
@@ -70,7 +69,6 @@ public class CatalogControllerTest extends ControllerTestBase {
 		productCatalog2.setMax(9);
 		productCatalog2.setMin(2);
 		productCatalog2.setName("T8 Bulb 40W Intermediate");
-		productCatalog2.setCritical(true);
 		
 		List<ProductCatalog> returnedProductCatalog = Arrays.asList(new ProductCatalog[] {productCatalog1, productCatalog2});
 		
@@ -101,7 +99,6 @@ public class CatalogControllerTest extends ControllerTestBase {
 		productCatalog.setImageUrl("image2.jpg");
 		productCatalog.setMax(10);
 		productCatalog.setMin(2);
-		productCatalog.setCritical(false);
 
 		EasyMock.expect(mockProductService.getProductById(2,1)).andReturn(productCatalog);
 		

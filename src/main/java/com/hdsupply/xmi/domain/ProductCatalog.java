@@ -12,7 +12,6 @@ public class ProductCatalog {
 	private Integer min;
 	private Integer max;
 	private Integer quantity;
-	private Boolean critical;
 	
 	
 	public String getName() {
@@ -50,12 +49,6 @@ public class ProductCatalog {
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
-	}
-	public Boolean getCritical() {
-		return critical;
-	}
-	public void setCritical(Boolean critical) {
-		this.critical = critical;
 	}
 	public BigDecimal getPrice() {
 		return price;

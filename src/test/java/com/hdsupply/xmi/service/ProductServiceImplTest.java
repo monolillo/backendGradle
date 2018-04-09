@@ -35,7 +35,6 @@ public class ProductServiceImplTest extends EasyMockSupport {
 		product.setItemNumber(2);
 		product.setMax(10);
 		product.setMin(5);
-		product.setCritical(false);
 		
 		EasyMock.expect(productDao.getProductById(2,1)).andReturn(product);
 		
@@ -52,7 +51,6 @@ public class ProductServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 10, productcatalog.getMax());
 		assertEquals((Integer) 5, productcatalog.getMin());
 		assertEquals((Integer)20, productcatalog.getQuantity());
-		assertEquals(false, productcatalog.getCritical());
 
 	}
 	
@@ -79,7 +77,6 @@ public class ProductServiceImplTest extends EasyMockSupport {
 		product.setItemNumber(2);
 		product.setMax(10);
 		product.setMin(5);
-		product.setCritical(false);
 		
 		EasyMock.expect(productDao.getProductByItemNumber(2,1)).andReturn(product);
 		
@@ -96,7 +93,6 @@ public class ProductServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer) 10, productcatalog.getMax());
 		assertEquals((Integer) 5, productcatalog.getMin());
 		assertEquals((Integer)20, productcatalog.getQuantity());
-		assertEquals(false, productcatalog.getCritical());
 
 	}
 	
