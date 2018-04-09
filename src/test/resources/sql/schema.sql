@@ -8,6 +8,8 @@ CREATE TABLE product
   id INT NOT NULL,
   name VARCHAR(256) NOT NULL,
   itemNumber INT NOT NULL,
+  price decimal(9,2) NOT NULL,
+  imageUrl varchar(256),
   PRIMARY KEY (id)
 );
 
@@ -82,7 +84,6 @@ CREATE TABLE location
 CREATE TABLE inventory
 (
   qty INT NOT NULL,
-  checkedOutQty INT NOT NULL,
   shopId INT NOT NULL,
   productId INT NOT NULL,
   locationId INT NOT NULL,
@@ -95,7 +96,9 @@ CREATE TABLE inventory
 create table users(
 	username varchar(50) not null primary key,
 	password varchar(50) not null,
-	enabled bit not null
+	enabled bit not null,
+	email varchar(50),
+	phone varchar(20)
 );
 
 CREATE TABLE site_users
@@ -123,4 +126,40 @@ create table group_members (
 	username varchar(50) not null,
 	group_id bigint not null,
 	constraint fk_group_members_group foreign key(group_id) references groups(id)
+);
+
+CREATE SEQUENCE checkin_seq
+  START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE checkin
+(
+  id INT NOT NULL,
+  qty INT NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  timestamp DATETIME NOT NULL,
+  shopId INT NOT NULL,
+  locationId INT NOT NULL,
+  productId INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (shopId) REFERENCES shop(id),
+  FOREIGN KEY (locationId) REFERENCES location(id),
+  FOREIGN KEY (productId) REFERENCES product(id)
+);
+
+CREATE SEQUENCE checkout_seq
+  START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE checkout
+(
+  id INT NOT NULL,
+  qty INT NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  timestamp DATETIME NOT NULL,
+  shopId INT NOT NULL,
+  locationId INT NOT NULL,
+  productId INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (shopId) REFERENCES shop(id),
+  FOREIGN KEY (locationId) REFERENCES location(id),
+  FOREIGN KEY (productId) REFERENCES product(id)
 );

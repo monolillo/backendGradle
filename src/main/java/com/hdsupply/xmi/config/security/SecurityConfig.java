@@ -15,8 +15,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -75,6 +78,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    public JwtAccessTokenConverter accessTokenConverter() {
       JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
       converter.setSigningKey(signingKey);
+      
+      ((DefaultAccessTokenConverter) converter.getAccessTokenConverter())
+      	.setUserTokenConverter(userAuthenticationConverter());      
+      
       return converter;
    }
 
@@ -91,4 +98,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       defaultTokenServices.setSupportRefreshToken(true);
       return defaultTokenServices;
    }
+   
+   @Bean
+   public UserAuthenticationConverter userAuthenticationConverter() {
+       DefaultUserAuthenticationConverter defaultUserAuthenticationConverter = new DefaultUserAuthenticationConverter();
+       //replace null with userDetailsService below to force the Authentication to contain the full user details from the DB 
+       defaultUserAuthenticationConverter.setUserDetailsService(null);
+       return defaultUserAuthenticationConverter;
+   }   
 }
