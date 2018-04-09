@@ -106,9 +106,9 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		
 		Capture<CheckIn> captured = EasyMock.newCapture();
 		
-		EasyMock.expect(inventoryDao.getCheckInById(5)).andReturn(EasyMock.capture(captured));
+		EasyMock.expect(inventoryDao.getCheckInById(EasyMock.eq(5))).andReturn(checkIn);
 		
-		inventoryDao.deleteCheckIn(5);
+		inventoryDao.deleteCheckIn(EasyMock.eq(5));
 		
 		inventoryDao.undoCheckIn(EasyMock.capture(captured));
 		
@@ -118,6 +118,13 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		
 		verifyAll();
 		
+		assertEquals(checkIn.getId(), captured.getValue().getId());
+		assertEquals(checkIn.getQuantity(), captured.getValue().getQuantity());
+		assertEquals(checkIn.getUserName(), captured.getValue().getUserName());
+		assertEquals(checkIn.getTimestamp(), captured.getValue().getTimestamp());
+		assertEquals(checkIn.getShopId(), captured.getValue().getShopId());
+		assertEquals(checkIn.getLocationId(), captured.getValue().getLocationId());
+		assertEquals(checkIn.getProductId(), captured.getValue().getProductId());
 		
 	}
 	
