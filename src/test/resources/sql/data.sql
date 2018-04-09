@@ -57,6 +57,7 @@ INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (2,'READ_SITE_CATALOG'
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (3,'READ_SITE_CATALOG');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (4,'READ_SITE_CATALOG');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_IN_PRODUCT');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0, 'CHECK_OUT_PRODUCT');
 
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',0);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',1);
@@ -65,3 +66,7 @@ INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('superv_usr',3);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('tech_usr',4);
 
 INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId) VALUES (5,5,'admin','2018-04-03 17:45:55.38',2,2,1);
+INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId) VALUES (6,5,'admin','2018-04-03 17:45:55.38',2,2,1);
+
+INSERT INTO CHECKOUT (id, qty, username, timestamp, shopId, locationId, productId) VALUES (5,5,'admin','2018-04-03 17:45:55.38',2,2,2);
+INSERT INTO CHECKOUT (id, qty, username, timestamp, shopId, locationId, productId) VALUES (6,5,'admin','2018-04-03 17:45:55.38',2,2,1);
