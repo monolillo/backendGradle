@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @ControllerAdvice
 @RestController
-public class RestControllerExceptionHandler {
+public class RestControllerExceptionMapper {
 	
 	private static final String FIELD_ERRORS 	= "fieldErrors";
 	private static final String JSON_ERROR 		= "jsonError";
