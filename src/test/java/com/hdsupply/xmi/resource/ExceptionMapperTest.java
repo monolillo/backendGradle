@@ -19,7 +19,6 @@ import org.springframework.util.ResourceUtils;
 import com.hdsupply.xmi.domain.Catalog;
 import com.hdsupply.xmi.service.CatalogService;
 import com.hdsupply.xmi.service.ProductService;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import junit.framework.AssertionFailedError;
 
@@ -117,6 +116,33 @@ public class ExceptionMapperTest extends ControllerTestBase {
 		EasyMock.verify(mockCatalogService);		
 		
 	}		
+	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "READ_SITE_CATALOG" })
+	public void testInvalidValues() throws Exception {
+		
+		mockCatalogService.updateActiveCatalog(EasyMock.anyObject(Catalog.class));
+
+		EasyMock.expectLastCall().andThrow(new AssertionFailedError()).anyTimes();
+	
+		EasyMock.replay(mockCatalogService);
+		
+		File file = ResourceUtils.getFile("classpath:request/requestUpdateActiveCatalogInvalidValue.json");
+		String jsonRequest = new String(Files.readAllBytes(file.toPath()));
+		
+		file = ResourceUtils.getFile("classpath:json/invalidValueResponse.json");
+		String response = new String(Files.readAllBytes(file.toPath()));			
+		
+		mockMvc.perform(put("/rest/site/2/product/1")
+			.header("Accept", "application/json")
+			.header("Content-type", "application/json")
+			.content(jsonRequest))
+			.andExpect(status().isBadRequest())
+			.andExpect(content().json(response));
+			
+		EasyMock.verify(mockCatalogService);		
+		
+	}			
 	
 	@Bean
 	public CatalogService catalogService() {
