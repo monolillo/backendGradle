@@ -2,6 +2,8 @@ package com.hdsupply.xmi.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
+
 import org.easymock.Capture;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
@@ -11,6 +13,7 @@ import org.easymock.TestSubject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.hdsupply.xmi.domain.CheckIn;
 import com.hdsupply.xmi.domain.Inventory;
 import com.hdsupply.xmi.repository.InventoryDao;
 
@@ -147,5 +150,40 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		
 	}
 	
-}
+	@Test
+	public void testUndoCheckIn() {
+		
+		CheckIn checkIn = new CheckIn();
+		checkIn.setId(5);
+		checkIn.setQuantity(5);
+		checkIn.setUserName("admin");
+		checkIn.setTimestamp(new Date());
+		checkIn.setShopId(2);
+		checkIn.setLocationId(2);
+		checkIn.setProductId(1);
+		
+		Capture<CheckIn> captured = EasyMock.newCapture();
+		
+		EasyMock.expect(inventoryDao.getCheckInById(EasyMock.eq(5))).andReturn(checkIn);
+		
+		inventoryDao.deleteCheckIn(EasyMock.eq(5));
+		
+		inventoryDao.undoCheckIn(EasyMock.capture(captured));
+		
+		replayAll();
+		
+		inventoryServiceImplTest.undoCheckIn(5);
+		
+		verifyAll();
+		
+		assertEquals(checkIn.getId(), captured.getValue().getId());
+		assertEquals(checkIn.getQuantity(), captured.getValue().getQuantity());
+		assertEquals(checkIn.getUserName(), captured.getValue().getUserName());
+		assertEquals(checkIn.getTimestamp(), captured.getValue().getTimestamp());
+		assertEquals(checkIn.getShopId(), captured.getValue().getShopId());
+		assertEquals(checkIn.getLocationId(), captured.getValue().getLocationId());
+		assertEquals(checkIn.getProductId(), captured.getValue().getProductId());
+		
+	}
 	
+}
