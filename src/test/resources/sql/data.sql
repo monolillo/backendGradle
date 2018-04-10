@@ -30,6 +30,7 @@ INSERT INTO CATALOG (critical,min,max,productId,siteId) VALUES (0,3,10,6,2);
 INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (10,2,1,2);
 INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (4,2,2,3);
 INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (2,3,5,6);
+INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (15,3,6,7);
 
 INSERT INTO USERS (username,password,enabled) VALUES ('admin','{noop}admin_pwd',1);
 INSERT INTO USERS (username,password,enabled) VALUES ('mgr_usr','{noop}pass',1);
@@ -54,8 +55,9 @@ INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (2,'READ_SITE_CATALOG'
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (3,'READ_SITE_CATALOG');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (4,'READ_SITE_CATALOG');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_IN_PRODUCT');
-INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0, 'CHECK_OUT_PRODUCT');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_OUT_PRODUCT');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'UNDO_CHECK_IN');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'UNDO_CHECK_OUT');
 
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',0);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',1);
@@ -69,3 +71,4 @@ INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId
 
 INSERT INTO CHECKOUT (id, qty, username, timestamp, shopId, locationId, productId) VALUES (5,5,'admin','2018-04-03 17:45:55.38',2,2,2);
 INSERT INTO CHECKOUT (id, qty, username, timestamp, shopId, locationId, productId) VALUES (6,5,'admin','2018-04-03 17:45:55.38',2,2,1);
+INSERT INTO CHECKOUT (id, qty, username, timestamp, shopId, locationId, productId) VALUES (7,2,'admin','2018-04-03 17:45:55.38',3,7,6);
