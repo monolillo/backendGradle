@@ -1,6 +1,3 @@
-INSERT INTO PLACES (id,namee) VALUES (1,'Rojas');
-INSERT INTO PLACES (id,namee) VALUES (2,'Mooresville');
-
 INSERT INTO COMPANY (id,name) VALUES (1,'HD Supply');
 INSERT INTO COMPANY (id,name) VALUES (2,'Marriot');
 
