@@ -63,6 +63,11 @@ public class InventoryDaoImpl implements InventoryDao{
 	@Value("${inventoryDao.undoCheckInSql}")
 	private String undoCheckInSql;
 	
+	@Value("${inventoryDao.deleteCheckOutSql}")
+	private String deleteCheckOutSql;
+	
+	@Value("${inventoryDao.undoCheckOutSql}")
+	private String undoCheckOutSql;
 	
 	@Override
 	public Inventory getInventoryById(Integer productId, Integer shopId) {
@@ -198,6 +203,24 @@ public class InventoryDaoImpl implements InventoryDao{
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		jdbcTemplate.update(undoCheckInSql, checkIn.getQuantity(), checkIn.getProductId(), checkIn.getShopId());
+		
+	}
+
+	@Override
+	public void deleteCheckOut(Integer checkOutId) {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update(deleteCheckOutSql, checkOutId);
+		
+	}
+	
+	@Override
+	public void undoCheckOut(CheckOut checkOut) {
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update(undoCheckOutSql, checkOut.getQuantity(), checkOut.getProductId(), checkOut.getShopId());
 		
 	}
 }
