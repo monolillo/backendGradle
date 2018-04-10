@@ -1,11 +1,17 @@
 package com.hdsupply.xmi.domain;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
 public class Catalog {
 
 	private Integer productId;
+	@PositiveOrZero
 	private Integer min;
+	@PositiveOrZero
 	private Integer max;
 	private Integer siteId;
+	@NotNull
 	private Boolean critical;
 	
 	public Integer getProductId() {

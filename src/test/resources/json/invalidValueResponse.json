@@ -1,0 +1,8 @@
+{
+    "fieldErrors": [
+        {
+            "field": "min",
+            "message": "must be greater than or equal to 0"
+        }
+    ]
+}

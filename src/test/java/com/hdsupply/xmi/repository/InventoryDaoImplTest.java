@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.hdsupply.xmi.domain.CheckIn;
+import com.hdsupply.xmi.domain.CheckOut;
 import com.hdsupply.xmi.domain.Inventory;
 
 @ContextConfiguration(classes=InventoryDaoImplTest.class)
@@ -75,7 +76,7 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		
 		assertEquals((Integer) 3, inventoryUpdated.getLocationId());
 		assertEquals((Integer) 3, inventoryUpdated.getProductId());
-		assertEquals((Integer) 15, inventoryUpdated.getQuantity());
+		assertEquals((Integer) 25, inventoryUpdated.getQuantity());
 		assertEquals((Integer) 2, inventoryUpdated.getShopId());
 		
 		assertNotEquals(inventoryInserted.getLocationId(), inventoryUpdated.getLocationId());
@@ -101,6 +102,26 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		Inventory inventory = testIntendoryDao.getInventoryById(100, 200);
 		
 		assertEquals(null, inventory);
+		
+	}
+	
+	@Test
+	public void testUpdateCheckOutInventoryProduct() {
+		
+		Inventory inventoryCheckout = new Inventory();
+		
+		inventoryCheckout.setProductId(2);
+		inventoryCheckout.setQuantity(2);
+		inventoryCheckout.setShopId(2);
+		
+		testIntendoryDao.updateCheckOutInventoryProduct(inventoryCheckout);
+		
+		Inventory inventoryUpdated = testIntendoryDao.getInventoryById(inventoryCheckout.getProductId(), inventoryCheckout.getShopId());
+
+		assertEquals((Integer) 2, inventoryUpdated.getProductId());
+		assertEquals((Integer) 2, inventoryUpdated.getQuantity());
+		assertEquals((Integer) 2, inventoryUpdated.getShopId());
+
 		
 	}
 	
@@ -163,11 +184,100 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 	}
 	
 	@Test
+	public void testUndoCheckIn() {
+		
+		Inventory inventory = testIntendoryDao.getInventoryById(5, 3);
+		CheckIn checkIn = testIntendoryDao.getCheckInById(7);
+		
+		assertEquals((Integer)2, inventory.getQuantity());
+		
+		testIntendoryDao.undoCheckIn(checkIn);
+		
+		Inventory inventoryUndo = testIntendoryDao.getInventoryById(5, 3);
+		
+		assertEquals((Integer)1, inventoryUndo.getQuantity());
+		
+	}
+	
+	@Test
 	public void testGetCheckInByIdNotFound() {
 		
 		CheckIn checkIn = testIntendoryDao.getCheckInById(100);
 		
 		assertEquals(null, checkIn);
+		
+	}
+	
+	@Test
+	public void testNewCheckOut() {
+		
+		Inventory inventory = new Inventory();
+		inventory.setLocationId(2);
+		inventory.setProductId(3);
+		inventory.setQuantity(10);
+		inventory.setShopId(2);
+		
+		String user = "admin";
+		
+		Integer checkOutId = 1;
+		
+		testIntendoryDao.newCheckOut(inventory, user, checkOutId);
+		
+		CheckOut checkOut = testIntendoryDao.getCheckOutById(checkOutId);
+		
+		assertEquals(inventory.getLocationId(), checkOut.getLocationId());
+		assertEquals(inventory.getProductId(), checkOut.getProductId());
+		assertEquals(inventory.getQuantity(), checkOut.getQuantity());
+		assertEquals(inventory.getShopId(), checkOut.getShopId());
+		assertEquals(user, checkOut.getUserName());
+		assertEquals(checkOutId, checkOut.getId()); 
+		
+	}
+	
+	@Test
+	public void testGetNextCheckoutId() {
+		
+		Integer checkOutId = testIntendoryDao.getNextCheckOutId();
+		
+		assertEquals((Integer) 1, checkOutId);
+		
+	}
+	
+	@Test
+	public void testGetCheckOutById() {
+		
+		CheckOut checkOut = testIntendoryDao.getCheckOutById(6);
+		
+		assertEquals((Integer) 6, checkOut.getId());
+		assertEquals((Integer) 5, checkOut.getQuantity());
+		assertEquals("admin", checkOut.getUserName());
+		assertEquals((Integer) 2, checkOut.getShopId());
+		assertEquals((Integer) 2, checkOut.getLocationId());
+		assertEquals((Integer) 1, checkOut.getProductId());
+		
+	}
+
+	@Test
+	public void testGetCheckOutByIdNotFound() {
+		
+		CheckOut checkOut = testIntendoryDao.getCheckOutById(100);
+		
+		assertEquals(null, checkOut);
+		
+	}
+	
+	@Test
+	public void testDeleteCheckIn() {
+		
+		CheckIn checkIn = testIntendoryDao.getCheckInById(6);
+		
+		assertEquals((Integer) 6, checkIn.getId());
+		
+		testIntendoryDao.deleteCheckIn(6);
+		
+		CheckIn checkInDelete = testIntendoryDao.getCheckInById(6);
+		
+		assertEquals(null, checkInDelete);
 		
 	}
 	

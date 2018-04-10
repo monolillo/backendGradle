@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hdsupply.xmi.domain.CheckIn;
+import com.hdsupply.xmi.domain.CheckOut;
 import com.hdsupply.xmi.domain.Inventory;
 
 @Repository
@@ -43,6 +44,25 @@ public class InventoryDaoImpl implements InventoryDao{
 	
 	@Value("${inventoryDao.getCheckInByIdSql}")
 	private String getCheckInByIdSql;
+	
+	@Value("${inventoryDao.updateCheckOutProductSql}")
+	private String updateCheckOutProductSql;
+	
+	@Value("${inventoryDao.newCheckOutSql}")
+	private String newCheckOutSql;
+	
+	@Value("${inventoryDao.getNextCheckoutIdSql}")
+	private String getNextCheckoutIdSql;
+	
+	@Value("${inventoryDao.getCheckOutByIdSql}")
+	private String getCheckOutByIdSql;
+	
+	@Value("${inventoryDao.deleteCheckInSql}")
+	private String deleteCheckInSql;
+	
+	@Value("${inventoryDao.undoCheckInSql}")
+	private String undoCheckInSql;
+	
 	
 	@Override
 	public Inventory getInventoryById(Integer productId, Integer shopId) {
@@ -122,5 +142,62 @@ public class InventoryDaoImpl implements InventoryDao{
 		}
 		
 	}
+	
 
+	@Override
+	public void updateCheckOutInventoryProduct(Inventory inventory) {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update(updateCheckOutProductSql, inventory.getQuantity(), inventory.getShopId(), inventory.getProductId());
+	}
+	
+	@Override
+	public void newCheckOut(Inventory inventory, String user, Integer checkOutId) {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update(newCheckOutSql, checkOutId, inventory.getQuantity(), user, new Date(), inventory.getShopId(),
+				inventory.getLocationId(), inventory.getProductId());
+		
+	}
+	
+	@Override
+	public Integer getNextCheckOutId() {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		return jdbcTemplate.queryForObject(getNextCheckoutIdSql, Integer.class);
+		
+	}
+	
+	@Override
+	public CheckOut getCheckOutById(Integer checkOutId) {
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		try {
+			return jdbcTemplate.queryForObject(getCheckOutByIdSql, new Object[] { checkOutId }, new BeanPropertyRowMapper<CheckOut>(CheckOut.class));
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+		
+	}
+
+	@Override
+	public void deleteCheckIn(Integer checkInId) {
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update(deleteCheckInSql, checkInId);
+		
+	}
+
+	@Override
+	public void undoCheckIn(CheckIn checkIn) {
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update(undoCheckInSql, checkIn.getQuantity(), checkIn.getProductId(), checkIn.getShopId());
+		
+	}
 }
