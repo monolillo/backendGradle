@@ -28,6 +28,6 @@ public interface InventoryDao {
 		
 	public Integer getNextCheckOutId();
 		
-	public CheckOut getCheckOutById(Integer checkOutId);
+	public CheckOut getCheckOutById(Integer checkOutId); 
 
 }
