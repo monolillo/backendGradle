@@ -9,5 +9,5 @@ public interface InventoryService {
 	public void checkOutProduct(Inventory inventory, String user);
 	
 	public void undoCheckIn(Integer checkInId);
-
+ 
 }

@@ -56,5 +56,5 @@ public class InventoryController extends BaseRestController{
 		inventoryService.undoCheckIn(checkIn.getId());
 		
 	}
-
+ 
 }

@@ -200,5 +200,4 @@ public class InventoryDaoImpl implements InventoryDao{
 		jdbcTemplate.update(undoCheckInSql, checkIn.getQuantity(), checkIn.getProductId(), checkIn.getShopId());
 		
 	}
-
 }

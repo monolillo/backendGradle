@@ -187,4 +187,3 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 	}
 	
 }
-	

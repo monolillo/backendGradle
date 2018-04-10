@@ -55,5 +55,5 @@ public class InventoryServiceImpl implements InventoryService{
 		inventoryDao.undoCheckIn(checkIn);
 		
 	}
-
+ 
 }

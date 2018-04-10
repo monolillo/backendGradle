@@ -113,6 +113,7 @@ public class InventoryControllerTest extends ControllerTestBase{
 		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
 		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());
 		assertEquals(inventory.getShopId(), captured.getValue().getShopId());
+	
 	}
 	
 	@Test
