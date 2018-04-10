@@ -12,7 +12,7 @@ public class ProductCatalog {
 	private Integer min;
 	private Integer max;
 	private Integer quantity;
-	
+	private Boolean critical;
 	
 	public String getName() {
 		return name;
@@ -61,6 +61,12 @@ public class ProductCatalog {
 	}
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+	public Boolean getCritical() {
+		return critical;
+	}
+	public void setCritical(Boolean critical) {
+		this.critical = critical;
 	}
 
 }
