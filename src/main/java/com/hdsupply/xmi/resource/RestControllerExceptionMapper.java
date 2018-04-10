@@ -62,9 +62,9 @@ public class RestControllerExceptionMapper {
 	protected Map<String, List<FieldErrorInfo>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
 		
 		List<FieldErrorInfo> errorList = new ArrayList<>();
-		ex.getBindingResult().getFieldErrors().stream().forEach(e -> {
-			errorList.add(new FieldErrorInfo(e.getField(), e.getDefaultMessage()));
-		});
+		ex.getBindingResult().getFieldErrors().stream().forEach(e -> 
+			errorList.add(new FieldErrorInfo(e.getField(), e.getDefaultMessage()))
+		);
 	  	
 		Map<String, List<FieldErrorInfo>> errorMap = new HashMap<>();
 		errorMap.put(FIELD_ERRORS, errorList);
@@ -87,16 +87,9 @@ public class RestControllerExceptionMapper {
 			return field;
 		}
 		
-		public void setField(String field) {
-			this.field = field;
-		}
-		
 		public String getMessage() {
 			return message;
 		}
 		
-		public void setMessage(String message) {
-			this.message = message;
-		}
 	}
 }
