@@ -68,6 +68,7 @@ INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('tech_usr',4);
 
 INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId) VALUES (5,5,'admin','2018-04-03 17:45:55.38',2,2,1);
 INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId) VALUES (6,5,'admin','2018-04-03 17:45:55.38',2,2,1);
+INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId) VALUES (7,1,'admin','2018-04-03 17:45:55.38',3,2,5);
 
 INSERT INTO CHECKOUT (id, qty, username, timestamp, shopId, locationId, productId) VALUES (5,5,'admin','2018-04-03 17:45:55.38',2,2,2);
 INSERT INTO CHECKOUT (id, qty, username, timestamp, shopId, locationId, productId) VALUES (6,5,'admin','2018-04-03 17:45:55.38',2,2,1);

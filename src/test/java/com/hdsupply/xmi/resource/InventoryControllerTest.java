@@ -85,7 +85,7 @@ public class InventoryControllerTest extends ControllerTestBase{
 				).andExpect(status().isForbidden());
 		
 	}
-	
+		
 	@Test
 	@WithMockUser(username = "admin", authorities = { "CHECK_OUT_PRODUCT" })
 	public void testCheckOutProduct() throws Exception {
@@ -133,7 +133,7 @@ public class InventoryControllerTest extends ControllerTestBase{
 	@WithMockUser(username = "admin", authorities = { "UNDO_CHECK_IN" })
 	public void testUndoCheckIn() throws Exception {
 		
-		Integer checkInId = 1;
+		Integer checkInId = 12;
 		
 		mockInventoryService.undoCheckIn(checkInId);
 		
@@ -150,6 +150,28 @@ public class InventoryControllerTest extends ControllerTestBase{
 		EasyMock.verify(mockInventoryService);
 		
 	}
+	
+//	@Test
+//	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+//	public void testUndoCheckInUnauthorized() throws Exception {
+//		
+//		Integer checkInId = 5;
+//		
+//		mockInventoryService.undoCheckIn(checkInId);
+//		
+//		EasyMock.replay(mockInventoryService);
+//		
+//		File file = ResourceUtils.getFile("classpath:request/requestUndoCheckIn.json");
+//		String requestBody = new String(Files.readAllBytes(file.toPath()));
+//		
+//		mockMvc.perform(delete("/rest/shop/2/product/3/checkin").
+//				contentType(MediaType.APPLICATION_JSON_UTF8).
+//				content(requestBody)
+//				).andExpect(status().isForbidden());
+//		
+//		EasyMock.verify(mockInventoryService);
+//		
+//	}
 	
 	@Bean
 	public InventoryService inventoryService() {
