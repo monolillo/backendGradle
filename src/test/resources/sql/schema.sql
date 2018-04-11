@@ -1,8 +1,3 @@
-CREATE TABLE PLACES (
-    id int,
-    namee varchar(255)
-);
-
 CREATE TABLE product
 (
   id INT NOT NULL,

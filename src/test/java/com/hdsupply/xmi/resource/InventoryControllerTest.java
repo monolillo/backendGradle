@@ -97,7 +97,7 @@ public class InventoryControllerTest extends ControllerTestBase{
 		
 		Capture<Inventory> captured = EasyMock.newCapture();
 		
-		mockInventoryService.checkOutProduct(EasyMock.capture(captured), EasyMock.eq("admin"));
+		EasyMock.expect(mockInventoryService.checkOutProduct(EasyMock.capture(captured), EasyMock.eq("admin"))).andReturn(1);
 		EasyMock.replay(mockInventoryService);
 		
 		File file = ResourceUtils.getFile("classpath:request/requestCheckOutProduct.json");
@@ -159,6 +159,46 @@ public class InventoryControllerTest extends ControllerTestBase{
 		EasyMock.replay(mockInventoryService);
 		
 		File file = ResourceUtils.getFile("classpath:request/requestUndoCheckIn.json");
+		String requestBody = new String(Files.readAllBytes(file.toPath()));
+		
+		mockMvc.perform(delete("/rest/shop/2/product/3/checkin").
+				contentType(MediaType.APPLICATION_JSON_UTF8).
+				content(requestBody)
+				).andExpect(status().isForbidden());
+		
+		EasyMock.verify(mockInventoryService);
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "UNDO_CHECK_OUT" })
+	public void testUndoCheckOut() throws Exception {
+		
+		Integer checkOutId = 10;
+		
+		mockInventoryService.undoCheckOut(checkOutId);
+		
+		EasyMock.replay(mockInventoryService);
+
+		File file = ResourceUtils.getFile("classpath:request/requestUndoCheckOut.json");
+		String requestBody = new String(Files.readAllBytes(file.toPath()));
+		
+		mockMvc.perform(delete("/rest/shop/2/product/3/checkout").
+				contentType(MediaType.APPLICATION_JSON_UTF8).
+				content(requestBody)
+				).andExpect(status().isOk());
+		
+		EasyMock.verify(mockInventoryService);
+		
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "OTHER_PERMISSION" })
+	public void testUndoCheckOutUnauthorized() throws Exception {
+		
+		EasyMock.replay(mockInventoryService);
+		
+		File file = ResourceUtils.getFile("classpath:request/requestUndoCheckOut.json");
 		String requestBody = new String(Files.readAllBytes(file.toPath()));
 		
 		mockMvc.perform(delete("/rest/shop/2/product/3/checkin").
