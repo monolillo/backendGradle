@@ -281,6 +281,37 @@ public class InventoryDaoImplTest extends DaoDbTestBase {
 		
 	}
 	
+	@Test
+	public void testDeleteCheckOut() {
+		
+		CheckOut checkOut = testIntendoryDao.getCheckOutById(5);
+		
+		assertEquals((Integer) 5, checkOut.getId());
+		
+		testIntendoryDao.deleteCheckOut(5);
+		
+		CheckOut checkOutDelete = testIntendoryDao.getCheckOutById(5);
+		
+		assertEquals(null, checkOutDelete);
+		
+	}
+	
+	@Test
+	public void testUndoCheckOut() {
+		
+		Inventory inventory = testIntendoryDao.getInventoryById(6, 3);
+		CheckOut checkOut = testIntendoryDao.getCheckOutById(7);
+		
+		assertEquals((Integer)15, inventory.getQuantity());
+		
+		testIntendoryDao.undoCheckOut(checkOut);
+		
+		Inventory inventoryUndo = testIntendoryDao.getInventoryById(6, 3);
+		
+		assertEquals((Integer)17, inventoryUndo.getQuantity());
+		
+	}
+	
 	@Bean
 	public InventoryDao testIntendoryDao() {
 		return new InventoryDaoImpl();

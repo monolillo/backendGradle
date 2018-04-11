@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hdsupply.xmi.domain.CheckIn;
+import com.hdsupply.xmi.domain.CheckOut;
 import com.hdsupply.xmi.domain.Inventory;
 import com.hdsupply.xmi.service.InventoryService;
 
@@ -39,12 +40,12 @@ public class InventoryController extends BaseRestController{
 	@RequestMapping(value="/shop/{shopId}/product/{productId}/checkout", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CHECK_OUT_PRODUCT')")
-	public void checkOutProduct(@RequestBody Inventory inventory, @PathVariable("shopId") Integer shopId, @PathVariable("productId") Integer productId, Principal userDetail) {
+	public Integer checkOutProduct(@RequestBody Inventory inventory, @PathVariable("shopId") Integer shopId, @PathVariable("productId") Integer productId, Principal userDetail) {
 		
 		inventory.setProductId(productId);
 		inventory.setShopId(shopId);
 		
-		inventoryService.checkOutProduct(inventory, userDetail.getName());
+		return inventoryService.checkOutProduct(inventory, userDetail.getName());
 		
 	}
 	
@@ -56,5 +57,14 @@ public class InventoryController extends BaseRestController{
 		inventoryService.undoCheckIn(checkIn.getId());
 		
 	}
- 
+	
+	@RequestMapping(value="/shop/{shopId}/product/{productId}/checkout", method=RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	@PreAuthorize("hasAuthority('UNDO_CHECK_OUT')")
+	public void undoChekcOut(@RequestBody CheckOut checkOut) {
+		
+		inventoryService.undoCheckOut(checkOut.getId());
+		
+	}
+	
 }
