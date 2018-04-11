@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
 			Integer qty = inventoryDao.getQuantity(productId, siteId);
 		
 			productCatalog.setQuantity(qty);
+			productCatalog.setLocationId(2);
 		}
 		
 		return productCatalog;
