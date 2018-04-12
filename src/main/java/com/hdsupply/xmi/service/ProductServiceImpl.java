@@ -28,9 +28,12 @@ public class ProductServiceImpl implements ProductService {
 		
 		if(null != productCatalog) {
 			Inventory inventory = inventoryDao.getInventoryById(productId, shopDao.getShopBySiteId(siteId).get(0).getId());
-		
-			productCatalog.setQuantity(inventory.getQuantity());
-			productCatalog.setLocationId(inventory.getLocationId());
+
+			productCatalog.setQuantity(0);
+			if(null != inventory) {
+				productCatalog.setQuantity(inventory.getQuantity());
+				productCatalog.setLocationId(inventory.getLocationId());
+			}
 		}
 		
 		return productCatalog;
