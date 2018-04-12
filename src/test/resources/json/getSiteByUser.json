@@ -1,0 +1,19 @@
+[
+    {
+        "id": 2,
+        "name": "Courtyard by Marriott Atlanta Cumberland/Galleria",
+        "companyId": 2,
+        "shops": [
+            {
+                "id": 2,
+                "name": "Maintenance",
+                "siteId": 2
+            },
+            {
+                "id": 3,
+                "name": "Storage",
+                "siteId": 2
+            }
+        ]
+    }
+]
