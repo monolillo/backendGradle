@@ -70,6 +70,40 @@ public class ProductServiceImplTest extends EasyMockSupport {
 		assertEquals((Integer)30, productcatalog.getLocationId());
 
 	}
+
+	@Test
+	public void testGetProductByIdNoInventory() {
+		
+		ProductCatalog product = new ProductCatalog();
+		product.setIdProduct(123);
+		product.setName("A Bulb 40W A15 Frost");
+		product.setItemNumber(2);
+		product.setMax(10);
+		product.setMin(5);
+		
+		EasyMock.expect(productDao.getProductById(2,1)).andReturn(product);
+		
+		Shop shop = new Shop();
+		shop.setId(10);
+		
+		EasyMock.expect(shopDao.getShopBySiteId(EasyMock.eq(2))).andReturn(Collections.singletonList(shop));
+		
+		EasyMock.expect(inventoryDao.getInventoryById(EasyMock.eq(1), EasyMock.eq(10))).andReturn(null);
+		
+		replayAll();
+		
+		ProductCatalog productcatalog = productServiceImplTest.getProductById(2,1);
+		verifyAll();
+		
+		assertEquals((Integer) 123, productcatalog.getIdProduct());
+		assertEquals("A Bulb 40W A15 Frost", productcatalog.getName());
+		assertEquals((Integer) 2, productcatalog.getItemNumber());
+		assertEquals((Integer) 10, productcatalog.getMax());
+		assertEquals((Integer) 5, productcatalog.getMin());
+		assertEquals((Integer)0, productcatalog.getQuantity());
+		assertEquals(null, productcatalog.getLocationId());
+
+	}	
 	
 	@Test
 	public void testGetProductByNotFound() {
