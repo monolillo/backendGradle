@@ -13,6 +13,7 @@ public class ProductCatalog {
 	private Integer max;
 	private Integer quantity;
 	private Boolean critical;
+	private Integer locationId;
 	
 	public String getName() {
 		return name;
@@ -67,6 +68,12 @@ public class ProductCatalog {
 	}
 	public void setCritical(Boolean critical) {
 		this.critical = critical;
+	}
+	public Integer getLocationId() {
+		return locationId;
+	}
+	public void setLocationId(Integer locationId) {
+		this.locationId = locationId;
 	}
 
 }
