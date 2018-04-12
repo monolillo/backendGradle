@@ -3,9 +3,11 @@ package com.hdsupply.xmi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hdsupply.xmi.domain.Inventory;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.repository.InventoryDao;
 import com.hdsupply.xmi.repository.ProductDao;
+import com.hdsupply.xmi.repository.ShopDao;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -15,6 +17,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private InventoryDao inventoryDao;
+	
+	@Autowired
+	private ShopDao shopDao;
 
 	@Override
 	public ProductCatalog getProductById(Integer siteId, Integer productId) {
@@ -22,10 +27,10 @@ public class ProductServiceImpl implements ProductService {
 		ProductCatalog productCatalog = productDao.getProductById(siteId, productId);
 		
 		if(null != productCatalog) {
-			Integer qty = inventoryDao.getQuantity(productId, siteId);
+			Inventory inventory = inventoryDao.getInventoryById(productId, shopDao.getShopBySiteId(siteId).get(0).getId());
 		
-			productCatalog.setQuantity(qty);
-			productCatalog.setLocationId(2);
+			productCatalog.setQuantity(inventory.getQuantity());
+			productCatalog.setLocationId(inventory.getLocationId());
 		}
 		
 		return productCatalog;
