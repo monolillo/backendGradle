@@ -13,26 +13,26 @@ import org.easymock.TestSubject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.hdsupply.xmi.domain.Place;
-import com.hdsupply.xmi.repository.PlaceDao;
+import com.hdsupply.xmi.domain.Location;
+import com.hdsupply.xmi.repository.LocationDao;
 
 @RunWith(EasyMockRunner.class)
-public class PlaceServiceImplTest extends EasyMockSupport {
+public class LocationServiceImplTest extends EasyMockSupport {
 	
 	@TestSubject
-	private PlaceServiceImpl fixture = new PlaceServiceImpl();	
+	private LocationServiceImpl fixture = new LocationServiceImpl();	
 	
 	@Mock
-	private PlaceDao placeDao;	
+	private LocationDao locationDao;	
 
 	@Test
 	public void testGetActivePlaces() {
 		
-		List<Place> returnedList = new ArrayList<Place>();
-		EasyMock.expect(placeDao.getActivePlaces()).andReturn(returnedList);
+		List<Location> returnedList = new ArrayList<Location>();
+		EasyMock.expect(locationDao.getLocationsByShop(2)).andReturn(returnedList);
 		
 		replayAll();
-		List<Place> result = fixture.getActivePlaces();
+		List<Location> result = fixture.getLocationsByShop(2);
 		verifyAll();
 		
 		assertEquals("Returned list should match the one returned by DAO.", returnedList, result);

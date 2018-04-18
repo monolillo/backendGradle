@@ -2,9 +2,9 @@ package com.hdsupply.xmi.repository;
 
 import java.util.List;
 
-import com.hdsupply.xmi.domain.Place;
+import com.hdsupply.xmi.domain.Location;
 
-public interface PlaceDao {
+public interface LocationDao {
 
 	/**
 	 * Gets a String from the DB using JdbcTemplate
@@ -12,6 +12,6 @@ public interface PlaceDao {
 	 * @see com.neoris.symphony.repository.ExampleDao#getExample()
 	 */
 
-	List<Place> getActivePlaces();
+	List<Location> getLocationsByShop(int shopId);
 
 }

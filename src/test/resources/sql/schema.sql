@@ -1,13 +1,10 @@
-CREATE TABLE PLACES (
-    id int,
-    namee varchar(255)
-);
-
 CREATE TABLE product
 (
   id INT NOT NULL,
   name VARCHAR(256) NOT NULL,
   itemNumber INT NOT NULL,
+  price decimal(9,2) NOT NULL,
+  imageUrl varchar(256),
   PRIMARY KEY (id)
 );
 
@@ -25,14 +22,6 @@ CREATE TABLE notification_type
   PRIMARY KEY (id)
 );
 
-CREATE TABLE users
-(
-  id INT NOT NULL,
-  firstName VARCHAR(256) NOT NULL,
-  lastName VARCHAR(256) NOT NULL,
-  PRIMARY KEY (id)
-);
-
 CREATE TABLE site
 (
   id INT NOT NULL,
@@ -47,20 +36,14 @@ CREATE TABLE notification
   id INT NOT NULL,
   timestamp DATETIME NOT NULL,
   notificationQty INT NOT NULL,
+  active BIT NOT NULL,
   siteId INT NOT NULL,
   typeId INT NOT NULL,
+  productId INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (siteId) REFERENCES site(id),
-  FOREIGN KEY (typeId) REFERENCES notification_type(id)
-);
-
-CREATE TABLE site_users
-(
-  userId INT NOT NULL,
-  siteId INT NOT NULL,
-  PRIMARY KEY (userId, siteId),
-  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (siteId) REFERENCES site(id)
+  FOREIGN KEY (typeId) REFERENCES notification_type(id),
+  FOREIGN KEY (productId) REFERENCES product(id)
 );
 
 CREATE TABLE shop
@@ -77,11 +60,11 @@ CREATE TABLE catalog
   critical BIT NOT NULL,
   min INT NOT NULL,
   max INT NOT NULL,
-  shopId INT NOT NULL,
   productId INT NOT NULL,
-  PRIMARY KEY (shopId, productId),
-  FOREIGN KEY (shopId) REFERENCES shop(id),
-  FOREIGN KEY (productId) REFERENCES product(id)
+  siteId INT NOT NULL,
+  PRIMARY KEY (productId, siteId),
+  FOREIGN KEY (productId) REFERENCES product(id),
+  FOREIGN KEY (siteId) REFERENCES site(id)
 );
 
 CREATE TABLE location
@@ -96,11 +79,82 @@ CREATE TABLE location
 CREATE TABLE inventory
 (
   qty INT NOT NULL,
-  checkedOut INT NOT NULL,
   shopId INT NOT NULL,
   productId INT NOT NULL,
+  locationId INT NOT NULL,
   PRIMARY KEY (shopId, productId),
   FOREIGN KEY (shopId) REFERENCES shop(id),
+  FOREIGN KEY (productId) REFERENCES product(id),
+  FOREIGN KEY (locationId) REFERENCES location(id)
+);
+
+create table users(
+	username varchar(50) not null primary key,
+	password varchar(50) not null,
+	enabled bit not null,
+	email varchar(50),
+	phone varchar(20)
+);
+
+CREATE TABLE site_users
+(
+  username VARCHAR(50) NOT NULL,
+  siteId INT NOT NULL,
+  PRIMARY KEY (username, siteId),
+  FOREIGN KEY (username) REFERENCES users(username),
+  FOREIGN KEY (siteId) REFERENCES site(id)
+);
+
+create table groups (
+	id bigint not null identity(0,1) primary key,
+	group_name varchar(50) not null
+);
+
+create table group_authorities (
+	group_id bigint not null,
+	authority varchar(50) not null,
+	constraint fk_group_authorities_group foreign key(group_id) references groups(id)
+);
+
+create table group_members (
+	id bigint not null identity(0,1) primary key,
+	username varchar(50) not null,
+	group_id bigint not null,
+	constraint fk_group_members_group foreign key(group_id) references groups(id)
+);
+
+CREATE SEQUENCE checkin_seq
+  START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE checkin
+(
+  id INT NOT NULL,
+  qty INT NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  timestamp DATETIME NOT NULL,
+  shopId INT NOT NULL,
+  locationId INT NOT NULL,
+  productId INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (shopId) REFERENCES shop(id),
+  FOREIGN KEY (locationId) REFERENCES location(id),
   FOREIGN KEY (productId) REFERENCES product(id)
 );
 
+CREATE SEQUENCE checkout_seq
+  START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE checkout
+(
+  id INT NOT NULL,
+  qty INT NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  timestamp DATETIME NOT NULL,
+  shopId INT NOT NULL,
+  locationId INT NOT NULL,
+  productId INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (shopId) REFERENCES shop(id),
+  FOREIGN KEY (locationId) REFERENCES location(id),
+  FOREIGN KEY (productId) REFERENCES product(id)
+);

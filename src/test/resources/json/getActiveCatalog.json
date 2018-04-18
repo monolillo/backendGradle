@@ -1,0 +1,20 @@
+[
+    {
+        "name": "A Bulb 40W A15 Frost",
+        "itemNumber": 1,
+        "idProduct": 123,
+        "price" : 10.10,
+        "imageUrl" : "image1.jpg",
+        "min": 2,
+        "max": 10
+    },
+    {
+        "name": "T8 Bulb 40W Intermediate",
+        "itemNumber": 2,
+        "idProduct": 321,
+        "price" : 20.20,
+        "imageUrl" : "image2.jpg",
+        "min": 2,
+        "max": 9
+    }
+]
