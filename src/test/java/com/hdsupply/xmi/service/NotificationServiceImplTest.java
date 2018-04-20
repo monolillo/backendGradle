@@ -675,4 +675,191 @@ public class NotificationServiceImplTest extends EasyMockSupport{
 		assertEquals(productCatalogFalse4.getPrice(), listProductCatalog.get(1).getPrice());
 
 	}
+	
+	@Test
+	public void testGetNotificationsFilterOutOfStockCritical() {
+		
+		List<ProductCatalog> listProductCatalog = new ArrayList<>();
+
+		ProductCatalog productCatalogFalse1 = new ProductCatalog();
+		productCatalogFalse1.setName("Certified Safety 4-Shelf Class B First Aid Cabinet");
+		productCatalogFalse1.setItemNumber(113644);
+		productCatalogFalse1.setIdProduct(2000);
+		productCatalogFalse1.setImageUrl("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p");
+		productCatalogFalse1.setMin(5);
+		productCatalogFalse1.setMax(10);
+		productCatalogFalse1.setCritical(false);
+		productCatalogFalse1.setLocationId(8);
+		productCatalogFalse1.setQuantity(0);
+		productCatalogFalse1.setPrice(new BigDecimal("12.49"));
+
+		List<ProductCatalog> returnedOutOfStockFalseList = Arrays.asList(new ProductCatalog[] {productCatalogFalse1});
+		
+		FilterNotification filter = new FilterNotification();
+		filter.setSiteId(4);
+		filter.setStockNotification(StockNotificationEnum.OUTOFSTOCK);
+		filter.setCritical(false);
+		
+		EasyMock.expect(notificationDao.getListOutOfStock(filter)).andReturn(returnedOutOfStockFalseList);
+		
+		EasyMock.expect(inventoryDao.getQuantity(2000, 4)).andReturn(0);
+		
+		replayAll();
+		
+		listProductCatalog = testNotificationService.getNotifications(filter);
+		
+		verifyAll();
+
+		assertEquals(productCatalogFalse1.getName(), listProductCatalog.get(0).getName());
+		assertEquals(productCatalogFalse1.getItemNumber(), listProductCatalog.get(0).getItemNumber());
+		assertEquals(productCatalogFalse1.getIdProduct(), listProductCatalog.get(0).getIdProduct());
+		assertEquals(productCatalogFalse1.getImageUrl(), listProductCatalog.get(0).getImageUrl());
+		assertEquals(productCatalogFalse1.getMin(), listProductCatalog.get(0).getMin());
+		assertEquals(productCatalogFalse1.getMax(), listProductCatalog.get(0).getMax());
+		assertEquals(productCatalogFalse1.getCritical(), listProductCatalog.get(0).getCritical());
+		assertEquals(productCatalogFalse1.getLocationId(), listProductCatalog.get(0).getLocationId());
+		assertEquals(productCatalogFalse1.getQuantity(), listProductCatalog.get(0).getQuantity());
+		assertEquals(productCatalogFalse1.getPrice(), listProductCatalog.get(0).getPrice());
+
+	}
+	
+	@Test
+	public void testGetNotificationsFilterLowInventoryCritical() {
+		
+		List<ProductCatalog> listProductCatalog = new ArrayList<>();
+
+		ProductCatalog productCatalogFalse2 = new ProductCatalog();
+		productCatalogFalse2.setName("Legionella Bacterium Water Testing Kit");
+		productCatalogFalse2.setItemNumber(112287);
+		productCatalogFalse2.setIdProduct(2002);
+		productCatalogFalse2.setImageUrl("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p");
+		productCatalogFalse2.setMin(5);
+		productCatalogFalse2.setMax(10);
+		productCatalogFalse2.setCritical(false);
+		productCatalogFalse2.setLocationId(8);
+		productCatalogFalse2.setQuantity(4);
+		productCatalogFalse2.setPrice(new BigDecimal("12.49"));
+
+		List<ProductCatalog> returnedLessThanMinFalseList = Arrays.asList(new ProductCatalog[] {productCatalogFalse2});
+		
+		FilterNotification filter = new FilterNotification();
+		filter.setSiteId(4);
+		filter.setStockNotification(StockNotificationEnum.LOWINVENTORY);
+		filter.setCritical(false);
+		
+		EasyMock.expect(notificationDao.getListLessThanMin(filter)).andReturn(returnedLessThanMinFalseList);
+		
+		EasyMock.expect(inventoryDao.getQuantity(2002, 4)).andReturn(4);
+		
+		replayAll();
+		
+		listProductCatalog = testNotificationService.getNotifications(filter);
+		
+		verifyAll();
+
+		assertEquals(productCatalogFalse2.getName(), listProductCatalog.get(0).getName());
+		assertEquals(productCatalogFalse2.getItemNumber(), listProductCatalog.get(0).getItemNumber());
+		assertEquals(productCatalogFalse2.getIdProduct(), listProductCatalog.get(0).getIdProduct());
+		assertEquals(productCatalogFalse2.getImageUrl(), listProductCatalog.get(0).getImageUrl());
+		assertEquals(productCatalogFalse2.getMin(), listProductCatalog.get(0).getMin());
+		assertEquals(productCatalogFalse2.getMax(), listProductCatalog.get(0).getMax());
+		assertEquals(productCatalogFalse2.getCritical(), listProductCatalog.get(0).getCritical());
+		assertEquals(productCatalogFalse2.getLocationId(), listProductCatalog.get(0).getLocationId());
+		assertEquals(productCatalogFalse2.getQuantity(), listProductCatalog.get(0).getQuantity());
+		assertEquals(productCatalogFalse2.getPrice(), listProductCatalog.get(0).getPrice());
+
+	}
+	
+	@Test
+	public void testGetNotificationsFilterMinThresholdCritical() {
+		
+		List<ProductCatalog> listProductCatalog = new ArrayList<>();
+
+		ProductCatalog productCatalogFalse3 = new ProductCatalog();
+		productCatalogFalse3.setName("200 Mg Medi-First Ibuprofen 2 Tablets, Box Of 250");
+		productCatalogFalse3.setItemNumber(132075);
+		productCatalogFalse3.setIdProduct(2004);
+		productCatalogFalse3.setImageUrl("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p");
+		productCatalogFalse3.setMin(5);
+		productCatalogFalse3.setMax(10);
+		productCatalogFalse3.setCritical(false);
+		productCatalogFalse3.setLocationId(8);
+		productCatalogFalse3.setQuantity(5);
+		productCatalogFalse3.setPrice(new BigDecimal("12.49"));
+
+		List<ProductCatalog> returnedListMinThresholdFalseList = Arrays.asList(new ProductCatalog[] {productCatalogFalse3});
+		
+		FilterNotification filter = new FilterNotification();
+		filter.setSiteId(4);
+		filter.setStockNotification(StockNotificationEnum.MINTHRESHOLD);
+		filter.setCritical(false);
+		
+		EasyMock.expect(notificationDao.getListMinThreshold(filter)).andReturn(returnedListMinThresholdFalseList);
+		
+		EasyMock.expect(inventoryDao.getQuantity(2004, 4)).andReturn(5);
+		
+		replayAll();
+		
+		listProductCatalog = testNotificationService.getNotifications(filter);
+		
+		verifyAll();
+
+		assertEquals(productCatalogFalse3.getName(), listProductCatalog.get(0).getName());
+		assertEquals(productCatalogFalse3.getItemNumber(), listProductCatalog.get(0).getItemNumber());
+		assertEquals(productCatalogFalse3.getIdProduct(), listProductCatalog.get(0).getIdProduct());
+		assertEquals(productCatalogFalse3.getImageUrl(), listProductCatalog.get(0).getImageUrl());
+		assertEquals(productCatalogFalse3.getMin(), listProductCatalog.get(0).getMin());
+		assertEquals(productCatalogFalse3.getMax(), listProductCatalog.get(0).getMax());
+		assertEquals(productCatalogFalse3.getCritical(), listProductCatalog.get(0).getCritical());
+		assertEquals(productCatalogFalse3.getLocationId(), listProductCatalog.get(0).getLocationId());
+		assertEquals(productCatalogFalse3.getQuantity(), listProductCatalog.get(0).getQuantity());
+		assertEquals(productCatalogFalse3.getPrice(), listProductCatalog.get(0).getPrice());
+
+	}
+	
+	@Test
+	public void testGetNotificationsFilterMaxThresholdCritical() {
+		
+		List<ProductCatalog> listProductCatalog = new ArrayList<>();
+
+		ProductCatalog productCatalogFalse4 = new ProductCatalog();
+		productCatalogFalse4.setName("Burn Aid Burn Gel Package Of 25");
+		productCatalogFalse4.setItemNumber(132068);
+		productCatalogFalse4.setIdProduct(2008);
+		productCatalogFalse4.setImageUrl("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p");
+		productCatalogFalse4.setMin(5);
+		productCatalogFalse4.setMax(10);
+		productCatalogFalse4.setCritical(false);
+		productCatalogFalse4.setLocationId(8);
+		productCatalogFalse4.setQuantity(13);
+		productCatalogFalse4.setPrice(new BigDecimal("12.49"));
+		
+		List<ProductCatalog> returnedListMaxThresholdFalseList = Arrays.asList(new ProductCatalog[] {productCatalogFalse4});
+		
+		FilterNotification filter = new FilterNotification();
+		filter.setSiteId(4);
+		filter.setStockNotification(StockNotificationEnum.INVENTORYEXCESS);
+		filter.setCritical(false);
+		
+		EasyMock.expect(notificationDao.getListMaxThreshold(filter)).andReturn(returnedListMaxThresholdFalseList);
+		
+		EasyMock.expect(inventoryDao.getQuantity(2008, 4)).andReturn(13);
+		
+		replayAll();
+		
+		listProductCatalog = testNotificationService.getNotifications(filter);
+		
+		verifyAll();
+		
+		assertEquals(productCatalogFalse4.getName(), listProductCatalog.get(0).getName());
+		assertEquals(productCatalogFalse4.getItemNumber(), listProductCatalog.get(0).getItemNumber());
+		assertEquals(productCatalogFalse4.getIdProduct(), listProductCatalog.get(0).getIdProduct());
+		assertEquals(productCatalogFalse4.getImageUrl(), listProductCatalog.get(0).getImageUrl());
+		assertEquals(productCatalogFalse4.getMin(), listProductCatalog.get(0).getMin());
+		assertEquals(productCatalogFalse4.getMax(), listProductCatalog.get(0).getMax());
+		assertEquals(productCatalogFalse4.getCritical(), listProductCatalog.get(0).getCritical());
+		assertEquals(productCatalogFalse4.getLocationId(), listProductCatalog.get(0).getLocationId());
+		assertEquals(productCatalogFalse4.getQuantity(), listProductCatalog.get(0).getQuantity());
+		assertEquals(productCatalogFalse4.getPrice(), listProductCatalog.get(0).getPrice());
+	}
 }
