@@ -119,6 +119,8 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listOutOfStockTrue)) {
 			
+			setQuantity(listOutOfStockTrue, filter.getSiteId());
+			
 			productCatalogList.addAll(listOutOfStockTrue);
 		}
 		
@@ -126,12 +128,16 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listLessThanMinTrue)) {
 			
+			setQuantity(listLessThanMinTrue, filter.getSiteId());
+			
 			productCatalogList.addAll(listLessThanMinTrue);
 		}
 		
 		List<ProductCatalog> listMinThresholdTrue = notificationDao.getListMinThreshold(filter);
 		
 		if(!CollectionUtils.isEmpty(listMinThresholdTrue)) {
+			
+			setQuantity(listMinThresholdTrue, filter.getSiteId());
 			
 			productCatalogList.addAll(listMinThresholdTrue);
 		}
@@ -144,12 +150,16 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listOutOfStockFalse)) {
 			
+			setQuantity(listOutOfStockFalse, filter.getSiteId());
+			
 			productCatalogList.addAll(listOutOfStockFalse);
 		}
 		
 		List<ProductCatalog> listLessThanMinFalse = notificationDao.getListLessThanMin(filter);
 		
 		if(!CollectionUtils.isEmpty(listLessThanMinFalse)) {
+			
+			setQuantity(listLessThanMinFalse, filter.getSiteId());
 			
 			productCatalogList.addAll(listLessThanMinFalse);
 		}
@@ -158,6 +168,8 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listMinThresholdFalse)) {
 			
+			setQuantity(listMinThresholdFalse, filter.getSiteId());
+			
 			productCatalogList.addAll(listMinThresholdFalse);
 		}
 		
@@ -165,15 +177,17 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listMaxThresholdTrue)) {
 			
+			setQuantity(listMaxThresholdTrue, filter.getSiteId());
+			
 			productCatalogList.addAll(listMaxThresholdTrue);
 		}
 		
 		if(!CollectionUtils.isEmpty(listMaxThresholdFalse)) {
 			
+			setQuantity(listMaxThresholdFalse, filter.getSiteId());
+			
 			productCatalogList.addAll(listMaxThresholdFalse);
 		}
-		
-		setQuantity(productCatalogList, filter.getSiteId());
 	}
 	
 	private void getNotificationsFilterCritical(FilterNotification filter, List<ProductCatalog> productCatalogList){
@@ -182,6 +196,8 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listOutOfStock)) {
 			
+			setQuantity(listOutOfStock, filter.getSiteId());
+			
 			productCatalogList.addAll(listOutOfStock);
 		}
 		
@@ -189,6 +205,8 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listLessThanMin)) {
 			
+			setQuantity(listLessThanMin, filter.getSiteId());
+
 			productCatalogList.addAll(listLessThanMin);
 		}
 		
@@ -196,6 +214,8 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listMinThreshold)) {
 			
+			setQuantity(listMinThreshold, filter.getSiteId());
+
 			productCatalogList.addAll(listMinThreshold);
 		}
 		
@@ -203,10 +223,10 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listMaxThreshold)) {
 			
+			setQuantity(listMaxThreshold, filter.getSiteId());
+
 			productCatalogList.addAll(listMaxThreshold);
 		}
-		
-		setQuantity(productCatalogList, filter.getSiteId());
 	}
 	
 	private void getNotificationsFilterOutOfStock(FilterNotification filter, List<ProductCatalog> productCatalogList){
@@ -215,10 +235,10 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listOutOfStock)) {
 			
+			setQuantity(listOutOfStock, filter.getSiteId());
+
 			productCatalogList.addAll(listOutOfStock);
 		}
-		
-		setQuantity(productCatalogList, filter.getSiteId());
 	}
 	
 	private void getNotificationsFilterLowInventory(FilterNotification filter, List<ProductCatalog> productCatalogList){
@@ -227,10 +247,10 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listLessThanMin)) {
 			
+			setQuantity(listLessThanMin, filter.getSiteId());
+
 			productCatalogList.addAll(listLessThanMin);
 		}
-		
-		setQuantity(productCatalogList, filter.getSiteId());
 	}
 	
 	private void getNotificationsFilterMinThreshold(FilterNotification filter, List<ProductCatalog> productCatalogList) {
@@ -239,10 +259,10 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listMinThreshold)) {
 			
+			setQuantity(listMinThreshold, filter.getSiteId());
+
 			productCatalogList.addAll(listMinThreshold);
 		}
-		
-		setQuantity(productCatalogList, filter.getSiteId());
 	}
 	
 	private void getNotificationsFilterMaxThreshold(FilterNotification filter, List<ProductCatalog> productCatalogList) {
@@ -251,10 +271,9 @@ public class NotificationServiceImpl implements NotificationService{
 		
 		if(!CollectionUtils.isEmpty(listMaxThreshold)) {
 			
+			setQuantity(listMaxThreshold, filter.getSiteId());
+
 			productCatalogList.addAll(listMaxThreshold);
 		}
-		
-		setQuantity(productCatalogList, filter.getSiteId());
-		
 	}
 }
