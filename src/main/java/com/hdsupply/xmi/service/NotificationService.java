@@ -7,6 +7,6 @@ import com.hdsupply.xmi.domain.ProductCatalog;
 
 public interface NotificationService {
 	
-	public List<ProductCatalog> getNotification(FilterNotification filter);
+	public List<ProductCatalog> getNotifications(FilterNotification filter);
 
 }

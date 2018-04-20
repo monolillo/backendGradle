@@ -31,25 +31,12 @@ public class NotificationDaoImpl implements NotificationDao{
 	@Value("${notificationDao.getListMaxThresholdSql}")
 	private String getListMaxThresholdSql;
 	
-	@Value("${notificationDao.getListOutOfStockCriticalSql}")
-	private String getListOutOfStockCriticalSql;
-	
-	@Value("${notificationDao.getListLessThanMinCriticalSql}")
-	private String getListLessThanMinCriticalSql;
-	
-	@Value("${notificationDao.getListMinThresholdCriticalSql}")
-	private String getListMinThresholdCriticalSql;
-	
-	@Value("${notificationDao.getListMaxThresholdCriticalSql}")
-	private String getListMaxThresholdCriticalSql;
-	
-	
 	@Override
 	public List<ProductCatalog> getListOutOfStock(FilterNotification filter) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		return jdbcTemplate.query(getListOutOfStockSql, new Object[] { filter.getSiteId(), filter.getSiteId() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
+		return jdbcTemplate.query(getListOutOfStockSql, new Object[] { filter.getSiteId(), filter.getSiteId(), filter.getCritical() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
 	}
 
 	@Override
@@ -57,7 +44,7 @@ public class NotificationDaoImpl implements NotificationDao{
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		return jdbcTemplate.query(getListLessThanMinSql, new Object[] { filter.getSiteId(), filter.getSiteId() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
+		return jdbcTemplate.query(getListLessThanMinSql, new Object[] { filter.getSiteId(), filter.getSiteId(), filter.getCritical() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
 	}
 
 	@Override
@@ -65,7 +52,7 @@ public class NotificationDaoImpl implements NotificationDao{
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		return jdbcTemplate.query(getListMinThresholdSql, new Object[] { filter.getSiteId(), filter.getSiteId() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
+		return jdbcTemplate.query(getListMinThresholdSql, new Object[] { filter.getSiteId(), filter.getSiteId(), filter.getCritical() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
 	}
 
 	@Override
@@ -73,37 +60,6 @@ public class NotificationDaoImpl implements NotificationDao{
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		
-		return jdbcTemplate.query(getListMaxThresholdSql, new Object[] { filter.getSiteId(), filter.getSiteId() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
-	}
-
-	@Override
-	public List<ProductCatalog> getListOutOfStockCritical(FilterNotification filter) {
-
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		return jdbcTemplate.query(getListOutOfStockCriticalSql, new Object[] { filter.getSiteId(), filter.getSiteId(), filter.getCritical() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
-	}
-
-	@Override
-	public List<ProductCatalog> getListLessThanMinCritical(FilterNotification filter) {
-		
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		return jdbcTemplate.query(getListLessThanMinCriticalSql, new Object[] { filter.getSiteId(), filter.getSiteId(), filter.getCritical() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
-	}
-
-	@Override
-	public List<ProductCatalog> getListMinThresholdCritical(FilterNotification filter) {
-
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		return jdbcTemplate.query(getListMinThresholdCriticalSql, new Object[] { filter.getSiteId(), filter.getSiteId(), filter.getCritical() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
-	}
-
-	@Override
-	public List<ProductCatalog> getListMaxThresholdCritical(FilterNotification filter) {
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		return jdbcTemplate.query(getListMaxThresholdCriticalSql, new Object[] { filter.getSiteId(), filter.getSiteId(), filter.getCritical() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
+		return jdbcTemplate.query(getListMaxThresholdSql, new Object[] { filter.getSiteId(), filter.getSiteId(), filter.getCritical() }, new BeanPropertyRowMapper<ProductCatalog>(ProductCatalog.class));
 	}
 }

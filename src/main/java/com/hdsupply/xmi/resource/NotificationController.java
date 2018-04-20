@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hdsupply.xmi.domain.FilterNotification;
 import com.hdsupply.xmi.domain.ProductCatalog;
+import com.hdsupply.xmi.enums.StockNotificationEnum;
 import com.hdsupply.xmi.service.NotificationService;
 
 @RestController
@@ -23,13 +24,15 @@ public class NotificationController extends BaseRestController {
 	
 	@RequestMapping(value="/site/{siteId}/product/notification", method=RequestMethod.GET)
 	@PreAuthorize("hasAuthority('NOTIFICATION')")
-	public List<ProductCatalog> getNotification(@PathParam("critical") Boolean critical, @PathVariable("siteId") Integer siteId) {
+	public List<ProductCatalog> getNotifications(@PathParam("critical") Boolean critical, 
+			@PathVariable("siteId") Integer siteId, @PathParam("stockNotification") StockNotificationEnum stockNotification) {
 		
 		FilterNotification filter = new FilterNotification();
 		filter.setSiteId(siteId);
 		filter.setCritical(critical);
+		filter.setStockNotification(stockNotification);
 		
-		List<ProductCatalog> productCatalogList = notificationService.getNotification(filter);
+		List<ProductCatalog> productCatalogList = notificationService.getNotifications(filter);
 		
 		return productCatalogList;
 	}
