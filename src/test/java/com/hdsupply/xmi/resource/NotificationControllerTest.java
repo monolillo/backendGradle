@@ -23,11 +23,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.util.ResourceUtils;
 
-import com.hdsupply.xmi.domain.Catalog;
 import com.hdsupply.xmi.domain.FilterNotification;
-import com.hdsupply.xmi.domain.Inventory;
 import com.hdsupply.xmi.domain.ProductCatalog;
-import com.hdsupply.xmi.enums.StockNotificationEnum;
 import com.hdsupply.xmi.service.NotificationService;
 
 @ContextConfiguration(classes = {NotificationControllerTest.class})
@@ -106,5 +103,4 @@ public class NotificationControllerTest extends ControllerTestBase {
 	public NotificationController mockNotificationService() {
 		return new NotificationController();
 	}
-
 }

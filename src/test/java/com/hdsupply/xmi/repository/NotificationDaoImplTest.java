@@ -254,5 +254,4 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 	public NotificationDao testNotificationDao() {
 		return new NotificationDaoImpl();
 	}
-
 }
