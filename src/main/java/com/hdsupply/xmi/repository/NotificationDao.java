@@ -14,13 +14,5 @@ public interface NotificationDao {
 	public List<ProductCatalog> getListMinThreshold(FilterNotification filter);
 	
 	public List<ProductCatalog> getListMaxThreshold(FilterNotification filter);
-	
-	public List<ProductCatalog> getListOutOfStockCritical(FilterNotification filter);
-	
-	public List<ProductCatalog> getListLessThanMinCritical(FilterNotification filter);
-	
-	public List<ProductCatalog> getListMinThresholdCritical(FilterNotification filter);
-	
-	public List<ProductCatalog> getListMaxThresholdCritical(FilterNotification filter);
 
 }
