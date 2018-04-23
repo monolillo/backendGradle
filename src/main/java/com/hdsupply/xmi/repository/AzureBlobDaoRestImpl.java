@@ -23,8 +23,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestOperations;
-import org.springframework.web.client.RestTemplate;
 
+/**
+ * Implementation of AzureBlobDao that uses a REST service call to upload the file.
+ * 
+ * @author julian.nunez
+ *
+ */
 @Repository
 public class AzureBlobDaoRestImpl implements AzureBlobDao {
 	
@@ -55,9 +60,7 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 	 * 
 	 */
 	@Override
-	public void uploadBlob(String fileName, byte[] fileBytes, String contentType) {
-		
-		restTemplate = new RestTemplate();
+	public String uploadBlob(String fileName, byte[] fileBytes, String contentType) {
 		
 		DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
 		String currTime = DATE_FORMAT.format(new Date());
@@ -83,6 +86,8 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		HttpEntity<byte[]> entity = new HttpEntity<>(fileBytes, headers);
 		
 		restTemplate.put(endpoint, entity);	    
+		
+		return endpoint;
 	    
 	}
 	
