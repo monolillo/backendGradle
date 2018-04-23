@@ -42,7 +42,7 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 	private static final String ENDPOINT = "https://{0}.blob.core.windows.net/{1}/{2}";
 	private static final String STR_TO_SIGN = "PUT\n\n\n{0}\n\n{1}\n\n\n\n\n\n\nx-ms-blob-type:BlockBlob\nx-ms-date:{2}\nx-ms-version:2015-12-11\n/{3}{4}";
 	private static final String AUTH_STR = "SharedKey {0}:{1}";
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z");
+	private static final String DATE_FORMAT_TEMPLATE = "EEE, d MMM yyyy HH:mm:ss z";
 
 	/**
 	 * Sends a request to the IFTTT endpoint with the following JSON body
@@ -60,8 +60,10 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 	@Override
 	public String uploadBlob(String fileName, byte[] fileBytes, String contentType) {
 		
-		DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
-		String currTime = DATE_FORMAT.format(new Date());
+		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_TEMPLATE);
+		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+		
+		String currTime = dateFormat.format(new Date());
 		
 		UriComponents fileUri = UriComponentsBuilder.fromUriString(ENDPOINT).build()
 				.expand(STORAGE_NAME, CONT_NAME, fileName);
@@ -82,10 +84,11 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		headers.set("x-ms-date", currTime);
 		headers.set("Authorization", authHeader);
 		
-		LOG.debug("Making a PUT request to: {}", fileUri.toUriString());
+		String fileUriString = fileUri.toUriString();
+		LOG.debug("Making a PUT request to: {}", fileUriString);
 		
 		HttpEntity<byte[]> entity = new HttpEntity<>(fileBytes, headers);
-		restTemplate.put(fileUri.toUriString(), entity);	    
+		restTemplate.put(fileUriString, entity);	    
 		
 		return fileUri.encode().toUriString();
 	    
@@ -99,15 +102,13 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		
 		byte[] secret = DatatypeConverter.parseBase64Binary(API_KEY);
 		
-		Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+		Mac sha256Hmac = Mac.getInstance("HmacSHA256");
 	    SecretKeySpec secret_key = new SecretKeySpec(secret, "HmacSHA256");
-	    sha256_HMAC.init(secret_key);
+	    sha256Hmac.init(secret_key);
 
-	    String hashBase64 = DatatypeConverter.printBase64Binary(sha256_HMAC.doFinal(toSign.getBytes()));
+	    String hashBase64 = DatatypeConverter.printBase64Binary(sha256Hmac.doFinal(toSign.getBytes()));
 	    
-	    String authorization = MessageFormat.format(AUTH_STR, STORAGE_NAME, hashBase64);	
-	    
-	    return authorization;
+	    return  MessageFormat.format(AUTH_STR, STORAGE_NAME, hashBase64);
 		
 	}
 	
