@@ -44,8 +44,4 @@ public class Catalog {
 	public void setCritical(Boolean critical) {
 		this.critical = critical;
 	}
-	
-	
-	
-	
 }
