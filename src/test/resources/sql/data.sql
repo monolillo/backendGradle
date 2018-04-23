@@ -25,26 +25,26 @@ INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (3,'T8 Bulb 40W I
 INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (4,'A Bulb 25W A15 Frost 130V',327825,9.35,'/img/item-image-lightbulb.png');
 INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (5,'Battery Smoke Alarm',307193,5.50,'/img/item-image-lightbulb.png');
 INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (6,'HP Disposer 1-Year Warranty',317692,40.25,'/img/item-image-lightbulb.png');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1090,'Avery Door Hangers With Tear Away Cards, 2 Cards P',186335,15,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1091,'Echo 2.6 Ounce 50-1 2-Cycle Engine Oil With Fuel S',130946,19,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1092,'Poulan Pro SAE 30 4-Cycle Engine Oil',130254,6,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1093,'Mi-T-M 16 Ounce Pressure Washer Pump Oil',131088,5,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p'); 
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1094,'11 Oz Liquid Wrench Industrial Chain Lubricant',111593,6,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1095,'Tanaka Perfect Mix 16 Oz 2-Cycle Engine Oil With F',130818,7,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1096,'12" Flexible Grease Gun Hose',111265,8,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1097,'10.25 Oz Liquid Wrench White Lithium Grease With C',111255,6,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1098,'14 Ounce High Temperature Grease Cartridge',111267,9,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1099,'14 Oz Multipurpose Grease Cartridge',111364,4,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2000,'Certified Safety 4-Shelf Class B First Aid Cabinet',113644,253,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2001,'Medifirst® Zika Outdoor Protection, Package Of 2 K',112286,160,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2002,'Legionella Bacterium Water Testing Kit',112287,440,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1090,'Avery Door Hangers With Tear Away Cards, 2 Cards P',186335,15.67,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1091,'Echo 2.6 Ounce 50-1 2-Cycle Engine Oil With Fuel S',130946,19.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1092,'Poulan Pro SAE 30 4-Cycle Engine Oil',130254,6.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1093,'Mi-T-M 16 Ounce Pressure Washer Pump Oil',131088,5.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p'); 
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1094,'11 Oz Liquid Wrench Industrial Chain Lubricant',111593,6.49,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1095,'Tanaka Perfect Mix 16 Oz 2-Cycle Engine Oil With F',130818,7.49,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1096,'12" Flexible Grease Gun Hose',111265,8.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1097,'10.25 Oz Liquid Wrench White Lithium Grease With C',111255,6.49,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1098,'14 Ounce High Temperature Grease Cartridge',111267,9.49,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (1099,'14 Oz Multipurpose Grease Cartridge',111364,4.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2000,'Certified Safety 4-Shelf Class B First Aid Cabinet',113644,253.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2001,'Medifirst Zika Outdoor Protection, Package Of 2 K',112286,160.00,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2002,'Legionella Bacterium Water Testing Kit',112287,440.00,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
 INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2003,'2 Oz Burn Spray',132064,5.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2004,'200 Mg Medi-First Ibuprofen 2 Tablets, Box Of 250',132075,14,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2005,'Medi-First Antacid Box Of 50',132078,9,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2006,'Medi-First Cherry Cough Drops Box Of 125',132079,8,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2007,'Triple Antibiotic Ointment Package Of 25',132067,4,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2008,'Burn Aid Burn Gel Package Of 25',132068,15,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
-INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2009,'1/2 Oz Eyedrops',132069,4,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2004,'200 Mg Medi-First Ibuprofen 2 Tablets, Box Of 250',132075,14.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2005,'Medi-First Antacid Box Of 50',132078,9.49,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2006,'Medi-First Cherry Cough Drops Box Of 125',132079,8.49,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2007,'Triple Antibiotic Ointment Package Of 25',132067,4.99,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2008,'Burn Aid Burn Gel Package Of 25',132068,15.49,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
+INSERT INTO PRODUCT (id,name,itemNumber,price,imageUrl) VALUES (2009,'1/2 Oz Eyedrops',132069,4.49,'https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p');
 
 INSERT INTO CATALOG (critical,min,max,productId,siteId) VALUES (0,5,30,1,2);
 INSERT INTO CATALOG (critical,min,max,productId,siteId) VALUES (0,5,30,2,2);
@@ -123,7 +123,7 @@ INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_IN_PRODUCT')
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_OUT_PRODUCT');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'UNDO_CHECK_IN');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'UNDO_CHECK_OUT');
- 
+
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',0);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',1);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('mgr_usr',2);
