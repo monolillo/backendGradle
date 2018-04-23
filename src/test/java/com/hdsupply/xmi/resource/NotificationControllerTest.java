@@ -44,7 +44,6 @@ public class NotificationControllerTest extends ControllerTestBase {
         EasyMock.reset(mockNotificationService);
 	}
 	
-	@Past
 	@Test
 	@WithMockUser(username = "admin", authorities = { "NOTIFICATION" })
 	public void testGetNotification() throws Exception {
