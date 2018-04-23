@@ -1,5 +1,6 @@
 package com.hdsupply.xmi.resource;
 
+import java.io.IOException;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class InventoryController extends BaseRestController{
 	@RequestMapping(value="/shop/{shopId}/product/{productId}/checkout", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('CHECK_OUT_PRODUCT')")
-	public Integer checkOutProduct(@RequestBody Inventory inventory, @PathVariable("shopId") Integer shopId, @PathVariable("productId") Integer productId, Principal userDetail) {
+	public Integer checkOutProduct(@RequestBody Inventory inventory, @PathVariable("shopId") Integer shopId, @PathVariable("productId") Integer productId, Principal userDetail) throws IOException {
 		
 		inventory.setProductId(productId);
 		inventory.setShopId(shopId);
