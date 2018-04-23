@@ -37,65 +37,11 @@ public class NotificationServiceImpl implements NotificationService{
 			
 		} else if (null == filter.getCritical() && null != filter.getStockNotification()) {
 			
-			if (StockNotificationEnum.OUTOFSTOCK.equals(filter.getStockNotification())) {
-				
-				filter.setCritical(true);
-				
-				getNotificationsFilterOutOfStock(filter, productCatalogList);
-				
-				filter.setCritical(false);
-				
-				getNotificationsFilterOutOfStock(filter, productCatalogList);
-				
-			} else if (StockNotificationEnum.LOWINVENTORY.equals(filter.getStockNotification())) {
-				
-				filter.setCritical(true);
-				
-				getNotificationsFilterLowInventory(filter, productCatalogList);
-				
-				filter.setCritical(false);
-				
-				getNotificationsFilterLowInventory(filter, productCatalogList);
-				
-			} else if (StockNotificationEnum.MINTHRESHOLD.equals(filter.getStockNotification())) {
-				
-				filter.setCritical(true);
-				
-				getNotificationsFilterMinThreshold(filter, productCatalogList);
-				
-				filter.setCritical(false);
-				
-				getNotificationsFilterMinThreshold(filter, productCatalogList);
-				
-			} else if (StockNotificationEnum.INVENTORYEXCESS.equals(filter.getStockNotification())) {
-				
-				filter.setCritical(true);
-				
-				getNotificationsFilterMaxThreshold(filter, productCatalogList);
-				
-				filter.setCritical(false);
-				
-				getNotificationsFilterMaxThreshold(filter, productCatalogList);
-			}
+			getNotificationOnlyStockNotification(filter, productCatalogList);
 			
 		} else if (null != filter.getCritical() && null != filter.getStockNotification()) {
 			
-			if (StockNotificationEnum.OUTOFSTOCK.equals(filter.getStockNotification())) {
-				
-				getNotificationsFilterOutOfStock(filter, productCatalogList);
-				
-			} else if (StockNotificationEnum.LOWINVENTORY.equals(filter.getStockNotification())) {
-				
-				getNotificationsFilterLowInventory(filter, productCatalogList);
-				
-			} else if (StockNotificationEnum.MINTHRESHOLD.equals(filter.getStockNotification())) {
-				
-				getNotificationsFilterMinThreshold(filter, productCatalogList);
-				
-			} else if (StockNotificationEnum.INVENTORYEXCESS.equals(filter.getStockNotification())) {
-				
-				getNotificationsFilterMaxThreshold(filter, productCatalogList);
-			}
+			getNotificationCriticalStockNotification(filter, productCatalogList);
 		}
 
 		return productCatalogList;
@@ -110,7 +56,7 @@ public class NotificationServiceImpl implements NotificationService{
 			productCatalog.setQuantity(qty);
 		}
 	}
-	
+		
 	private void getAllNotifications(FilterNotification filter, List<ProductCatalog> productCatalogList){
 		
 		filter.setCritical(true);
@@ -226,6 +172,71 @@ public class NotificationServiceImpl implements NotificationService{
 			setQuantity(listMaxThreshold, filter.getSiteId());
 
 			productCatalogList.addAll(listMaxThreshold);
+		}
+	}
+	
+	private void getNotificationOnlyStockNotification(FilterNotification filter, List<ProductCatalog> productCatalogList) {
+		
+		if (StockNotificationEnum.OUTOFSTOCK.equals(filter.getStockNotification())) {
+			
+			filter.setCritical(true);
+			
+			getNotificationsFilterOutOfStock(filter, productCatalogList);
+			
+			filter.setCritical(false);
+			
+			getNotificationsFilterOutOfStock(filter, productCatalogList);
+			
+		} else if (StockNotificationEnum.LOWINVENTORY.equals(filter.getStockNotification())) {
+			
+			filter.setCritical(true);
+			
+			getNotificationsFilterLowInventory(filter, productCatalogList);
+			
+			filter.setCritical(false);
+			
+			getNotificationsFilterLowInventory(filter, productCatalogList);
+			
+		} else if (StockNotificationEnum.MINTHRESHOLD.equals(filter.getStockNotification())) {
+			
+			filter.setCritical(true);
+			
+			getNotificationsFilterMinThreshold(filter, productCatalogList);
+			
+			filter.setCritical(false);
+			
+			getNotificationsFilterMinThreshold(filter, productCatalogList);
+			
+		} else if (StockNotificationEnum.INVENTORYEXCESS.equals(filter.getStockNotification())) {
+			
+			filter.setCritical(true);
+			
+			getNotificationsFilterMaxThreshold(filter, productCatalogList);
+			
+			filter.setCritical(false);
+			
+			getNotificationsFilterMaxThreshold(filter, productCatalogList);
+		}
+		
+	}
+	
+	private void getNotificationCriticalStockNotification(FilterNotification filter, List<ProductCatalog> productCatalogList) {
+		
+		if (StockNotificationEnum.OUTOFSTOCK.equals(filter.getStockNotification())) {
+			
+			getNotificationsFilterOutOfStock(filter, productCatalogList);
+			
+		} else if (StockNotificationEnum.LOWINVENTORY.equals(filter.getStockNotification())) {
+			
+			getNotificationsFilterLowInventory(filter, productCatalogList);
+			
+		} else if (StockNotificationEnum.MINTHRESHOLD.equals(filter.getStockNotification())) {
+			
+			getNotificationsFilterMinThreshold(filter, productCatalogList);
+			
+		} else if (StockNotificationEnum.INVENTORYEXCESS.equals(filter.getStockNotification())) {
+			
+			getNotificationsFilterMaxThreshold(filter, productCatalogList);
 		}
 	}
 	
