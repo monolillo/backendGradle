@@ -24,6 +24,10 @@ public class NotificationEmailServiceImpl implements NotificationEmailService {
 	private static final Logger LOG = LoggerFactory.getLogger(NotificationEmailServiceImpl.class);
 	
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss");
+	private static final String FILENAME_TEMPLATE = "Product-list_{0}.xlsx";
+	
+	private static final String IFTTT_EVENT = "xmi_product_list";
+	private static final String EXCEL_MIME_TYPE = "application/vnd.ms-excel";
 
 	@Autowired
 	private AzureBlobDao blobDao;
@@ -37,8 +41,6 @@ public class NotificationEmailServiceImpl implements NotificationEmailService {
 	@Override
 	public void emailNotifications() {
 		
-		String currTime = DATE_FORMAT.format(new Date());
-		String filenameTemplate = "Product-list_{0}.xlsx";
 		
         ProductCatalog product1 = new ProductCatalog();
         product1.setItemNumber(123456);
@@ -52,19 +54,20 @@ public class NotificationEmailServiceImpl implements NotificationEmailService {
         products.add(product1);
         products.add(product1);
         
-        byte[] excelFile = null;
+        byte[] excelFileBytes = null;
         try {
-			excelFile = excelService.convertToExcel(products);
+        	excelFileBytes = excelService.convertToExcel(products);
 		} catch (IOException e) {
 			LOG.error("Error generating Excel representation of product list.", e);
 			
 			throw new RuntimeException("Error generating Excel representation of product list.", e);
 		}
         
-        String fileUrl = blobDao.uploadBlob(MessageFormat.format(filenameTemplate, currTime), 
-        		excelFile, "application/vnd.ms-excel");
+		String currTime = DATE_FORMAT.format(new Date());
+        String fileUrl = blobDao.uploadBlob(MessageFormat.format(FILENAME_TEMPLATE, currTime), 
+        		excelFileBytes, EXCEL_MIME_TYPE);
         
-        iftttDao.tiggerEvent("xmi_product_list", "julianf.nunez@gmail.com", "BBB", fileUrl);
+        iftttDao.tiggerEvent(IFTTT_EVENT, "julianf.nunez@gmail.com", "BBB", fileUrl);
 		
 	}
 
