@@ -40,6 +40,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Avery Door Hangers With Tear Away Cards, 2 Cards P", listProductCatalog.get(0).getName());
 		assertEquals((Integer)186335, listProductCatalog.get(0).getItemNumber());
 		assertEquals((Integer)1090, listProductCatalog.get(0).getIdProduct());
+		assertEquals(new BigDecimal("15.67"), listProductCatalog.get(0).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(0).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(0).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(0).getMax());
@@ -49,6 +50,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Echo 2.6 Ounce 50-1 2-Cycle Engine Oil With Fuel S", listProductCatalog.get(1).getName());
 		assertEquals((Integer)130946, listProductCatalog.get(1).getItemNumber());
 		assertEquals((Integer)1091, listProductCatalog.get(1).getIdProduct());
+		assertEquals(new BigDecimal("19.99"), listProductCatalog.get(1).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(1).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(1).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(1).getMax());
@@ -58,15 +60,17 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Certified Safety 4-Shelf Class B First Aid Cabinet", listProductCatalog.get(2).getName());
 		assertEquals((Integer)113644, listProductCatalog.get(2).getItemNumber());
 		assertEquals((Integer)2000, listProductCatalog.get(2).getIdProduct());
+		assertEquals(new BigDecimal("253.99"), listProductCatalog.get(2).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(2).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(2).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(2).getMax());
 		assertEquals(false, listProductCatalog.get(2).getCritical());
 		assertEquals((Integer)8, listProductCatalog.get(2).getLocationId());
 		
-		assertEquals("Medifirst® Zika Outdoor Protection, Package Of 2 K", listProductCatalog.get(3).getName());
+		assertEquals("Medifirst Zika Outdoor Protection, Package Of 2 K", listProductCatalog.get(3).getName());
 		assertEquals((Integer)112286, listProductCatalog.get(3).getItemNumber());
 		assertEquals((Integer)2001, listProductCatalog.get(3).getIdProduct());
+		assertEquals(new BigDecimal("160.00"), listProductCatalog.get(3).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(3).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(3).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(3).getMax());
@@ -93,6 +97,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Poulan Pro SAE 30 4-Cycle Engine Oil", listProductCatalog.get(0).getName());
 		assertEquals((Integer)130254, listProductCatalog.get(0).getItemNumber());
 		assertEquals((Integer)1092, listProductCatalog.get(0).getIdProduct());
+		assertEquals(new BigDecimal("6.99"), listProductCatalog.get(0).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(0).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(0).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(0).getMax());
@@ -102,6 +107,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Mi-T-M 16 Ounce Pressure Washer Pump Oil", listProductCatalog.get(1).getName());
 		assertEquals((Integer)131088, listProductCatalog.get(1).getItemNumber());
 		assertEquals((Integer)1093, listProductCatalog.get(1).getIdProduct());
+		assertEquals(new BigDecimal("5.99"), listProductCatalog.get(1).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(1).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(1).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(1).getMax());
@@ -111,6 +117,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Legionella Bacterium Water Testing Kit", listProductCatalog.get(2).getName());
 		assertEquals((Integer)112287, listProductCatalog.get(2).getItemNumber());
 		assertEquals((Integer)2002, listProductCatalog.get(2).getIdProduct());
+		assertEquals(new BigDecimal("440.00"), listProductCatalog.get(2).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(2).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(2).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(2).getMax());
@@ -120,6 +127,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("2 Oz Burn Spray", listProductCatalog.get(3).getName());
 		assertEquals((Integer)132064, listProductCatalog.get(3).getItemNumber());
 		assertEquals((Integer)2003, listProductCatalog.get(3).getIdProduct());
+		assertEquals(new BigDecimal("5.99"), listProductCatalog.get(3).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(3).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(3).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(3).getMax());
@@ -146,6 +154,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("11 Oz Liquid Wrench Industrial Chain Lubricant", listProductCatalog.get(0).getName());
 		assertEquals((Integer)111593, listProductCatalog.get(0).getItemNumber());
 		assertEquals((Integer)1094, listProductCatalog.get(0).getIdProduct());
+		assertEquals(new BigDecimal("6.49"), listProductCatalog.get(0).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(0).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(0).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(0).getMax());
@@ -155,6 +164,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Tanaka Perfect Mix 16 Oz 2-Cycle Engine Oil With F", listProductCatalog.get(1).getName());
 		assertEquals((Integer)130818, listProductCatalog.get(1).getItemNumber());
 		assertEquals((Integer)1095, listProductCatalog.get(1).getIdProduct());
+		assertEquals(new BigDecimal("7.49"), listProductCatalog.get(1).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(1).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(1).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(1).getMax());
@@ -164,6 +174,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("200 Mg Medi-First Ibuprofen 2 Tablets, Box Of 250", listProductCatalog.get(2).getName());
 		assertEquals((Integer)132075, listProductCatalog.get(2).getItemNumber());
 		assertEquals((Integer)2004, listProductCatalog.get(2).getIdProduct());
+		assertEquals(new BigDecimal("14.99"), listProductCatalog.get(2).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(2).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(2).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(2).getMax());
@@ -173,6 +184,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Medi-First Antacid Box Of 50", listProductCatalog.get(3).getName());
 		assertEquals((Integer)132078, listProductCatalog.get(3).getItemNumber());
 		assertEquals((Integer)2005, listProductCatalog.get(3).getIdProduct());
+		assertEquals(new BigDecimal("9.49"), listProductCatalog.get(3).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(3).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(3).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(3).getMax());
@@ -199,6 +211,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("14 Ounce High Temperature Grease Cartridge", listProductCatalog.get(0).getName());
 		assertEquals((Integer)111267, listProductCatalog.get(0).getItemNumber());
 		assertEquals((Integer)1098, listProductCatalog.get(0).getIdProduct());
+		assertEquals(new BigDecimal("9.49"), listProductCatalog.get(0).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(0).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(0).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(0).getMax());
@@ -208,6 +221,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("14 Oz Multipurpose Grease Cartridge", listProductCatalog.get(1).getName());
 		assertEquals((Integer)111364, listProductCatalog.get(1).getItemNumber());
 		assertEquals((Integer)1099, listProductCatalog.get(1).getIdProduct());
+		assertEquals(new BigDecimal("4.99"), listProductCatalog.get(1).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(1).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(1).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(1).getMax());
@@ -217,6 +231,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("Burn Aid Burn Gel Package Of 25", listProductCatalog.get(2).getName());
 		assertEquals((Integer)132068, listProductCatalog.get(2).getItemNumber());
 		assertEquals((Integer)2008, listProductCatalog.get(2).getIdProduct());
+		assertEquals(new BigDecimal("15.49"), listProductCatalog.get(2).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(2).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(2).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(2).getMax());
@@ -226,6 +241,7 @@ public class NotificationDaoImplTest extends DaoDbTestBase {
 		assertEquals("1/2 Oz Eyedrops", listProductCatalog.get(3).getName());
 		assertEquals((Integer)132069, listProductCatalog.get(3).getItemNumber());
 		assertEquals((Integer)2009, listProductCatalog.get(3).getIdProduct());
+		assertEquals(new BigDecimal("4.49"), listProductCatalog.get(3).getPrice());
 		assertEquals("https://hdsupplysolutions.com/wcsstore/ThdsMroUs/p", listProductCatalog.get(3).getImageUrl());
 		assertEquals((Integer)5, listProductCatalog.get(3).getMin());
 		assertEquals((Integer)10, listProductCatalog.get(3).getMax());

@@ -1,5 +1,6 @@
 package com.hdsupply.xmi.resource;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -9,6 +10,8 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.validation.constraints.Past;
 
 import org.easymock.Capture;
 import org.easymock.EasyMock;
@@ -41,6 +44,7 @@ public class NotificationControllerTest extends ControllerTestBase {
         EasyMock.reset(mockNotificationService);
 	}
 	
+	@Past
 	@Test
 	@WithMockUser(username = "admin", authorities = { "NOTIFICATION" })
 	public void testGetNotification() throws Exception {
@@ -66,11 +70,8 @@ public class NotificationControllerTest extends ControllerTestBase {
 		productCatalog2.setMin(5);
 		productCatalog2.setName("Right Arrow Directional Sign, Green, 3 x 3");
 		productCatalog2.setCritical(false);
-		productCatalog1.setQuantity(2);
-		productCatalog1.setLocationId(10);
-		
-		FilterNotification filter = new FilterNotification();
-		filter.setSiteId(4);
+		productCatalog2.setQuantity(2);
+		productCatalog2.setLocationId(10);
 		
 		Capture<FilterNotification> captured = EasyMock.newCapture();
 		
@@ -89,6 +90,11 @@ public class NotificationControllerTest extends ControllerTestBase {
 			.andExpect(content().json(expectedJson));
 		
 		EasyMock.verify(mockNotificationService);
+		
+		assertEquals(productCatalog1, returnedProductCatalog.get(0));
+		assertEquals(productCatalog2, returnedProductCatalog.get(1));
+		assertEquals((Integer)4, captured.getValue().getSiteId());
+		
 	}
 	
 	@Bean
