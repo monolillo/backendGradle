@@ -2,10 +2,7 @@ package com.hdsupply.xmi.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import org.easymock.Capture;
 import org.easymock.EasyMock;
@@ -15,10 +12,8 @@ import org.easymock.Mock;
 import org.easymock.TestSubject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.util.ResourceUtils;
 
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.domain.Site;
@@ -64,7 +59,6 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 		XmiUser xmiUser = new XmiUser("admin", "123", "user.getEmail()", "11111", AuthorityUtils.NO_AUTHORITIES);
 		
 		EasyMock.expect(productService.getProductById(2,2)).andReturn(productCatalog);
-//		EasyMock.expect(productService.getProductById(2,1)).andReturn(productCatalog2);
 		
 		EasyMock.expect(userDetailsService.loadUserByUsername(EasyMock.eq("admin"))).andReturn(xmiUser);
 		
@@ -84,7 +78,7 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 		assertEquals("xmi_critical_low", capturedEvent.getValue());
 		assertEquals("user.getEmail()",captureValue1.getValue());
 		assertEquals("Product 2 is Out of Stock",captureValue2.getValue());
-		assertEquals ("2.0.A Bulb 40W A15 Frost.5.Out of Stock\r\n",captureValue3.getValue());
+		assertEquals ("2.0.A Bulb 40W A15 Frost.5.Out of Stock",captureValue3.getValue());
 		
 	}
 	
@@ -128,7 +122,7 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 		assertEquals("xmi_critical_low", capturedEvent.getValue());
 		assertEquals("user.getEmail()",captureValue1.getValue());
 		assertEquals("Product 2 is Running low",captureValue2.getValue());
-		assertEquals ("2.3.A Bulb 40W A15 Frost.5.Running low\r\n",captureValue3.getValue());
+		assertEquals ("2.3.A Bulb 40W A15 Frost.5.Running low",captureValue3.getValue());
 		
 	}
 

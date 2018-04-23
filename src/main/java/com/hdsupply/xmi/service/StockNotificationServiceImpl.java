@@ -62,20 +62,20 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 		
 		String emailTemplate = new String(Files.readAllBytes(file.toPath()));
 		
-		String msg = emailTemplate.replaceAll("AAAitemNumberAAA", String.valueOf(productCatalog.getItemNumber()));
+		String msg = emailTemplate.replaceAll("AAAitemNumberAAA", String.valueOf(productCatalog.getItemNumber()).trim());
 		
-		String msg1 = msg.replaceAll("AAAquantityAAA", String.valueOf(productCatalog.getQuantity()));
+		String msg1 = msg.replaceAll("AAAquantityAAA", String.valueOf(productCatalog.getQuantity()).trim());
 		
-		String msg2 = msg1.replaceAll("AAAnameAAA", String.valueOf(productCatalog.getName()));
+		String msg2 = msg1.replaceAll("AAAnameAAA", String.valueOf(productCatalog.getName()).trim());
 		
-		String msg3 = msg2.replaceAll("AAAminAAA", String.valueOf(productCatalog.getMin()));
+		String msg3 = msg2.replaceAll("AAAminAAA", String.valueOf(productCatalog.getMin()).trim());
 		
 		String msg4;
 		
 		if(0 == productCatalog.getQuantity()) {
-			msg4 = msg3.replaceAll("AAAstateAAA", "Out of Stock");
+			msg4 = msg3.replaceAll("AAAstateAAA", "Out of Stock").trim();
 		} else {
-			msg4 = msg3.replaceAll("AAAstateAAA", "Running low");
+			msg4 = msg3.replaceAll("AAAstateAAA", "Running low").trim();
 		}
 		
 		return msg4;
