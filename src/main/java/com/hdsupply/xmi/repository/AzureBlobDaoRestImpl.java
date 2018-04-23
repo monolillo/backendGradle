@@ -86,8 +86,9 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		headers.set("x-ms-date", currTime);
 		headers.set("Authorization", authHeader);
 		
-		HttpEntity<byte[]> entity = new HttpEntity<>(fileBytes, headers);
+		LOG.debug("Making a PUT request to: {}", fileUri.toUriString());
 		
+		HttpEntity<byte[]> entity = new HttpEntity<>(fileBytes, headers);
 		restTemplate.put(fileUri.toUriString(), entity);	    
 		
 		return fileUri.encode().toUriString();
@@ -98,7 +99,7 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		
 		String toSign = MessageFormat.format(STR_TO_SIGN, Long.toString(size), contentType, currTime, STORAGE_NAME, filePath);
 		
-		System.out.println(toSign);
+		LOG.debug("Signing request with string: {}", toSign);
 		
 		byte[] secret = DatatypeConverter.parseBase64Binary(API_KEY);
 		
@@ -114,13 +115,4 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		
 	}
 	
-	
-	public static void main(String[] args) throws IOException, InvalidFormatException, InvalidKeyException, NoSuchAlgorithmException {
-		AzureBlobDao dao = new AzureBlobDaoRestImpl();
-		
-		File file = ResourceUtils.getFile("classpath:" + "Test2.xlsx");
-		byte[] fileBytes = Files.readAllBytes(file.toPath());
-		
-		dao.uploadBlob("Test2.xlsx", fileBytes, "application/vnd.ms-excel");
-	}
 }
