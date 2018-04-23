@@ -2,6 +2,7 @@ package com.hdsupply.xmi.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.Date;
 
 import org.easymock.Capture;
@@ -28,6 +29,9 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 	
 	@Mock
 	private InventoryDao inventoryDao;
+	
+	@Mock
+	private StockNotificationService stockNotificationService;
 	
 	@Test
 	public void testCheckInUpdateProduct() {
@@ -62,7 +66,7 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 	}
 	
 	@Test
-	public void testCheckoutUpdateProduct() {
+	public void testCheckoutUpdateProduct() throws IOException {
 		
 		Inventory inventory = new Inventory();
 		inventory.setLocationId(2);
@@ -71,23 +75,25 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		inventory.setShopId(2);
 		
 		Capture<Inventory> captured = EasyMock.newCapture();
-				
+		
 		inventoryDao.updateCheckOutInventoryProduct(EasyMock.capture(captured));
 		
 		EasyMock.expect(inventoryDao.getNextCheckOutId()).andReturn(1);
 		EasyMock.expect(inventoryDao.getInventoryById(1,2)).andReturn(inventory);
 		
 		inventoryDao.newCheckOut(EasyMock.capture(captured), EasyMock.eq("admin"), EasyMock.eq(1));
+		stockNotificationService.doNotification(EasyMock.eq("admin"), EasyMock.eq(2), EasyMock.eq(1));
 		
 		replayAll();
-		
+	
 		inventoryServiceImplTest.checkOutProduct(inventory, "admin");
 		
 		verifyAll();
 		
 		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
 		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());
-		assertEquals(inventory.getShopId(), captured.getValue().getShopId());
+		assertEquals(inventory.getShopId(), captured.getValue().getShopId());	
+		
 	}
 	
 	@Test
@@ -123,7 +129,7 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 	}
 	
 	@Test
-	public void testCheckOutProduct() {
+	public void testCheckOutProduct() throws IOException {
 		
 		Inventory inventory = new Inventory();
 		inventory.setProductId(1);
@@ -131,13 +137,14 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		inventory.setShopId(2);
 		
 		Capture<Inventory> captured = EasyMock.newCapture();
-		
+
 		inventoryDao.updateCheckOutInventoryProduct(EasyMock.capture(captured));
 		
 		EasyMock.expect(inventoryDao.getNextCheckOutId()).andReturn(1);
 		EasyMock.expect(inventoryDao.getInventoryById(1,2)).andReturn(inventory);
 		
 		inventoryDao.newCheckOut(EasyMock.capture(captured), EasyMock.eq("admin"), EasyMock.eq(1));
+		stockNotificationService.doNotification(EasyMock.eq("admin"), EasyMock.eq(2), EasyMock.eq(1));
 		
 		replayAll();
 		
@@ -148,7 +155,7 @@ public class InventoryServiceImplTest extends EasyMockSupport {
 		assertEquals(inventory.getProductId(), captured.getValue().getProductId());
 		assertEquals(inventory.getQuantity(), captured.getValue().getQuantity());
 		assertEquals(inventory.getShopId(), captured.getValue().getShopId());
-		
+
 	}
 	
 	@Test

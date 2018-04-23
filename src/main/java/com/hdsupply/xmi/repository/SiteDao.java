@@ -8,4 +8,6 @@ public interface SiteDao {
 
 	List<Site> getSiteByUser(String user);
 	
+	Site getSiteByIdShop(Integer shopId);
+	
 }

@@ -35,4 +35,14 @@ public class SiteServiceImpl implements SiteService {
 		return listSite;
 	}
 
+	@Override
+	public Site getSiteByIdShop(Integer shopId) {
+		
+		Site site = siteDao.getSiteByIdShop(shopId);
+		
+		return site;
+	}
+	
+	
+
 }
