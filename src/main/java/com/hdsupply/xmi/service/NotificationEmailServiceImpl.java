@@ -2,7 +2,10 @@ package com.hdsupply.xmi.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,6 +22,8 @@ import com.hdsupply.xmi.service.excel.ExcelService;
 public class NotificationEmailServiceImpl implements NotificationEmailService {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(NotificationEmailServiceImpl.class);
+	
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss");
 
 	@Autowired
 	private AzureBlobDao blobDao;
@@ -31,6 +36,9 @@ public class NotificationEmailServiceImpl implements NotificationEmailService {
 	
 	@Override
 	public void emailNotifications() {
+		
+		String currTime = DATE_FORMAT.format(new Date());
+		String filenameTemplate = "Product-list_{0}.xlsx";
 		
         ProductCatalog product1 = new ProductCatalog();
         product1.setItemNumber(123456);
@@ -53,7 +61,8 @@ public class NotificationEmailServiceImpl implements NotificationEmailService {
 			throw new RuntimeException("Error generating Excel representation of product list.", e);
 		}
         
-        String fileUrl = blobDao.uploadBlob("Test3.xlsx", excelFile, "application/vnd.ms-excel");
+        String fileUrl = blobDao.uploadBlob(MessageFormat.format(filenameTemplate, currTime), 
+        		excelFile, "application/vnd.ms-excel");
         
         iftttDao.tiggerEvent("xmi_product_list", "julianf.nunez@gmail.com", "BBB", fileUrl);
 		
