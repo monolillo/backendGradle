@@ -1,14 +1,9 @@
-package com.hdsupply.xmi.service;
+package com.hdsupply.xmi.service.excel;
 
 import java.awt.Color;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -18,36 +13,21 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
+import org.springframework.stereotype.Service;
 
 import com.hdsupply.xmi.domain.ProductCatalog;
 
-public class ExcelService {
+@Service
+public class ExcelServicePoiImpl implements ExcelService {
 
-    private static String[] columns = {"ItemNumber", "Name", "Price", "In Stock", "Minimun"};
-    private static List<ProductCatalog> results =  new ArrayList<>();
+    private static final String[] COLUMNS = {"ItemNumber", "Name", "Price", "In Stock", "Minimun"};
 
-	// Initializing employees data to insert into the excel file
-    static {
-        Calendar dateOfBirth = Calendar.getInstance();
-        dateOfBirth.set(1992, 7, 21);
-        
-        ProductCatalog product1 = new ProductCatalog();
-        product1.setItemNumber(123456);
-        product1.setName("Dishwasher");
-        product1.setQuantity(10);
-        product1.setPrice(new BigDecimal("10.50"));
-        product1.setMin(5);
-        
-        results.add(product1);
-
-        dateOfBirth.set(1965, 10, 15);
-        results.add(product1);
-
-        dateOfBirth.set(1987, 4, 18);
-        results.add(product1);
-    }
-
-    public static void main(String[] args) throws IOException, InvalidFormatException {
+    /* (non-Javadoc)
+	 * @see com.hdsupply.xmi.service.excel.ExcelService#convertToExcel(java.util.List)
+	 */
+    @Override
+	public byte[] convertToExcel(List<ProductCatalog> products) throws IOException {
         // Create a Workbook
         Workbook workbook = new XSSFWorkbook(); // new HSSFWorkbook() for generating `.xls` file
 
@@ -73,9 +53,9 @@ public class ExcelService {
         Row headerRow = sheet.createRow(0);
 
         // Creating cells
-        for(int i = 0; i < columns.length; i++) {
+        for(int i = 0; i < COLUMNS.length; i++) {
             Cell cell = headerRow.createCell(i);
-            cell.setCellValue(columns[i]);
+            cell.setCellValue(COLUMNS[i]);
             cell.setCellStyle(headerCellStyle);
         }
 
@@ -88,7 +68,7 @@ public class ExcelService {
 
         // Create Other rows and cells with employees data
         int rowNum = 1;
-        for(ProductCatalog product: results) {
+        for(ProductCatalog product: products) {
             Row row = sheet.createRow(rowNum++);
 
             row.createCell(0)
@@ -110,17 +90,18 @@ public class ExcelService {
         }
 
 		// Resize all columns to fit the content size
-        for(int i = 0; i < columns.length; i++) {
+        for(int i = 0; i < COLUMNS.length; i++) {
             sheet.autoSizeColumn(i);
         }
 
         // Write the output to a file
-        FileOutputStream fileOut = new FileOutputStream("c:\\dev\\poi-generated-file.xlsx");
-        workbook.write(fileOut);
-        fileOut.close();
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        workbook.write(output);
 
         // Closing the workbook
         workbook.close();
+        
+        return output.toByteArray();
     }
 }
 
