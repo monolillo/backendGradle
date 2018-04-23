@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
@@ -47,5 +48,21 @@ public class XmiUserService extends JdbcDaoImpl {
 	public void setUsersByUsernameQuery(String usersByUsernameQueryString) {
 		super.setUsersByUsernameQuery(usersByUsernameQueryString);
 	}
+	
+	@Override
+	protected UserDetails createUserDetails(String username,
+			UserDetails userFromUserQuery, List<GrantedAuthority> combinedAuthorities) {
+		String returnUsername = userFromUserQuery.getUsername();
+
+		if (!this.isUsernameBasedPrimaryKey()) {
+			returnUsername = username;
+		}
+		
+		XmiUser userFromUserQueryXmi = (XmiUser)userFromUserQuery;
+
+		return new XmiUser(returnUsername, userFromUserQuery.getPassword(),
+				userFromUserQueryXmi.getEmail(), userFromUserQueryXmi.getPhone(),
+				userFromUserQuery.isEnabled(), true, true, true, combinedAuthorities);
+	}	
 
 }
