@@ -23,6 +23,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestOperations;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Implementation of AzureBlobDao that uses a REST service call to upload the file.
@@ -42,7 +44,7 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 	private static final String STORAGE_NAME = "elux1";
 	private static final String CONT_NAME = "xmistorage";
 	private static final String ENDPOINT = "https://{0}.blob.core.windows.net/{1}/{2}";
-	private static final String STR_TO_SIGN = "PUT\n\n\n{0}\n\n{1}\n\n\n\n\n\n\nx-ms-blob-type:BlockBlob\nx-ms-date:{2}\nx-ms-version:2015-12-11\n/{3}/{4}/{5}";
+	private static final String STR_TO_SIGN = "PUT\n\n\n{0}\n\n{1}\n\n\n\n\n\n\nx-ms-blob-type:BlockBlob\nx-ms-date:{2}\nx-ms-version:2015-12-11\n/{3}{4}";
 	private static final String AUTH_STR = "SharedKey {0}:{1}";
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z");
 
@@ -65,11 +67,12 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
 		String currTime = DATE_FORMAT.format(new Date());
 		
-		String endpoint = MessageFormat.format(ENDPOINT, STORAGE_NAME, CONT_NAME, fileName);
+		UriComponents fileUri = UriComponentsBuilder.fromUriString(ENDPOINT).build()
+				.expand(STORAGE_NAME, CONT_NAME, fileName);
 		
 		String authHeader = null;
 		try {
-			authHeader = getAuthorization(currTime, fileName, fileBytes.length, contentType);
+			authHeader = getAuthorization(currTime, fileUri.encode().getPath(), fileBytes.length, contentType);
 		} catch (InvalidKeyException | NoSuchAlgorithmException e) {
 			LOG.error("Unable to generate crypto for upload.", e);
 			throw new RuntimeException("Cryto error trying to upload file", e);
@@ -85,15 +88,17 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		
 		HttpEntity<byte[]> entity = new HttpEntity<>(fileBytes, headers);
 		
-		restTemplate.put(endpoint, entity);	    
+		restTemplate.put(fileUri.toUriString(), entity);	    
 		
-		return endpoint;
+		return fileUri.encode().toUriString();
 	    
 	}
 	
-	private String getAuthorization(String currTime, String fileName, int size, String contentType) throws NoSuchAlgorithmException, InvalidKeyException {
+	private String getAuthorization(String currTime, String filePath, int size, String contentType) throws NoSuchAlgorithmException, InvalidKeyException {
 		
-		String toSign = MessageFormat.format(STR_TO_SIGN, Long.toString(size), contentType, currTime, STORAGE_NAME, CONT_NAME, fileName);
+		String toSign = MessageFormat.format(STR_TO_SIGN, Long.toString(size), contentType, currTime, STORAGE_NAME, filePath);
+		
+		System.out.println(toSign);
 		
 		byte[] secret = DatatypeConverter.parseBase64Binary(API_KEY);
 		
