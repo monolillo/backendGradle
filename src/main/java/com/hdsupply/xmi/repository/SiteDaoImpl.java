@@ -22,6 +22,9 @@ public class SiteDaoImpl implements SiteDao{
 	@Value("${siteDao.getSiteByUserSql}")
 	private String getSiteByUserSql;
 	
+	@Value("${siteDao.getSiteByIdShopSql}")
+	private String getSiteByIdShopSql;
+	
 	@Override
 	public List<Site> getSiteByUser(String user) {
 		
@@ -29,6 +32,13 @@ public class SiteDaoImpl implements SiteDao{
 		
 		return jdbcTemplate.query(getSiteByUserSql, new Object[] { user }, new BeanPropertyRowMapper<Site>(Site.class));
 	}
-	
 
+	@Override
+	public Site getSiteByIdShop(Integer shopId) {
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		return jdbcTemplate.queryForObject(getSiteByIdShopSql, new Object[] {shopId},  new BeanPropertyRowMapper<Site>(Site.class));
+	}
+	
 }

@@ -1,5 +1,7 @@
 package com.hdsupply.xmi.service;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,10 @@ public class InventoryServiceImpl implements InventoryService{
 	
 	@Autowired
 	private InventoryDao inventoryDao;
-
+	
+	@Autowired
+	private StockNotificationService stockNotificationService;
+	
 	@Override
 	public Integer checkInProduct(Inventory inventory, String user) {
 		
@@ -32,7 +37,7 @@ public class InventoryServiceImpl implements InventoryService{
 	}
 
 	@Override
-	public Integer checkOutProduct(Inventory inventory, String user) {
+	public Integer checkOutProduct(Inventory inventory, String user) throws IOException {
 		
 		inventoryDao.updateCheckOutInventoryProduct(inventory);
 		
@@ -44,8 +49,10 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		inventoryDao.newCheckOut(inventory, user, checkOutId);
 		
-		return checkOutId;
+		stockNotificationService.doNotification(user, inventory.getShopId(), inventory.getProductId());
 		
+		return checkOutId;
+			
 	}
 	
 	@Override
