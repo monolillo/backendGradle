@@ -1,12 +1,11 @@
 package com.hdsupply.xmi.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.hdsupply.xmi.domain.FilterNotification;
 import com.hdsupply.xmi.domain.ProductCatalog;
@@ -31,29 +30,76 @@ public class NotificationServiceImpl implements NotificationService{
 			
 			List<ProductCatalog> listOutOfStock = notificationDao.getListOutOfStock(filter);
 			
-			productCatalogList.addAll(listOutOfStock);
+			if(!CollectionUtils.isEmpty(listOutOfStock)) {
+				
+				productCatalogList.addAll(listOutOfStock);
+			}
 			
 			List<ProductCatalog> listLessThanMin = notificationDao.getListLessThanMin(filter);
 			
-			productCatalogList.addAll(listLessThanMin);
+			if(!CollectionUtils.isEmpty(listLessThanMin)) {
+				
+				productCatalogList.addAll(listLessThanMin);
+			}
 			
 			List<ProductCatalog> listMinThreshold = notificationDao.getListMinThreshold(filter);
 			
-			productCatalogList.addAll(listMinThreshold);
+			if(!CollectionUtils.isEmpty(listMinThreshold)) {
+				
+				productCatalogList.addAll(listMinThreshold);
+			}
+			
+			List<ProductCatalog> listMaxThreshold = notificationDao.getListMaxThreshold(filter);
+			
+			if(!CollectionUtils.isEmpty(listMaxThreshold)) {
+				
+				productCatalogList.addAll(listMaxThreshold);
+			}
 			
 			for (ProductCatalog productCatalog : productCatalogList) {
 				
 				Integer qty = inventoryDao.getQuantity(productCatalog.getIdProduct(), filter.getSiteId());
 				
 				productCatalog.setQuantity(qty);
-				
 			}
 			
-		} else if (filter.getCritical()) {
-			//solo critico
-		} else if (!filter.getCritical()) {
-			//solo no critico
-		}
+		} else if (null != filter.getCritical()) {
+
+			List<ProductCatalog> listOutOfStockCritical = notificationDao.getListOutOfStockCritical(filter);
+			
+			if(!CollectionUtils.isEmpty(listOutOfStockCritical)) {
+				
+				productCatalogList.addAll(listOutOfStockCritical);
+			}
+			
+			List<ProductCatalog> listLessThanMinCritical = notificationDao.getListLessThanMinCritical(filter);
+			
+			if(!CollectionUtils.isEmpty(listLessThanMinCritical)) {
+				
+				productCatalogList.addAll(listLessThanMinCritical);
+			}
+			
+			List<ProductCatalog> listMinThresholdCritical = notificationDao.getListMinThresholdCritical(filter);
+			
+			if(!CollectionUtils.isEmpty(listMinThresholdCritical)) {
+				
+				productCatalogList.addAll(listMinThresholdCritical);
+			}
+			
+			List<ProductCatalog> listMaxThresholdCritical = notificationDao.getListMaxThresholdCritical(filter);
+			
+			if(!CollectionUtils.isEmpty(listMaxThresholdCritical)) {
+				
+				productCatalogList.addAll(listMaxThresholdCritical);
+			}
+			
+			for (ProductCatalog productCatalog : productCatalogList) {
+				
+				Integer qty = inventoryDao.getQuantity(productCatalog.getIdProduct(), filter.getSiteId());
+				
+				productCatalog.setQuantity(qty);
+			}
+		} 
 
 		return productCatalogList;
 	}
