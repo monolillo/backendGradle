@@ -37,7 +37,8 @@ dependencies {
     testCompile group: 'com.h2database', name: 'h2', version:'1.4.196'
     testCompile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '8.5.29'
 	testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '5.0.3.RELEASE'
-
+	testCompile group: 'org.dbunit', name: 'dbunit', version: '2.5.4'
+	
 }
 
 sonarqube {
