@@ -2,6 +2,7 @@ package com.hdsupply.xmi.resource;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -11,23 +12,21 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.validation.constraints.Past;
-
 import org.easymock.Capture;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.util.ResourceUtils;
 
-import com.hdsupply.xmi.domain.Catalog;
 import com.hdsupply.xmi.domain.FilterNotification;
-import com.hdsupply.xmi.domain.Inventory;
 import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.enums.StockNotificationEnum;
+import com.hdsupply.xmi.service.NotificationEmailService;
 import com.hdsupply.xmi.service.NotificationService;
 
 @ContextConfiguration(classes = {NotificationControllerTest.class})
@@ -36,12 +35,16 @@ public class NotificationControllerTest extends ControllerTestBase {
 	@Autowired
 	private NotificationService mockNotificationService;
 	
+	@Autowired
+	private NotificationEmailService mockNotificationEmailService;
+	
 	@Before
 	public void setUp() throws Exception {
 		
         super.setUp();		
         
         EasyMock.reset(mockNotificationService);
+        EasyMock.reset(mockNotificationEmailService);
 	}
 	
 	@Test
@@ -96,9 +99,42 @@ public class NotificationControllerTest extends ControllerTestBase {
 		
 	}
 	
+	@Test
+	@WithMockUser(username = "admin", authorities = { "SEND" })
+	public void testSendNotification() throws Exception {
+		
+		FilterNotification filter = new FilterNotification();
+		filter.setCritical(true);
+		filter.setSiteId(4);
+		filter.setStockNotification(StockNotificationEnum.INVENTORYEXCESS);
+		filter.setUser("monito");
+		
+		Capture<FilterNotification> filterCapture = EasyMock.newCapture();
+		
+		mockNotificationEmailService.emailNotifications(EasyMock.capture(filterCapture));
+		
+		EasyMock.replay(mockNotificationService);
+		
+		File file = ResourceUtils.getFile("classpath:request/requestSendNotification.json");
+		String requestBody = new String(Files.readAllBytes(file.toPath()));
+		
+		mockMvc.perform(post("/rest/site/4/product/notification/send")
+				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content(requestBody))
+				.andExpect(status().isOk());
+		
+		EasyMock.verify(mockNotificationService);
+		
+	}
+	
 	@Bean
 	public NotificationService notificationService() {
 		return EasyMock.createStrictMock(NotificationService.class);
+	}
+	
+	@Bean
+	public NotificationEmailService notificationEmailService() {
+		return EasyMock.createStrictMock(NotificationEmailService.class);
 	}
 	
 	@Bean
