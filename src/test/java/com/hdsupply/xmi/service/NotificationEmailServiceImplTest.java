@@ -81,4 +81,25 @@ public class NotificationEmailServiceImplTest extends EasyMockSupport{
 		
 	}
 	
+	@Test(expected=RuntimeException.class)
+	public void testEmailNotificationsException() throws IOException {
+		
+		FilterNotification filter = new FilterNotification();
+		filter.setUser("theuser");
+		List<ProductCatalog> products = new ArrayList<>();
+		
+		List<? extends GrantedAuthority> authList = Collections.singletonList(new SimpleGrantedAuthority("admin"));
+		
+		EasyMock.expect(notificationService.getNotifications(EasyMock.eq(filter))).andReturn(products);
+		
+		EasyMock.expect(excelService.convertToExcel(EasyMock.eq(products))).andThrow(new IOException("This is an error"));
+		
+		replayAll();
+		
+		fixture.emailNotifications(filter);
+		
+		verifyAll();
+		
+	}
+	
 }
