@@ -70,9 +70,27 @@ public class SiteServiceImplTest extends EasyMockSupport{
 		assertEquals((Integer) 3, listShop.get(1).getId());
 		assertEquals("Storage", listShop.get(1).getName());
 		assertEquals((Integer) 2, listShop.get(1).getSiteId());
-		
-		
-		
+
 	}
 
+	@Test
+	public void testGetSiteByIdShop() {
+		
+		Site site = new Site();
+		site.setId(2);
+		site.setName("Courtyard by Marriott Atlanta Cumberland/Galleria");
+		site.setCompanyId(2);
+		
+		EasyMock.expect(siteDao.getSiteByIdShop(2)).andReturn(site);
+		
+		replayAll();
+		
+		fixture.getSiteByIdShop(2);
+		
+		verifyAll();
+		
+		assertEquals((Integer) 2, site.getId());
+		assertEquals("Courtyard by Marriott Atlanta Cumberland/Galleria", site.getName());
+		assertEquals((Integer) 2, site.getCompanyId());
+	}
 }
