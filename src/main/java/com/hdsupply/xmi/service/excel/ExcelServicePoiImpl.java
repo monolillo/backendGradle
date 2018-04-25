@@ -106,8 +106,7 @@ public class ExcelServicePoiImpl implements ExcelService {
 	        workbook.write(output);
 	        resultBytes = output.toByteArray();
 	
-	        // Closing the workbook
-	        workbook.close();
+	        // workbook is closed by the try-with-resources 
         }
         
         return resultBytes;
