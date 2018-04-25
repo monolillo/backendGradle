@@ -11,9 +11,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import com.hdsupply.xmi.domain.FilterNotification;
 import com.hdsupply.xmi.domain.ProductCatalog;
+import com.hdsupply.xmi.domain.XmiUser;
 import com.hdsupply.xmi.repository.AzureBlobDao;
 import com.hdsupply.xmi.repository.IftttDao;
 import com.hdsupply.xmi.service.excel.ExcelService;
@@ -38,36 +41,33 @@ public class NotificationEmailServiceImpl implements NotificationEmailService {
 	@Autowired
 	private IftttDao iftttDao;
 	
+	@Autowired
+	private NotificationService notificationService;
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
 	@Override
-	public void emailNotifications() {
+	public void emailNotifications(FilterNotification filter) {
 		
-		
-        ProductCatalog product1 = new ProductCatalog();
-        product1.setItemNumber(123456);
-        product1.setName("Dishwasher");
-        product1.setQuantity(10);
-        product1.setPrice(new BigDecimal("10.50"));
-        product1.setMin(5);
-        
-		List<ProductCatalog> products =  new ArrayList<>();
-        products.add(product1);
-        products.add(product1);
-        products.add(product1);
+		List<ProductCatalog> listProductCatalog = notificationService.getNotifications(filter);
         
         byte[] excelFileBytes = null;
         try {
-        	excelFileBytes = excelService.convertToExcel(products);
+        	excelFileBytes = excelService.convertToExcel(listProductCatalog);
 		} catch (IOException e) {
 			LOG.error("Error generating Excel representation of product list.", e);
 			
 			throw new RuntimeException("Error generating Excel representation of product list.", e);
 		}
         
+        XmiUser user = (XmiUser) userDetailsService.loadUserByUsername(filter.getUser());
+        
 		String currTime = DATE_FORMAT.format(new Date());
         String fileUrl = blobDao.uploadBlob(MessageFormat.format(FILENAME_TEMPLATE, currTime), 
         		excelFileBytes, EXCEL_MIME_TYPE);
         
-        iftttDao.tiggerEvent(IFTTT_EVENT, "julianf.nunez@gmail.com", "BBB", fileUrl);
+        iftttDao.tiggerEvent(IFTTT_EVENT, user.getEmail(), "BBB", fileUrl);
 		
 	}
 
