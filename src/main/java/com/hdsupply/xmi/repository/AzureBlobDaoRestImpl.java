@@ -73,7 +73,7 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 			authHeader = getAuthorization(currTime, fileUri.encode().getPath(), fileBytes.length, contentType);
 		} catch (InvalidKeyException | NoSuchAlgorithmException e) {
 			LOG.error("Unable to generate crypto for upload.", e);
-			throw new RuntimeException("Cryto error trying to upload file", e);
+			throw new SecurityException("Cryto error trying to upload file", e);
 		}
 	    
 		HttpHeaders headers = new HttpHeaders();
@@ -103,8 +103,8 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		byte[] secret = DatatypeConverter.parseBase64Binary(API_KEY);
 		
 		Mac sha256Hmac = Mac.getInstance("HmacSHA256");
-	    SecretKeySpec secret_key = new SecretKeySpec(secret, "HmacSHA256");
-	    sha256Hmac.init(secret_key);
+	    SecretKeySpec secretKey = new SecretKeySpec(secret, "HmacSHA256");
+	    sha256Hmac.init(secretKey);
 
 	    String hashBase64 = DatatypeConverter.printBase64Binary(sha256Hmac.doFinal(toSign.getBytes()));
 	    

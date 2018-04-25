@@ -1,10 +1,9 @@
 package com.hdsupply.xmi.service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.io.UncheckedIOException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class NotificationEmailServiceImpl implements NotificationEmailService {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(NotificationEmailServiceImpl.class);
 	
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss");
+	private static final String DATE_TEMPLATE = "MM-dd-yyyy_HH-mm-ss";
 	private static final String FILENAME_TEMPLATE = "Product-list_{0}.xlsx";
 	
 	private static final String IFTTT_EVENT = "xmi_product_list";
@@ -58,12 +57,12 @@ public class NotificationEmailServiceImpl implements NotificationEmailService {
 		} catch (IOException e) {
 			LOG.error("Error generating Excel representation of product list.", e);
 			
-			throw new RuntimeException("Error generating Excel representation of product list.", e);
+			throw new UncheckedIOException("Error generating Excel representation of product list.", e);
 		}
         
         XmiUser user = (XmiUser) userDetailsService.loadUserByUsername(filter.getUser());
         
-		String currTime = DATE_FORMAT.format(new Date());
+		String currTime = new SimpleDateFormat(DATE_TEMPLATE).format(new Date());
         String fileUrl = blobDao.uploadBlob(MessageFormat.format(FILENAME_TEMPLATE, currTime), 
         		excelFileBytes, EXCEL_MIME_TYPE);
         
