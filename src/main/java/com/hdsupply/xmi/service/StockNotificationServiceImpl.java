@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.MessageFormat;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -14,13 +14,11 @@ import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.domain.Site;
 import com.hdsupply.xmi.domain.XmiUser;
 import com.hdsupply.xmi.repository.IftttDao;
+import com.hdsupply.xmi.service.security.XmiUserService;
 
 @Service
 public class StockNotificationServiceImpl implements StockNotificationService {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
 	@Autowired
 	private IftttDao iftttDao;
 	
@@ -28,37 +26,61 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	private ProductService productService;
 	
 	@Autowired
-	private SiteService siteService; 
+	private SiteService siteService;
+	
+	@Autowired
+	private XmiUserService xmiUserService;
+	
+	private String emailTemplateLocation = "classpath:templates/stockEmail.html";
+
+	private final String emailPermission = "STOCK_PUSH_ALERTS";
 	
 	@Override
 	public void doNotification(String user, Integer shopId, Integer productId) throws IOException {
 	
-		Site site = siteService.getSiteByIdShop(shopId);   
+		Site site = siteService.getSiteByIdShop(shopId);
 		
 		ProductCatalog productCatalog = productService.getProductById(site.getId(), productId);
 		
+		if(!productCatalog.getCritical()) {
+			return;
+		}
+		
 		if (productCatalog.getQuantity() < productCatalog.getMin() || productCatalog.getQuantity() == 0) {
-			notifyProduct(user, productCatalog);
+			notifyProduct(user, productCatalog, site.getId());
 			
 		}
 	
 	}
 
-	private void notifyProduct(String username, ProductCatalog productCatalog) throws IOException {
+	private void notifyProduct(String username, ProductCatalog productCatalog, Integer siteId) throws IOException {
 		
-		XmiUser user = (XmiUser) userDetailsService.loadUserByUsername(username);
+		List<XmiUser> listXmiUsers = xmiUserService.loadUsersEmailBySiteId(siteId, emailPermission);
+		
+		String emails = listEmails(listXmiUsers);
 		
 		String emailBody = populateTemplate(productCatalog);
 		
 		String  emailSubject = generateSubject(productCatalog);
 		
-		iftttDao.tiggerEvent("xmi_critical_low", user.getEmail(), emailSubject, emailBody);
+		iftttDao.tiggerEvent("xmi_critical_low", emails, emailSubject, emailBody);
 		
+	}
+	
+	private String listEmails(List<XmiUser> listXmiUsers) {
+		
+		String emails = "";
+		
+		for (XmiUser xmiUser : listXmiUsers) {
+			emails = emails + xmiUser.getEmail() + ",";
+		}
+		
+		return emails;
 	}
 	
 	private String populateTemplate(ProductCatalog productCatalog) throws IOException {
 		
-		File file = ResourceUtils.getFile("classpath:templatesTest/stockTest.html");
+		File file = ResourceUtils.getFile(emailTemplateLocation);
 		
 		String emailTemplate = new String(Files.readAllBytes(file.toPath()));
 		
@@ -83,22 +105,23 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	
 	private String generateSubject(ProductCatalog productCatalog) {
 		
-		String oooSubject = "Product {0} is Out of Stock";
+		String oooSubject = "Product #{0} is Out of Stock.";
+		String lowSubject = "Product #{0} is Running low.";
 		
-		String lowSubject = "Product {0} is Running low";
-		
-		String emailSubject = null;
-		
+		String template = null;
 		if (productCatalog.getQuantity() == 0) {
-			
-			emailSubject = MessageFormat.format(oooSubject, productCatalog.getItemNumber());
-	
-		}else {
-			
-			emailSubject = MessageFormat.format(lowSubject, productCatalog.getItemNumber());
-			
+			template = oooSubject;
+		} else {
+			template = lowSubject;
 		}
 		
+		String emailSubject = MessageFormat.format(template, 
+				Long.toString(productCatalog.getItemNumber()));
+		
 		return emailSubject;
+	}
+
+	public void setEmailTemplateLocation(String emailTemplateLocation) {
+		this.emailTemplateLocation = emailTemplateLocation;
 	}
 }
