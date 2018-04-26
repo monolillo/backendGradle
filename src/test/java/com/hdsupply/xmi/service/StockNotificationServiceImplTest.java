@@ -41,6 +41,8 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 	@Test
 	public void testDoNotification() throws IOException {
 		
+		stockNotificationServiceImplTest.setEmailTemplateLocation("classpath:templatesTest/stockEmailTest.html");
+		
 		Site site = new Site();
 		site.setId(2);
 		site.setName("Courtyard by Marriott Atlanta Cumberland/Galleria");
@@ -78,12 +80,14 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 		assertEquals("xmi_critical_low", capturedEvent.getValue());
 		assertEquals("user.getEmail()",captureValue1.getValue());
 		assertEquals("Product 2 is Out of Stock",captureValue2.getValue());
-		assertEquals ("2.0.A Bulb 40W A15 Frost.5.Out of Stock",captureValue3.getValue());
+		assertEquals("2.0.A Bulb 40W A15 Frost.5.Out of Stock",captureValue3.getValue());
 		
 	}
 	
 	@Test
 	public void testDoNotification2() throws IOException{
+		
+		stockNotificationServiceImplTest.setEmailTemplateLocation("classpath:templatesTest/stockEmailTest.html");
 		
 		Site site = new Site();
 		site.setId(2);

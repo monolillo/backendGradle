@@ -30,6 +30,8 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	@Autowired
 	private SiteService siteService; 
 	
+	private String emailTemplateLocation = "classpath:templates/stockEmail.html";
+	
 	@Override
 	public void doNotification(String user, Integer shopId, Integer productId) throws IOException {
 	
@@ -58,7 +60,7 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	
 	private String populateTemplate(ProductCatalog productCatalog) throws IOException {
 		
-		File file = ResourceUtils.getFile("classpath:templatesTest/stockTest.html");
+		File file = ResourceUtils.getFile(emailTemplateLocation);
 		
 		String emailTemplate = new String(Files.readAllBytes(file.toPath()));
 		
@@ -100,5 +102,9 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 		}
 		
 		return emailSubject;
+	}
+
+	public void setEmailTemplateLocation(String emailTemplateLocation) {
+		this.emailTemplateLocation = emailTemplateLocation;
 	}
 }
