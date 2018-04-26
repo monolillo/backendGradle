@@ -38,7 +38,7 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	@Override
 	public void doNotification(String user, Integer shopId, Integer productId) throws IOException {
 	
-		Site site = siteService.getSiteByIdShop(shopId);   
+		Site site = siteService.getSiteByIdShop(shopId);
 		
 		ProductCatalog productCatalog = productService.getProductById(site.getId(), productId);
 		
