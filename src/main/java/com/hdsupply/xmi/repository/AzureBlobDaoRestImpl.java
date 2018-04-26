@@ -30,7 +30,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 @Repository
 public class AzureBlobDaoRestImpl implements AzureBlobDao {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(AzureBlobDaoRestImpl.class);
 	
 	@Autowired
@@ -43,6 +43,8 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 	private static final String STR_TO_SIGN = "PUT\n\n\n{0}\n\n{1}\n\n\n\n\n\n\nx-ms-blob-type:BlockBlob\nx-ms-date:{2}\nx-ms-version:2015-12-11\n/{3}{4}";
 	private static final String AUTH_STR = "SharedKey {0}:{1}";
 	private static final String DATE_FORMAT_TEMPLATE = "EEE, d MMM yyyy HH:mm:ss z";
+	
+	private static String ALGORITHM_NAME = "HmacSHA256";
 
 	/**
 	 * Sends a request to the IFTTT endpoint with the following JSON body
@@ -102,8 +104,8 @@ public class AzureBlobDaoRestImpl implements AzureBlobDao {
 		
 		byte[] secret = DatatypeConverter.parseBase64Binary(API_KEY);
 		
-		Mac sha256Hmac = Mac.getInstance("HmacSHA256");
-	    SecretKeySpec secretKey = new SecretKeySpec(secret, "HmacSHA256");
+		Mac sha256Hmac = Mac.getInstance(ALGORITHM_NAME);
+	    SecretKeySpec secretKey = new SecretKeySpec(secret, ALGORITHM_NAME);
 	    sha256Hmac.init(secretKey);
 
 	    String hashBase64 = DatatypeConverter.printBase64Binary(sha256Hmac.doFinal(toSign.getBytes()));

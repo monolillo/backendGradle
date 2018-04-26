@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,6 +38,7 @@ public class AzureBlobDaoRestImplTest {
 		
 		mockServer = MockRestServiceServer.createServer(restTemplate);
 		
+		ReflectionTestUtils.setField(fixture, "ALGORITHM_NAME", "HmacSHA256");
 	}		
 
 	@Test
@@ -92,6 +94,19 @@ public class AzureBlobDaoRestImplTest {
 			.andExpect(header("x-ms-blob-type", "BlockBlob"))
 			.andExpect(header("x-ms-version", "2015-12-11"))
 	     	.andRespond(withServerError());
+		
+		fixture.uploadBlob("testFile.xlsx", content.getBytes(), "application/test");
+		 
+		mockServer.verify();
+	
+	}
+	
+	@Test(expected=SecurityException.class)
+	public void testUploadBlobBadAlgo() {
+		
+		String content = "This is the content";
+		
+		ReflectionTestUtils.setField(fixture, "ALGORITHM_NAME", "1234");
 		
 		fixture.uploadBlob("testFile.xlsx", content.getBytes(), "application/test");
 		 
