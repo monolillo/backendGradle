@@ -63,6 +63,7 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 		productCatalog.setMax(10);
 		productCatalog.setMin(5);
 		productCatalog.setQuantity(0);
+		productCatalog.setCritical(true);
 		
 		XmiUser xmiUser1 = new XmiUser("admin", "123", "rodrigo.masanes@gmail.com", "11111", AuthorityUtils.NO_AUTHORITIES);
 		XmiUser xmiUser2 = new XmiUser("admin", "123", "rodrigo.masanes@neoris.com", "11111", AuthorityUtils.NO_AUTHORITIES);
@@ -71,7 +72,7 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 		
 		EasyMock.expect(productService.getProductById(2,2)).andReturn(productCatalog);
 		
-		EasyMock.expect(xmiUserService.loadUsersEmailBySiteId(4, "STOCK_PUSH_ALERTS")).andReturn(listXmiUsers);
+		EasyMock.expect(xmiUserService.loadUsersEmailBySiteId(2, "STOCK_PUSH_ALERTS")).andReturn(listXmiUsers);
 		
 		Capture<String> capturedEvent = EasyMock.newCapture(); 
 		Capture<String> captureValue1 = EasyMock.newCapture();
@@ -88,7 +89,7 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 	
 		assertEquals("xmi_critical_low", capturedEvent.getValue());
 		assertEquals("rodrigo.masanes@gmail.com,rodrigo.masanes@neoris.com,",captureValue1.getValue());
-		assertEquals("Product 2 is Out of Stock",captureValue2.getValue());
+		assertEquals("Product #2 is Out of Stock.",captureValue2.getValue());
 		assertEquals("2.0.A Bulb 40W A15 Frost.5.Out of Stock",captureValue3.getValue());
 		
 	}
@@ -112,6 +113,7 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 		productCatalog2.setMax(10);
 		productCatalog2.setMin(5);
 		productCatalog2.setQuantity(3);
+		productCatalog2.setCritical(true);
 		
 		XmiUser xmiUser1 = new XmiUser("admin", "123", "rodrigo.masanes@gmail.com", "11111", AuthorityUtils.NO_AUTHORITIES);
 		XmiUser xmiUser2 = new XmiUser("admin", "123", "rodrigo.masanes@neoris.com", "11111", AuthorityUtils.NO_AUTHORITIES);
@@ -120,7 +122,7 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 		
 		EasyMock.expect(productService.getProductById(2,2)).andReturn(productCatalog2);
 		
-		EasyMock.expect(xmiUserService.loadUsersEmailBySiteId(4, "STOCK_PUSH_ALERTS")).andReturn(listXmiUsers);
+		EasyMock.expect(xmiUserService.loadUsersEmailBySiteId(2, "STOCK_PUSH_ALERTS")).andReturn(listXmiUsers);
 		
 		Capture<String> capturedEvent = EasyMock.newCapture(); 
 		Capture<String> captureValue1 = EasyMock.newCapture();
@@ -137,8 +139,40 @@ public class StockNotificationServiceImplTest extends EasyMockSupport{
 	
 		assertEquals("xmi_critical_low", capturedEvent.getValue());
 		assertEquals("rodrigo.masanes@gmail.com,rodrigo.masanes@neoris.com,",captureValue1.getValue());
-		assertEquals("Product 2 is Running low",captureValue2.getValue());
+		assertEquals("Product #2 is Running low.",captureValue2.getValue());
 		assertEquals ("2.3.A Bulb 40W A15 Frost.5.Running low",captureValue3.getValue());
+		
+	}
+	
+	@Test
+	public void testDoNotificationNotCritical() throws IOException{
+		
+		stockNotificationServiceImplTest.setEmailTemplateLocation("classpath:templatesTest/stockEmailTest.html");
+		
+		Site site = new Site();
+		site.setId(2);
+		site.setName("Courtyard by Marriott Atlanta Cumberland/Galleria");
+		site.setCompanyId(2);
+		
+		EasyMock.expect(siteService.getSiteByIdShop(2)).andReturn(site);
+		
+		ProductCatalog productCatalog2 = new ProductCatalog();
+		productCatalog2.setIdProduct(123);
+		productCatalog2.setName("A Bulb 40W A15 Frost");
+		productCatalog2.setItemNumber(2);
+		productCatalog2.setMax(10);
+		productCatalog2.setMin(5);
+		productCatalog2.setQuantity(3);
+		productCatalog2.setCritical(false);
+		
+		EasyMock.expect(productService.getProductById(2,2)).andReturn(productCatalog2);
+		
+		replayAll();
+		
+		stockNotificationServiceImplTest.doNotification("admin", 2, 2);
+		
+		verifyAll();
+	
 		
 	}
 

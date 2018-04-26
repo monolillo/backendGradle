@@ -42,16 +42,20 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 		
 		ProductCatalog productCatalog = productService.getProductById(site.getId(), productId);
 		
+		if(!productCatalog.getCritical()) {
+			return;
+		}
+		
 		if (productCatalog.getQuantity() < productCatalog.getMin() || productCatalog.getQuantity() == 0) {
-			notifyProduct(user, productCatalog);
+			notifyProduct(user, productCatalog, site.getId());
 			
 		}
 	
 	}
 
-	private void notifyProduct(String username, ProductCatalog productCatalog) throws IOException {
+	private void notifyProduct(String username, ProductCatalog productCatalog, Integer siteId) throws IOException {
 		
-		List<XmiUser> listXmiUsers = xmiUserService.loadUsersEmailBySiteId(4, emailPermission);
+		List<XmiUser> listXmiUsers = xmiUserService.loadUsersEmailBySiteId(siteId, emailPermission);
 		
 		String emails = listEmails(listXmiUsers);
 		
@@ -101,21 +105,18 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	
 	private String generateSubject(ProductCatalog productCatalog) {
 		
-		String oooSubject = "Product {0} is Out of Stock";
+		String oooSubject = "Product #{0} is Out of Stock.";
+		String lowSubject = "Product #{0} is Running low.";
 		
-		String lowSubject = "Product {0} is Running low";
-		
-		String emailSubject = null;
-		
+		String template = null;
 		if (productCatalog.getQuantity() == 0) {
-			
-			emailSubject = MessageFormat.format(oooSubject, productCatalog.getItemNumber());
-	
-		}else {
-			
-			emailSubject = MessageFormat.format(lowSubject, productCatalog.getItemNumber());
-			
+			template = oooSubject;
+		} else {
+			template = lowSubject;
 		}
+		
+		String emailSubject = MessageFormat.format(template, 
+				Long.toString(productCatalog.getItemNumber()));
 		
 		return emailSubject;
 	}
