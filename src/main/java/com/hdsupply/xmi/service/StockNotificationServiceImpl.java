@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.MessageFormat;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -14,13 +14,11 @@ import com.hdsupply.xmi.domain.ProductCatalog;
 import com.hdsupply.xmi.domain.Site;
 import com.hdsupply.xmi.domain.XmiUser;
 import com.hdsupply.xmi.repository.IftttDao;
+import com.hdsupply.xmi.service.security.XmiUserService;
 
 @Service
 public class StockNotificationServiceImpl implements StockNotificationService {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
 	@Autowired
 	private IftttDao iftttDao;
 	
@@ -28,14 +26,19 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	private ProductService productService;
 	
 	@Autowired
-	private SiteService siteService; 
+	private SiteService siteService;
+	
+	@Autowired
+	private XmiUserService xmiUserService;
 	
 	private String emailTemplateLocation = "classpath:templates/stockEmail.html";
+
+	private final String emailPermission = "STOCK_PUSH_ALERTS";
 	
 	@Override
 	public void doNotification(String user, Integer shopId, Integer productId) throws IOException {
 	
-		Site site = siteService.getSiteByIdShop(shopId);   
+		Site site = siteService.getSiteByIdShop(shopId);
 		
 		ProductCatalog productCatalog = productService.getProductById(site.getId(), productId);
 		
@@ -48,14 +51,27 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 
 	private void notifyProduct(String username, ProductCatalog productCatalog) throws IOException {
 		
-		XmiUser user = (XmiUser) userDetailsService.loadUserByUsername(username);
+		List<XmiUser> listXmiUsers = xmiUserService.loadUsersEmailBySiteId(4, emailPermission);
+		
+		String emails = listEmails(listXmiUsers);
 		
 		String emailBody = populateTemplate(productCatalog);
 		
 		String  emailSubject = generateSubject(productCatalog);
 		
-		iftttDao.tiggerEvent("xmi_critical_low", user.getEmail(), emailSubject, emailBody);
+		iftttDao.tiggerEvent("xmi_critical_low", emails, emailSubject, emailBody);
 		
+	}
+	
+	private String listEmails(List<XmiUser> listXmiUsers) {
+		
+		String emails = "";
+		
+		for (XmiUser xmiUser : listXmiUsers) {
+			emails = emails + xmiUser.getEmail() + ",";
+		}
+		
+		return emails;
 	}
 	
 	private String populateTemplate(ProductCatalog productCatalog) throws IOException {

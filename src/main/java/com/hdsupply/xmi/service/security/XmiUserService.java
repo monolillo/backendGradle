@@ -22,6 +22,9 @@ import com.hdsupply.xmi.domain.XmiUser;
  */
 public class XmiUserService extends JdbcDaoImpl {
 	
+	@Value("${xmiUserService.loadUsersEmailBySiteId}")
+	private String loadUsersEmailBySiteId;
+	
 	@Override
 	protected List<UserDetails> loadUsersByUsername(String username) {
 		
@@ -41,6 +44,26 @@ public class XmiUserService extends JdbcDaoImpl {
 					}
 
 				});		
+	}
+	
+	public List<XmiUser> loadUsersEmailBySiteId(Integer siteId, String authority){
+		
+		return getJdbcTemplate().query(loadUsersEmailBySiteId,
+				new Object[] { siteId, authority }, new RowMapper<XmiUser>() {
+					@Override
+					public XmiUser mapRow(ResultSet rs, int rowNum)
+							throws SQLException {
+						String username = rs.getString(1);
+						boolean enabled = rs.getBoolean(2);
+						String email 	= rs.getString(3);
+						String phone 	= rs.getString(4);
+						
+						return new XmiUser(username, "", email, phone, enabled, true, true, true,
+								AuthorityUtils.NO_AUTHORITIES);
+					}
+
+				});	
+		
 	}
 	
 	@Override
