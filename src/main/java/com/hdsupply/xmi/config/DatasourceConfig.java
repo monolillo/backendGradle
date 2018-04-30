@@ -1,7 +1,8 @@
 package com.hdsupply.xmi.config;
 
-import javax.sql.DataSource;
 
+
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -25,11 +26,15 @@ public class DatasourceConfig {
     @Bean
     public DataSource dataSource() {
     	
-    	DataSource dataSource = DataSourceBuilder.create()
+    	DataSource dataSource = (DataSource)DataSourceBuilder.create()
     			.url(environment.getProperty("JDBC_URL"))
     			.username(environment.getProperty("DB_USERNAME"))
     			.password(environment.getProperty("DB_PASSWORD"))    			
     			.build();
+    	
+    	dataSource.setTestWhileIdle(true);
+    	dataSource.setTimeBetweenEvictionRunsMillis(600000); //10 minutes
+    	dataSource.setValidationQuery("SELECT 1");
     	
         return dataSource;
     }
