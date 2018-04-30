@@ -33,7 +33,7 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	
 	private String emailTemplateLocation = "classpath:templates/stockEmail.html";
 
-	private final String emailPermission = "STOCK_PUSH_ALERTS";
+	private static final String EMAIL_PERMISSION = "STOCK_PUSH_ALERTS";
 	
 	@Override
 	public void doNotification(String user, Integer shopId, Integer productId) throws IOException {
@@ -47,15 +47,15 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 		}
 		
 		if (productCatalog.getQuantity() < productCatalog.getMin() || productCatalog.getQuantity() == 0) {
-			notifyProduct(user, productCatalog, site.getId());
+			notifyProduct(productCatalog, site.getId());
 			
 		}
 	
 	}
 
-	private void notifyProduct(String username, ProductCatalog productCatalog, Integer siteId) throws IOException {
+	private void notifyProduct(ProductCatalog productCatalog, Integer siteId) throws IOException {
 		
-		List<XmiUser> listXmiUsers = xmiUserService.loadUsersEmailBySiteId(siteId, emailPermission);
+		List<XmiUser> listXmiUsers = xmiUserService.loadUsersEmailBySiteId(siteId, EMAIL_PERMISSION);
 		
 		String emails = listEmails(listXmiUsers);
 		
@@ -69,13 +69,13 @@ public class StockNotificationServiceImpl implements StockNotificationService {
 	
 	private String listEmails(List<XmiUser> listXmiUsers) {
 		
-		String emails = "";
+		StringBuilder emails = new StringBuilder();
 		
 		for (XmiUser xmiUser : listXmiUsers) {
-			emails = emails + xmiUser.getEmail() + ",";
+			emails.append(xmiUser.getEmail()).append(",");
 		}
 		
-		return emails;
+		return emails.toString();
 	}
 	
 	private String populateTemplate(ProductCatalog productCatalog) throws IOException {
