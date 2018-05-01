@@ -21,7 +21,7 @@ public class ShopDaoImpl implements ShopDao {
 	@Value("${shopDao.getShopByUserSql}")
 	private String getShopByUserSql;
 	
-	
+
 	@Override
 	public List<Shop> getShopBySiteId(Integer siteId) {
 

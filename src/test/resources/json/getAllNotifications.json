@@ -1,0 +1,26 @@
+[
+    {
+        "name": "No Trespassing Designer Sign, Burgundy on Ivory, Non-Reflective, 16 x 16",
+        "itemNumber": 265699,
+        "idProduct": 3510,
+        "price": 49.99,
+        "imageUrl": "https://hdsupplysolutions.com/wcsstore/ThdsMroUs/product/fm/enlarged/26/265699_PT_600px_EPS_JPG.jpg",
+        "min": 5,
+        "max": 10,
+        "quantity": 2,
+        "critical": true,
+        "locationId": 10
+    },
+    {
+        "name": "Right Arrow Directional Sign, Green, 3 x 3",
+        "itemNumber": 266015,
+        "idProduct": 3520,
+        "price": 14.99,
+        "imageUrl": "https://hdsupplysolutions.com/wcsstore/ThdsMroUs/product/fm/enlarged/26/266015_PT_600px_EPS_JPG.jpg",
+        "min": 5,
+        "max": 10,
+        "quantity": 2,
+        "critical": false,
+        "locationId": 10
+    }
+]

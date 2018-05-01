@@ -27,7 +27,10 @@ dependencies {
     compile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version:'6.4.0.jre8'
     
 	compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.9.RELEASE'
-	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.0.RELEASE'  
+	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.0.RELEASE'
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+	
+	compileOnly group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '8.5.29'
     
     testCompile group: 'org.springframework', name: 'spring-test', version:'5.0.4.RELEASE'
     testCompile group: 'junit', name: 'junit', version:'4.12'
@@ -36,7 +39,8 @@ dependencies {
     testCompile group: 'com.h2database', name: 'h2', version:'1.4.196'
     testCompile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '8.5.29'
 	testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '5.0.3.RELEASE'
-
+	testCompile group: 'org.dbunit', name: 'dbunit', version: '2.5.4'
+	
 }
 
 sonarqube {

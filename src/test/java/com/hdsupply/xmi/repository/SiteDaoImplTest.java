@@ -31,6 +31,17 @@ public class SiteDaoImplTest extends DaoDbTestBase{
 		
 	}
 
+	@Test
+	public void testGetSiteByIdShop() {
+		
+		Site site = fixture.getSiteByIdShop(2);
+		assertEquals((Integer) 2, site.getId());
+		assertEquals("Courtyard by Marriott Atlanta Cumberland/Galleria", site.getName());
+		assertEquals((Integer) 2, site.getCompanyId());
+		
+	}
+	
+	
 	@Bean
 	public SiteDao fixture() {
 		return new SiteDaoImpl();

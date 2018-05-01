@@ -8,5 +8,6 @@ public interface SiteService {
 	
 	public List<Site> getSiteByUser(String user);
 	
+	public Site getSiteByIdShop(Integer shopId);
 
 }

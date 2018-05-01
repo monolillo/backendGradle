@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
@@ -20,6 +21,9 @@ import com.hdsupply.xmi.domain.XmiUser;
  *
  */
 public class XmiUserService extends JdbcDaoImpl {
+	
+	@Value("${xmiUserService.loadUsersEmailBySiteId}")
+	private String loadUsersEmailBySiteId;
 	
 	@Override
 	protected List<UserDetails> loadUsersByUsername(String username) {
@@ -42,10 +46,46 @@ public class XmiUserService extends JdbcDaoImpl {
 				});		
 	}
 	
+	public List<XmiUser> loadUsersEmailBySiteId(Integer siteId, String authority){
+		
+		return getJdbcTemplate().query(loadUsersEmailBySiteId,
+				new Object[] { siteId, authority }, new RowMapper<XmiUser>() {
+					@Override
+					public XmiUser mapRow(ResultSet rs, int rowNum)
+							throws SQLException {
+						String username = rs.getString(1);
+						boolean enabled = rs.getBoolean(2);
+						String email 	= rs.getString(3);
+						String phone 	= rs.getString(4);
+						
+						return new XmiUser(username, "", email, phone, enabled, true, true, true,
+								AuthorityUtils.NO_AUTHORITIES);
+					}
+
+				});	
+		
+	}
+	
 	@Override
 	@Value("${userDetailsService.usersByUsername}")
 	public void setUsersByUsernameQuery(String usersByUsernameQueryString) {
 		super.setUsersByUsernameQuery(usersByUsernameQueryString);
 	}
+	
+	@Override
+	protected UserDetails createUserDetails(String username,
+			UserDetails userFromUserQuery, List<GrantedAuthority> combinedAuthorities) {
+		String returnUsername = userFromUserQuery.getUsername();
+
+		if (!this.isUsernameBasedPrimaryKey()) {
+			returnUsername = username;
+		}
+		
+		XmiUser userFromUserQueryXmi = (XmiUser)userFromUserQuery;
+
+		return new XmiUser(returnUsername, userFromUserQuery.getPassword(),
+				userFromUserQueryXmi.getEmail(), userFromUserQueryXmi.getPhone(),
+				userFromUserQuery.isEnabled(), true, true, true, combinedAuthorities);
+	}	
 
 }
