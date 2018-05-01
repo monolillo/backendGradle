@@ -97,10 +97,10 @@ INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (8,4,2007,8);
 INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (12,4,2008,8);
 INSERT INTO INVENTORY (qty,shopId,productId,locationId) VALUES (13,4,2009,8);
 
-INSERT INTO USERS (username,password,enabled) VALUES ('admin','{noop}admin_pwd',1);
-INSERT INTO USERS (username,password,enabled) VALUES ('mgr_usr','{noop}pass',1);
-INSERT INTO USERS (username,password,enabled) VALUES ('tech_usr','{noop}pass',1);
-INSERT INTO USERS (username,password,enabled) VALUES ('superv_usr','{noop}pass',1);
+INSERT INTO USERS (username,password,enabled,email,phone) VALUES ('admin','{noop}admin_pwd',1,'admin@test.com', '1111111111');
+INSERT INTO USERS (username,password,enabled,email,phone) VALUES ('mgr_usr','{noop}pass',1,'mgr_usr@test.com', '2222222222');
+INSERT INTO USERS (username,password,enabled,email,phone) VALUES ('tech_usr','{noop}pass',1,'tech_usr@test.com', '3333333333');
+INSERT INTO USERS (username,password,enabled,email,phone) VALUES ('superv_usr','{noop}pass',1,'superv_usr@test.com', '4444444444');
 
 INSERT INTO SITE_USERS (username,siteId) VALUES ('admin',2);
 INSERT INTO SITE_USERS (username,siteId) VALUES ('mgr_usr',2);
@@ -112,6 +112,7 @@ INSERT INTO GROUPS (group_name) VALUES ('ADMIN');
 INSERT INTO GROUPS (group_name) VALUES ('PROPERTY_MGR');
 INSERT INTO GROUPS (group_name) VALUES ('MNT_SUPERVISOR');
 INSERT INTO GROUPS (group_name) VALUES ('MNT_TECH');
+INSERT INTO GROUPS (group_name) VALUES ('STOCK_ALERTS');
 
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'GET_PLACES');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'READ_SITE_CATALOG');
@@ -123,12 +124,14 @@ INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_IN_PRODUCT')
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'CHECK_OUT_PRODUCT');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'UNDO_CHECK_IN');
 INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (0,'UNDO_CHECK_OUT');
+INSERT INTO GROUP_AUTHORITIES (group_id,authority) VALUES (5,'STOCK_PUSH_ALERTS');
 
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',0);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('admin',1);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('mgr_usr',2);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('superv_usr',3);
 INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('tech_usr',4);
+INSERT INTO GROUP_MEMBERS (username,group_id) VALUES ('superv_usr',5);
 
 INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId) VALUES (5,5,'admin','2018-04-03 17:45:55.38',2,2,1);
 INSERT INTO CHECKIN (id, qty, username, timestamp, shopId, locationId, productId) VALUES (6,5,'admin','2018-04-03 17:45:55.38',2,2,1);
